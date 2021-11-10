@@ -18,6 +18,10 @@ const MainCont = styled.div`
   height:100vh;
 
 `
+const NavCont = styled.div`
+display:flex;
+flex-grow:1;
+`
 const Heading = styled.div`
 font-size: 34px;
 font-weight: 700;
@@ -93,6 +97,7 @@ export default function Members() {
   return (
   
     <MainCont>
+      <NavCont>
            <NavBar2
     onContClick={()=>{
       GlobalNavClick();
@@ -109,6 +114,7 @@ export default function Members() {
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
     />
+    </NavCont>
         <LeftCont>
         <Heading className="ubuntu">Members</Heading>
 
