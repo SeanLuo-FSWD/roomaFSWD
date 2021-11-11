@@ -6,7 +6,7 @@ import {useRouter} from 'next/router';
 
 
 const MainCont = styled.div`
-display: flex;
+display: ${props=>props.display};
 flex-direction: column;
 margin-top:10px;
 width:100%;
@@ -51,7 +51,7 @@ const BodyDiv = styled.div`
 display:flex;
 flex-direction: column;
 align-items:left;
-margin:15px;
+// margin:15px;
 width:700px;
 `
 const Header = styled.p`
@@ -71,16 +71,16 @@ border-style: solid;
 width: 100%;
 `
 const ButtonDiv = styled.div`
-margin-left:65%;
+margin-left:75%;
 margin-top:50px;
 `
 
 const HouseRules = ({
-
+    display="none"
     
 }) => {
     const router = useRouter();
-    return <MainCont>
+    return <MainCont display={display}>
                 <TopDiv>
                     <TitleDiv>
                         <Image src="/House.png"></Image>

@@ -27,10 +27,11 @@ const SetNav = styled.div`
   display:flex;
   flex-direction:column;
   border-right:1px solid #D6D6D6;
-  padding-right:15px; 
-  // padding-left:5px; 
+  padding-right:15px;
+  padding-left:15px; 
   max-width:30%;
   align-items: center;
+  // margin-left:-145px;
   
 `
 const Holder = styled.div `
@@ -53,6 +54,30 @@ font-weight:700;
 
 export default function Home() {
 
+
+//setting navigation buttons: Right Cont change
+  const [showRightCont, setShowRightCont] = useState(0);
+
+  const HandleClickRightCont1 = () =>{
+    setShowRightCont(1);
+  }
+  const HandleClickRightCont2 = () =>{
+    setShowRightCont(2);
+  } 
+  const HandleClickRightCont3 = () =>{
+    setShowRightCont(3);
+  }  
+  const HandleClickRightCont4 = () =>{
+    setShowRightCont(4);
+  } 
+  const HandleClickRightCont5 = () =>{
+    setShowRightCont(5);
+  }
+  
+ 
+
+
+// setting navigation button: Color change
   const [buttonstate1, setButtonState1] = useState(0);
   const [buttonstate5, setButtonState5] = useState(0);
   const HandleClickButtonColor1 = () =>{
@@ -106,6 +131,7 @@ export default function Home() {
           src="/Member.png"
           onClick={() =>{
             HandleClickButtonColor1();
+            HandleClickRightCont1();
           }} 
           bgcolor={
             buttonstate1 === 1 ? '#FAFAFA' : '#FFFFFF'}
@@ -117,6 +143,7 @@ export default function Home() {
         src="/House.png"
        onClick={() =>{
         HandleClickButtonColor2();
+        HandleClickRightCont2();
       }} 
       bgcolor={buttonstate1 === 2 ? '#FAFAFA' : '#FFFFFF'}
       /> 
@@ -126,6 +153,7 @@ export default function Home() {
       src="/Test Account.png"
        onClick={() =>{
         HandleClickButtonColor3();
+        HandleClickRightCont3();
       }} 
       bgcolor={
         buttonstate1 === 3 ? '#FAFAFA' : '#FFFFFF'}
@@ -136,6 +164,7 @@ export default function Home() {
       src="/Export.png"
        onClick={() =>{
         HandleClickButtonColor4();
+        HandleClickRightCont4();
       }} 
       bgcolor={
         buttonstate1 === 4 ? '#FAFAFA' : '#FFFFFF'}
@@ -146,17 +175,18 @@ export default function Home() {
       src="/Exit.png"
        onClick={() =>{
         HandleClickButtonColor5();
+        HandleClickRightCont5();
       }} 
       bgcolor={
         buttonstate1 === 5 ? '#FAFAFA' : '#FFFFFF'}
       /> 
     </SetNav> 
     <Holder>
-      {/* <Invite></Invite> */}
-      {/* <HouseRules></HouseRules> */}
-      {/* <ManageProfile></ManageProfile> */}
-      {/* <LeaveGroup></LeaveGroup> */}
-      {/* <LogOut></LogOut> */}
+      <Invite display={showRightCont === 1 ? 'flex' : 'none'}></Invite>
+      <HouseRules display={showRightCont === 2 ? 'flex' : 'none'}></HouseRules>
+      <ManageProfile display={showRightCont === 3 ? 'flex' : 'none'}></ManageProfile>
+      <LeaveGroup display={showRightCont === 4 ? 'flex' : 'none'}></LeaveGroup>
+      <LogOut display={showRightCont === 5 ? 'flex' : 'none'}></LogOut>
       
     </Holder> 
     </Cont>

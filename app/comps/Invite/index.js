@@ -2,18 +2,19 @@ import react from 'react';
 import styled from 'styled-components';
 
 const MainCont = styled.div`
-display: flex;
+display:${props=>props.display};
 flex-direction: column;
 margin-top:10px;
 width:100%;
+align-items:center;
+position:relative;
 
 `
 
 const Cont = styled.div`
 display: flex;
 flex-direction: column;
-margin:40px;
-margin-right: 130px;
+width:700px;
 `
 const Head = styled.div`
 font-size: 25px;
@@ -34,12 +35,14 @@ justify-content: center;
 align-items: center;
 background-color: #F6F6FE;
 border: none;
-padding: 20px;
+// padding: 20px;
 border-radius: 6px;
 margin-top: 25px;
 position: relative;
 // left: ${props=>props.position};
-left:500px;
+// left:500px;
+margin-left:65%;
+margin-top:30px;
 `
 const Img = styled.img`
 margin-right: 10px;
@@ -58,13 +61,13 @@ width: 100%;
 `
 
 const Invite = ({
-// head="Invite a member with a link ",
-// text="Invite a member to join your team from another device. ",
-// position="500px",
-
-
+    // show=false
+    display="none"
 }) => {
-    return <MainCont>
+    // if(show == false){
+    //     return<></>
+    // }
+    return <MainCont display={display}>
     <Cont>
         <Head className="opensans">Invite a member with a link</Head>
         <Text className="opensans">Invite a member to join your team from another device.</Text>
