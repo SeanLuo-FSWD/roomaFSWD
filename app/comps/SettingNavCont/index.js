@@ -4,13 +4,15 @@ import styled from 'styled-components'
 const NavCont = styled.div`
 display:flex;
 flex-direction:row;
-justify-content:center;
+justify-content:left;
 align-items:center;
-width:80%;
-height:100%;
+// width:80%;
+// height:1000%;
+width:100%;
+height: 100px;
 background-color:${props=>props.bgcolor};
-margin:10px;
-border-radius:50px;
+margin:7px;
+border-radius:16px;
 `
 const ContentCont = styled.div`
 display:flex;
@@ -20,6 +22,7 @@ flex-direction:row;
 const Icon = styled.img`
 width:48px;
 height:48px;
+margin-left:60px;
 justify-content:center;
 align-items:center;
 
@@ -27,7 +30,7 @@ align-items:center;
 const ContDetail = styled.div`
 display:flex;
 flex-direction:column;
-margin:5px;
+margin:40px;
 `
 const Heading = styled.h4`
 margin:0;
