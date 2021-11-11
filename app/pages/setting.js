@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import React from 'react';
 import NavBar2 from '../comps/NavBar2';
 import Invite from '../comps/Invite';
+import HouseRules from '../comps/HouseRules';
+import ManageProfile from '../comps/ManageProfile';
+import LeaveGroup from '../comps/LeaveGroup';
+import LogOut from '../comps/LogOut';
 import SettingNavCont from '../comps/SettingNavCont';
 import {useState} from 'react';
 
@@ -22,13 +26,29 @@ const GlbNav = styled.div`
 const SetNav = styled.div`
   display:flex;
   flex-direction:column;
-  flex-grow:3;
+  border-right:1px solid #D6D6D6;
+  padding-right:15px; 
+  // padding-left:5px; 
+  max-width:30%;
+  align-items: center;
+  
 `
 const Holder = styled.div `
   display:flex;
-  flex-direction:column;
-  margin-top:30px;
-  flex-grow:4;
+  flex-grow:5;
+
+  // justify-content: center;
+  // align-items: center;
+  // flex-direction:column;
+  // margin-top:30px;
+
+`
+
+const Title = styled.p`
+font-size:35px;
+margin-left:-140px;
+font-weight:700;
+
 `
 
 export default function Home() {
@@ -79,7 +99,7 @@ export default function Home() {
     />
         </GlbNav>
     <SetNav>
-      <h2>Settings</h2>
+      <Title className="ubuntu">Settings</Title>
       <SettingNavCont
           heading="Add a member"
           ps="Invite a new member"
@@ -88,7 +108,7 @@ export default function Home() {
             HandleClickButtonColor1();
           }} 
           bgcolor={
-            buttonstate1 === 1 ? '#888888' : '#FFFFFF'}
+            buttonstate1 === 1 ? '#FAFAFA' : '#FFFFFF'}
          
       />
       <SettingNavCont
@@ -98,7 +118,7 @@ export default function Home() {
        onClick={() =>{
         HandleClickButtonColor2();
       }} 
-      bgcolor={buttonstate1 === 2 ? '#888888' : '#FFFFFF'}
+      bgcolor={buttonstate1 === 2 ? '#FAFAFA' : '#FFFFFF'}
       /> 
       <SettingNavCont
       heading="Manage Profile"
@@ -108,7 +128,7 @@ export default function Home() {
         HandleClickButtonColor3();
       }} 
       bgcolor={
-        buttonstate1 === 3 ? '#888888' : '#FFFFFF'}
+        buttonstate1 === 3 ? '#FAFAFA' : '#FFFFFF'}
       /> 
       <SettingNavCont
       heading="Leave group"
@@ -118,7 +138,7 @@ export default function Home() {
         HandleClickButtonColor4();
       }} 
       bgcolor={
-        buttonstate1 === 4 ? '#888888' : '#FFFFFF'}
+        buttonstate1 === 4 ? '#FAFAFA' : '#FFFFFF'}
       /> 
       <SettingNavCont
       heading="Log Out"
@@ -128,11 +148,16 @@ export default function Home() {
         HandleClickButtonColor5();
       }} 
       bgcolor={
-        buttonstate1 === 5 ? '#888888' : '#FFFFFF'}
+        buttonstate1 === 5 ? '#FAFAFA' : '#FFFFFF'}
       /> 
     </SetNav> 
     <Holder>
-      <Invite></Invite>
+      {/* <Invite></Invite> */}
+      {/* <HouseRules></HouseRules> */}
+      {/* <ManageProfile></ManageProfile> */}
+      {/* <LeaveGroup></LeaveGroup> */}
+      {/* <LogOut></LogOut> */}
+      
     </Holder> 
     </Cont>
   )
