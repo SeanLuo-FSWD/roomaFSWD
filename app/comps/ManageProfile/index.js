@@ -9,7 +9,7 @@ import {useRouter} from 'next/router';
 
 
 const MainCont = styled.div`
-display: flex;
+display: ${props=>props.display};
 flex-direction: column;
 // margin-top:10px;
 width:100%;
@@ -20,7 +20,7 @@ position:relative;
 
 
 const ButtonDiv = styled.div`
-margin-left:65%;
+margin-left:75%;
 margin-top:50px;
 `
 
@@ -94,11 +94,11 @@ align-items:center;
 `
 
 const ManageProfile = ({
-
+    display="none"
     
 }) => {
     const router = useRouter();
-    return <MainCont>
+    return <MainCont display={display}>
 
                 <RightCont>
                     <ProfileHolder>

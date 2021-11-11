@@ -6,7 +6,7 @@ import {useRouter} from 'next/router';
 
 
 const MainCont = styled.div`
-display: flex;
+display: ${props=>props.display};
 flex-direction: column;
 margin-top:600px;
 width:100%;
@@ -43,11 +43,11 @@ margin-top:30px;
 `
 
 const LeaveGroup = ({
-
+    display="none"
     
 }) => {
     const router = useRouter();
-    return <MainCont>
+    return <MainCont display={display}>
                
                 <Line/> 
             
