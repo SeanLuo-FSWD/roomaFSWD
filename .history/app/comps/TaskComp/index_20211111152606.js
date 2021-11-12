@@ -123,51 +123,11 @@ display:flex;
 width: 100%;
 justify-content: flex-end;
 `
-const TabCont = styled.div`
-display:flex;
-flex-direction:row;
-min-width: 700px;
-align-items:center;
-justify-content: flex-end;
-margin-bottom: 25px;
 
-`
-const AddBtn = styled.div`
-width:35px;
-height:35px;
-background-color:#7751E8;
-border-radius:20px;
-display:flex;
-justify-content:center;
-align-items:center;
-
-`
-const PlusIcon = styled.img`
-width:20px;
-height:20px;
-
-`
 const TaskComp = ({
 
 })=>{
   return<MainCont>
- <TabCont>
-    <Button
-    title="Garbage"
-    width="120px"
-    height="40px"
-    borderRadius="18px"
-    border="solid 1.8px"
-    bgcolor="#ffffff"
-    fontcolor="#7751E8"
-    fontSize="16px"
-    fontWeight="400"
-    margin="15px"
-    />
-    <AddBtn>
-    <PlusIcon src="/plus.svg"/>
-    </AddBtn>
-  </TabCont>
 
 <Cont>
  <InputCont>
