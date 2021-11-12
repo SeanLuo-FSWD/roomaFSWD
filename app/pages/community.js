@@ -6,6 +6,7 @@ import NavBar2 from '../comps/NavBar2';
 import AddPost from '../comps/AddPost'
 import {useState} from 'react';
 import CommunityPost from '../comps/CommunityPost';
+import Comments from '../comps/Comments';
 import FilterOptionsButton from '../comps/FilterOptionsButton';
 import AddFilter from '../comps/AddFilter';
 
@@ -42,9 +43,8 @@ const PostArea2 = styled.div`
 `
 const RightCont = styled.div`
   display:flex;
-  margin-left:200px;
   flex-direction:column;
-  flex-grow:3;
+  flex-grow:1;
 `
 
 
@@ -65,7 +65,7 @@ export default function Community() {
   const [buttonstate1, setButtonState1] = useState(0);
   const [buttonstate5, setButtonState5] = useState(0);
   const [buttonstate2, setButtonState2] = useState(0);
-
+  const [onPostClick, setPostClick] =useState(0);
   // ADD POST: useState Function 
   const [buttonstate6, setButtonState6] = useState(0);
   const [buttonstate7, setButtonState7] = useState(0);
@@ -121,7 +121,7 @@ export default function Community() {
     setButtonState2(0);
   }
   }
-  //
+  // global nav click
   const GlobalNavClick = () =>{
     if (buttonstate5===0){
     setButtonState5(1);
@@ -130,8 +130,18 @@ export default function Community() {
   }
   }
 
+  // Post clikced 
+  // needs to increase the number of useState depending on the post number.
+  // post content in comment comp will change depending on the post the user's clicked
+  // now is static since hard to imagine how many posts will be there...
+  const PostClick=()=>{
+    if(onPostClick ===0){
+      setPostClick(1);
 
-
+    }else{
+      setPostClick(0);
+    }
+  }
   // ADD POST: Btn options handling from here
   const Btn1= () =>{
     if (buttonstate6===0){
@@ -423,6 +433,10 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="100"
         CommentNum="10"
+        onPostClick={()=>{
+          PostClick();
+        }}
+        
         />
         <CommunityPost
         title="Furniture Sale"
@@ -433,6 +447,9 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="230"
         CommentNum="20"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         
         </PostArea1>
@@ -446,6 +463,9 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="1100"
         CommentNum="15"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         <CommunityPost
         title="Music Festival on Queen Park!"
@@ -456,6 +476,9 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="800"
         CommentNum="30"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         </PostArea2>
         <PostArea2>
@@ -468,6 +491,9 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="1100"
         CommentNum="15"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         <CommunityPost
         title="Music Festival on Queen Park!"
@@ -478,11 +504,24 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="800"
         CommentNum="30"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         </PostArea2>
         </MainCont>
         <RightCont>
-
+                <Comments
+                  visibility={onPostClick === 1 ? "visible":"hidden"}
+                  title="Any recommendations on resturaunts in Vancouver?"
+                  name="Floyd Miles"
+                  src="/Avatar3.png"
+                  button_title="restaurants"
+                  time="6h ago"
+                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+                  likeNum="100"
+                  CommentNum="10"
+                />
         </RightCont>
     </Cont>
   )

@@ -7,12 +7,12 @@ import Button from '../Button';
 const MainCont = styled.div`
 display: flex;
 flex-direction: column;
-width: 340px;
+width:${props=>props.width};
 height: 326px;
-padding:15px;
+padding:${props=>props.padding};
 border-radius:24px;
-box-shadow: 0px 4.0133771896362305px 11.036787033081055px 0px #00000014;
-margin:20px;
+box-shadow:${props=>props.boxShadow};
+margin:${props=>props.margin};
 
 `
 
@@ -147,6 +147,10 @@ font-weight: 700;
 
 
 const CommunityPost = ({
+    boxShadow="0px 4.0133771896362305px 11.036787033081055px 0px #00000014",
+    margin="20px",
+    padding="15px",
+    width="340px",
     title="Any recommendations on resturaunts in Vancouver?",
     name="Floyd Miles",
     src="/Avatar3.png",
@@ -155,9 +159,10 @@ const CommunityPost = ({
     text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     likeNum="100",
     CommentNum="10",
+    onPostClick=()=>{},
 
 }) => {
-    return <MainCont>
+    return <MainCont boxShadow={boxShadow} margin={margin} padding={padding} width={width} onClick={onPostClick}>
                 <TitleCont>
                     <Title className="ubuntu">{title}</Title>
                 </TitleCont>
