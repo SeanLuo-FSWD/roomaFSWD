@@ -6,6 +6,7 @@ display:flex;
 flex-direction:column;
 width:${props=>props.width};
 height:${props=>props.height};
+margin-top: 15px;
 `
 const Heading = styled.h3`
 font-size: 34px;

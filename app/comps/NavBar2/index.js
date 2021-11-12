@@ -12,6 +12,8 @@ align-items:center;
 width:${props=>props.width};
 height:100vh;
 box-shadow: 0px 4.0133771896362305px 11.036787033081055px 0px #00000014;
+
+
 `
 
 const ProfileCont = styled.div`
@@ -30,6 +32,7 @@ flex-direction: column;
 justify-content:center;
 width: 100%;
 height: 100%;
+
 `
 const TopCont = styled.div`
 display:${props=>props.display};
@@ -142,6 +145,10 @@ height:25px;
 position:relative;
 left:245px;
 top:-135px;
+
+:hover{
+    background-color:red;
+}
 
 
 `

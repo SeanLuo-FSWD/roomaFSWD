@@ -134,14 +134,14 @@ export default function Home (){
     }} 
     height={buttonstate2 === 1 ? '760px' : '360px'}
     top={buttonstate2 === 1 ? '820px' : '425px'}
-    title_more={buttonstate2 === 1 ? 'close ' : 'more '}
+    title_more={buttonstate2 === 1 ? 'Close ' : 'More '}
     //complete_display={buttonstate2 === 1 ? 'none' : 'block'}
     rewards_display={buttonstate2 === 1 ? 'none' : 'block'}
 
     onCompleteClick={()=>{
       CompleteHandleClick();
     }}
-    title_complete={buttonstate3 === 1 ? 'hide ' : 'complete '}
+    title_complete={buttonstate3 === 1 ? 'Hide ' : 'Completed '}
     reminder_display={buttonstate3 === 1 ? 'none': 'block'}
     reminder_completed_display={buttonstate3 ===1 ? 'block': 'none'}
     //complete_width={buttonstate3 === 1 ? '685px' : '235px'}

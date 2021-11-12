@@ -1,15 +1,12 @@
 import Head from 'next/head'
 import styled from 'styled-components';
 import * as React from 'react';
-import Tutorial from '../comps/Tutorial';
-import MemberProfile from'../comps/MemberProfile';
 import NavBar2 from '../comps/NavBar2'
-import AddMembers from '../comps/AddMembers';
-import ProfileInfo from '../comps/ProfileInfo';
-import Button from '../comps/Button';
 import ChatNav from '../comps/ChatNav';
-
 import {useState} from 'react';
+import User1 from '../comps/ChatComps/user1'
+import User2 from '../comps/ChatComps/user2';
+import Input from '../comps/ChatComps/input';
 
 
 
@@ -57,8 +54,21 @@ align-items:center;
 const RightCont = styled.div`
 display:flex;
 flex:3;
+width: 100%;
+height: 100%;
 flex-direction: column;
+justify-content: flex-end;
 `
+const ChatCont1 = styled.div`
+display:flex;
+width: 100%;
+`
+const ChatCont2 = styled.div`
+display:flex;
+width: 100%;
+justify-content: flex-end;
+`
+
 
 
 export default function Chat() {
@@ -148,10 +158,17 @@ export default function Chat() {
         {/* Right Container */}
         <RightCont>
     
-
+          <ChatCont1>
+          <User1></User1>
+          </ChatCont1>
     
-
+          <ChatCont2>
+            <User2></User2>
+          </ChatCont2>
         
+    
+        <Input></Input>
+      
 
 
         </RightCont>

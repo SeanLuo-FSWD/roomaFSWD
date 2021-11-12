@@ -11,6 +11,8 @@ import Reminder from '../comps/Reminder';
 import RemindContent from '../comps/RemindContent';
 import Event from '../comps/Event';
 import AddEvent from '../comps/AddEvent';
+import MemberProfile from '../comps/MemberProfile'
+import AddButton from '../comps/AddButton';
 
 
 //TEST YOUR COMPONENTS HERE
@@ -32,6 +34,10 @@ export default function Tester() {
 
             <FilterButton></FilterButton>
             <CommunityPost/>
+
+            <MemberProfile/>
+
+            <AddButton></AddButton>
        
     
         </MainCont>
