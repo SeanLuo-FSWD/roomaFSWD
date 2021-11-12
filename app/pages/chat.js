@@ -98,12 +98,12 @@ export default function Chat() {
     setButtonState1(5);
   } 
   
-  
-  
   return (
   
     <MainCont>
            <NavBar2
+    color3="#8867EB"
+    src3="/Chat_Icon_Color.svg"
     onContClick={()=>{
       GlobalNavClick();
     }}
@@ -118,7 +118,9 @@ export default function Chat() {
     displaySetting={buttonstate5 === 1 ? 'none' : 'block'}
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
-    />
+
+ 
+      />
         <LeftCont>
         <TopCont>
         <Heading className="ubuntu">Chat</Heading>

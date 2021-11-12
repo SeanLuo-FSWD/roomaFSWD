@@ -259,6 +259,8 @@ export default function Community() {
     <Cont>
       <GlbNav>
       <NavBar2
+    color5="#8867EB"
+    src5="/search_Color.svg"
     onContClick={()=>{
       GlobalNavClick();
     }}
