@@ -62,6 +62,8 @@ export default function Home() {
     <Cont>
       <GlbNav>
       <NavBar2
+    color6="#8867EB"
+    src6="/Settings_Icon_Color.svg"
     onContClick={()=>{
       GlobalNavClick();
     }}

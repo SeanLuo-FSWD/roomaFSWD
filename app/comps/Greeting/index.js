@@ -22,13 +22,14 @@ margin-top:5px;
 const Greeting = ({
 width="200px",
 height="100px",
-heading="User",
+heading="Hello",
+User="User",
 ps="Welcome",
 visibility="visible"
 })=>{
   return<Cont width={width} height={height}>
     <Heading className="ubuntu">
-      Hello {heading}
+      {heading} {User}
     </Heading>
     <Ps visibility={visibility} className="opensans">
       {ps}

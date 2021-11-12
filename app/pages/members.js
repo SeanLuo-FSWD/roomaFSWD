@@ -93,12 +93,14 @@ export default function Members() {
     setButtonState5(0);
   }
   }
-  
+
   return (
   
     <MainCont>
       <NavCont>
            <NavBar2
+    color4="#8867EB"
+    src4="/Members_Icon_Color.svg"
     onContClick={()=>{
       GlobalNavClick();
     }}
@@ -113,6 +115,7 @@ export default function Members() {
     displaySetting={buttonstate5 === 1 ? 'none' : 'block'}
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
+
     />
     </NavCont>
         <LeftCont>

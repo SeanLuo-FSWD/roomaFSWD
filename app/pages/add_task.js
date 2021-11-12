@@ -60,6 +60,8 @@ export default function Add_task() {
     <MainCont>
       <LeftCont>
       <NavBar2
+    color2="#8867EB"
+    src2="/Task_Icon_Color.svg"
     onContClick={()=>{
       GlobalNavClick();
     }}
@@ -81,6 +83,7 @@ export default function Add_task() {
     width="250px"
     height="100px"
     heading="Add Tasks"
+    User=""
     ps=""
     visibility="visible"
     />

@@ -42,19 +42,8 @@ flex-grow:1;
 
 
 export default function Home (){
-
-  //NavBar onClick function
-  // const [showNav2, setShowNav2] = useState(false)
-  // const [showNav, setShowNav] = useState(true)
-
-
-
   // detect button clicked or not
   const [buttonstate1, setButtonState1] = useState(0);
-  const [buttonstate2, setButtonState2] = useState(0);
-  const [buttonstate3, setButtonState3] = useState(0);
-  const [buttonstate4, setButtonState4] = useState(0);
-  const [buttonstate5, setButtonState5] = useState(0);
   const EventHandleClick = () =>{
     if (buttonstate1===0){
     setButtonState1(1);
@@ -62,6 +51,7 @@ export default function Home (){
     setButtonState1(0);
   }
   }
+  const [buttonstate2, setButtonState2] = useState(0);
   const ReminderHandleClick = () =>{
     if (buttonstate2===0){
     setButtonState2(1);
@@ -69,6 +59,8 @@ export default function Home (){
     setButtonState2(0);
   }
   }
+  const [buttonstate3, setButtonState3] = useState(0);
+  
   const CompleteHandleClick = () =>{
     if (buttonstate3===0){
     setButtonState3(1);
@@ -76,13 +68,16 @@ export default function Home (){
     setButtonState3(0);
   }
   }
+  // completed checkbtn default clicked change to not clicked // not working yet
+  const [buttonstate4, setButtonState4] = useState(0);
   const CheckedButtonClick = () =>{
-      if (buttonstate4===0){
-      setButtonState4(1);
-    }else{
-      setButtonState4(0);
-    }
-    }
+    if (buttonstate4===0){
+    setButtonState4(1);
+  }else{
+    setButtonState4(0);
+  }
+  }
+  const [buttonstate5, setButtonState5] = useState(0);
   const GlobalNavClick = () =>{
       if (buttonstate5===0){
       setButtonState5(1);
@@ -90,10 +85,13 @@ export default function Home (){
       setButtonState5(0);
     }
     }
+
   return (<MainCont>
 
     <LeftCont>
     <NavBar2
+    color1="#8867EB"
+    src1="/Home_Icon_color.svg"
     onContClick={()=>{
       GlobalNavClick();
     }}
@@ -108,6 +106,8 @@ export default function Home (){
     displaySetting={buttonstate5 === 1 ? 'none' : 'block'}
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
+
+   
     />
     </LeftCont>
 
@@ -115,8 +115,9 @@ export default function Home (){
     <Greeting
     width="250px"
     height="100px"
-    // heading should be connected with the users' name
-    heading="Ester!"
+    heading="Hello"
+    // User should be connected with the users' name
+    User="Ester!"
     ps="Here’s your schedule this week"
     visibility="visible"
     />
