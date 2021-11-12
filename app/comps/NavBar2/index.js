@@ -139,12 +139,14 @@ font-weight:700;
 margin-top:15px;
 margin-bottom:15px;
 `
-const BellIcon = styled.img`
-width:20px;
-height:25px;
+const BellIconArea = styled.div`
 position:relative;
 left:245px;
 top:-135px;
+`
+const BellIcon = styled.img`
+width:20px;
+height:25px;
 `
 const Alert = styled.div`
 display:${props=>props.display};
@@ -153,9 +155,9 @@ height:16px;
 border-radius:50%;
 background-color:#5950E0;
 color:#FFFFFF;
-position:absolute;
-top:10px;
-left:252px
+position:relative;
+top:-30px;
+left:8px;
 `
 const RoomaLogo = styled.img`
 width:50px;
@@ -204,7 +206,10 @@ const NavBar2 = ({
            <IconCont>
                {/*Wide global nav top cont from here*/}
               <TopCont display={display}>
-                  <BellIcon src="/Bell_Icon.svg"/><Alert display={Alertdisplay}/>
+                  <BellIconArea>
+                  <BellIcon src="/Bell_Icon.svg"/>
+                  <Alert display={Alertdisplay}/>
+                  </BellIconArea>
                         <ProfileCont>
                             <Pic src={src}></Pic>
                             <Name className="opensans">{name}</Name>

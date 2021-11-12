@@ -77,7 +77,7 @@ color:#7751E8;
 `
 const Divider = styled.hr`
 border-top: 1px solid #E8E8E8;
-
+width:700px;
 `
 const Icon = styled.img`
 margin-bottom: 2px;
