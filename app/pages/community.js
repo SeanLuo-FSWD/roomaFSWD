@@ -6,6 +6,8 @@ import NavBar2 from '../comps/NavBar2';
 import AddPost from '../comps/AddPost'
 import {useState} from 'react';
 import CommunityPost from '../comps/CommunityPost';
+import FilterOptionsButton from '../comps/FilterOptionsButton';
+import AddFilter from '../comps/AddFilter';
 
 const Cont = styled.div`
   padding:5px;
@@ -45,6 +47,19 @@ const RightCont = styled.div`
   flex-direction:column;
   flex-grow:3;
 `
+
+
+const FilterButtonDiv = styled.div`
+  display:flex;
+  margin-top:50px;
+  width:720px;
+  justify-content: flex-end;
+`
+
+const AddFilterDiv = styled.div`
+  margin-top: 20px;
+`
+
 export default function Community() {
   
   const [checked, setChecked] = useState(0);
@@ -52,6 +67,7 @@ export default function Community() {
   const [buttonstate5, setButtonState5] = useState(0);
   const [buttonstate2, setButtonState2] = useState(0);
 
+  // ADD POST: useState Function 
   const [buttonstate6, setButtonState6] = useState(0);
   const [buttonstate7, setButtonState7] = useState(0);
   const [buttonstate8, setButtonState8] = useState(0);
@@ -60,6 +76,29 @@ export default function Community() {
   const [buttonstate11, setButtonState11] = useState(0);
   const [buttonstate12, setButtonState12] = useState(0);
   const [buttonstate13, setButtonState13] = useState(0);
+
+
+  // ADD FILTER: useState Function
+  const [buttonstate14, setButtonState14] = useState(0);
+  const [buttonstate15, setButtonState15] = useState(0);
+  const [buttonstate16, setButtonState16] = useState(0);
+  const [buttonstate17, setButtonState17] = useState(0);
+  const [buttonstate18, setButtonState18] = useState(0);
+  const [buttonstate19, setButtonState19] = useState(0);
+  const [buttonstate20, setButtonState20] = useState(0);
+  const [buttonstate21, setButtonState21] = useState(0);
+
+  //Hide/Show Filter Comp 
+  const [showFilterComp, setShowFilterComp] = useState(0);
+  const ClickFilterButton = () =>{
+    if (showFilterComp === 0){
+      setShowFilterComp(1);
+  }else{
+      setShowFilterComp(0);
+  }
+}
+
+
 
   const HandleToggleClick = () =>{
     if (checked === 0){
@@ -91,7 +130,10 @@ export default function Community() {
     setButtonState5(0);
   }
   }
-  // Btn options handling from here
+
+
+
+  // ADD POST: Btn options handling from here
   const Btn1= () =>{
     if (buttonstate6===0){
     setButtonState6(1);
@@ -147,7 +189,72 @@ export default function Community() {
   }else{
     setButtonState13(0);
   }
+  }  
+  
+  
+  
+  
+  // ADD FILTER: Btn options handling from here
+  const Btn9= () =>{
+    if (buttonstate14===0){
+    setButtonState14(1);
+  }else{
+    setButtonState14(0);
   }
+  }
+  const Btn10= () =>{
+    if (buttonstate15===0){
+    setButtonState15(1);
+  }else{
+    setButtonState15(0);
+  }
+  }
+  const Btn11= () =>{
+    if (buttonstate16==0){
+    setButtonState16(1);
+  }else{
+    setButtonState16(0);
+  }
+  }
+  const Btn12= () =>{
+    if (buttonstate17===0){
+    setButtonState17(1);
+  }else{
+    setButtonState17(0);
+  }
+  }
+  const Btn13= () =>{
+    if (buttonstate18===0){
+    setButtonState18(1);
+  }else{
+    setButtonState18(0);
+  }
+  }
+  const Btn14= () =>{
+    if (buttonstate19===0){
+    setButtonState19(1);
+  }else{
+    setButtonState19(0);
+  }
+  }
+  const Btn15= () =>{
+    if (buttonstate20===0){
+    setButtonState20(1);
+  }else{
+    setButtonState20(0);
+  }
+  }
+  const Btn16= () =>{
+    if (buttonstate21===0){
+    setButtonState21(1);
+  }else{
+    setButtonState21(0);
+  }
+  }
+
+
+
+
   return (
     <Cont>
       <GlbNav>
@@ -169,66 +276,136 @@ export default function Community() {
     />
         </GlbNav>
         <MainCont>
+       
         <AddPost
-        src="/Avatar.png"
-        onAddClick={()=>{
-          HandleAddClick();
-        }}
-        height={buttonstate1 === 1 ? '385px':'65px' }
-        display={buttonstate1 === 1 ? 'block':'none'}
-        onToggleClick={() =>{
-          HandleToggleClick();
-        }}
-        visibility={checked === 1 ? 'visible' : 'hidden'}
-        onPostClick={()=>{
-          HandleAddPost();
-        }}
-      
-        // button color changes from here
-        onBtnClick1={()=>{
-          Btn1();
-        }}
-        btn_bgcolor1={buttonstate6 === 1?'#7751E8':'#ffffff'}
-        fontcolor1={buttonstate6 === 1? '#ffffff':'#7751E8'}
-        onBtnClick2={()=>{
-          Btn2();
-        }}
-        btn_bgcolor2={buttonstate7 === 1?'#7751E8':'#ffffff'}
-        fontcolor2={buttonstate7 === 1? '#ffffff':'#7751E8'}
-        onBtnClick3={()=>{
-          Btn3();
-        }}
-        btn_bgcolor3={buttonstate8 === 1?'#7751E8':'#ffffff'}
-        fontcolor3={buttonstate8 === 1? '#ffffff':'#7751E8'}
-        onBtnClick4={()=>{
-          Btn4();
-        }}
-        btn_bgcolor4={buttonstate9 === 1?'#7751E8':'#ffffff'}
-        fontcolor4={buttonstate9 === 1? '#ffffff':'#7751E8'}
-        onBtnClick5={()=>{
-          Btn5();
-        }}
-        btn_bgcolor5={buttonstate10 === 1?'#7751E8':'#ffffff'}
-        fontcolor5={buttonstate10 === 1? '#ffffff':'#7751E8'}
-        onBtnClick6={()=>{
-          Btn6();
-        }}
-        btn_bgcolor6={buttonstate11 === 1?'#7751E8':'#ffffff'}
-        fontcolor6={buttonstate11 === 1? '#ffffff':'#7751E8'}
-        onBtnClick7={()=>{
-          Btn7();
-        }}
-        btn_bgcolor7={buttonstate12 === 1?'#7751E8':'#ffffff'}
-        fontcolor7={buttonstate12 === 1? '#ffffff':'#7751E8'}
-        onBtnClick8={()=>{
-          Btn8();
-        }}
-        btn_bgcolor8={buttonstate13 === 1?'#7751E8':'#ffffff'}
-        fontcolor8={buttonstate13 === 1? '#ffffff':'#7751E8'}
+                src="/Avatar.png"
+                onAddClick={()=>{
+                  HandleAddClick();
+                }}
+                height={buttonstate1 === 1 ? '385px':'65px' }
+                display={buttonstate1 === 1 ? 'block':'none'}
+                onToggleClick={() =>{
+                  HandleToggleClick();
+                }}
+                visibility={checked === 1 ? 'visible' : 'hidden'}
+                onPostClick={()=>{
+                  HandleAddPost();
+                }}
+              
+                // ADD POST: button color changes from here
+                onBtnClick1={()=>{
+                  Btn1();
+                }}
+                btn_bgcolor1={buttonstate6 === 1?'#7751E8':'#ffffff'}
+                fontcolor1={buttonstate6 === 1? '#ffffff':'#7751E8'}
+                onBtnClick2={()=>{
+                  Btn2();
+                }}
+                btn_bgcolor2={buttonstate7 === 1?'#7751E8':'#ffffff'}
+                fontcolor2={buttonstate7 === 1? '#ffffff':'#7751E8'}
+                onBtnClick3={()=>{
+                  Btn3();
+                }}
+                btn_bgcolor3={buttonstate8 === 1?'#7751E8':'#ffffff'}
+                fontcolor3={buttonstate8 === 1? '#ffffff':'#7751E8'}
+                onBtnClick4={()=>{
+                  Btn4();
+                }}
+                btn_bgcolor4={buttonstate9 === 1?'#7751E8':'#ffffff'}
+                fontcolor4={buttonstate9 === 1? '#ffffff':'#7751E8'}
+                onBtnClick5={()=>{
+                  Btn5();
+                }}
+                btn_bgcolor5={buttonstate10 === 1?'#7751E8':'#ffffff'}
+                fontcolor5={buttonstate10 === 1? '#ffffff':'#7751E8'}
+                onBtnClick6={()=>{
+                  Btn6();
+                }}
+                btn_bgcolor6={buttonstate11 === 1?'#7751E8':'#ffffff'}
+                fontcolor6={buttonstate11 === 1? '#ffffff':'#7751E8'}
+                onBtnClick7={()=>{
+                  Btn7();
+                }}
+                btn_bgcolor7={buttonstate12 === 1?'#7751E8':'#ffffff'}
+                fontcolor7={buttonstate12 === 1? '#ffffff':'#7751E8'}
+                onBtnClick8={()=>{
+                  Btn8();
+                }}
+                btn_bgcolor8={buttonstate13 === 1?'#7751E8':'#ffffff'}
+                fontcolor8={buttonstate13 === 1? '#ffffff':'#7751E8'}
 
-        // button color changes end
+                // ADD POST: button color changes end
         />
+
+
+        <FilterButtonDiv>
+            <FilterOptionsButton
+               onFilterButtonClick={()=>{
+                 ClickFilterButton();
+
+               }}
+            
+            ></FilterOptionsButton>
+        </FilterButtonDiv>
+        <AddFilterDiv>
+            <AddFilter
+
+                display={showFilterComp === 1 ? 'block' : 'none'}
+
+                    // ADD FILTER BUTTON: button color changes from here
+                onBtnClick1={()=>{
+                  Btn9();
+                }}
+                btn_bgcolor1={buttonstate14 === 1?'#7751E8':'#ffffff'}
+                fontcolor1={buttonstate14 === 1? '#ffffff':'#7751E8'}
+                onBtnClick2={()=>{
+                  Btn10();
+                }}
+                btn_bgcolor2={buttonstate15 === 1?'#7751E8':'#ffffff'}
+                fontcolor2={buttonstate15 === 1? '#ffffff':'#7751E8'}
+                onBtnClick3={()=>{
+                  Btn11();
+                }}
+                btn_bgcolor3={buttonstate16 === 1?'#7751E8':'#ffffff'}
+                fontcolor3={buttonstate16 === 1? '#ffffff':'#7751E8'}
+                onBtnClick4={()=>{
+                  Btn12();
+                }}
+                btn_bgcolor4={buttonstate17 === 1?'#7751E8':'#ffffff'}
+                fontcolor4={buttonstate17 === 1? '#ffffff':'#7751E8'}
+                onBtnClick5={()=>{
+                  Btn13();
+                }}
+                btn_bgcolor5={buttonstate18 === 1?'#7751E8':'#ffffff'}
+                fontcolor5={buttonstate18 === 1? '#ffffff':'#7751E8'}
+                onBtnClick6={()=>{
+                  Btn14();
+                }}
+                btn_bgcolor6={buttonstate19 === 1?'#7751E8':'#ffffff'}
+                fontcolor6={buttonstate19 === 1? '#ffffff':'#7751E8'}
+                onBtnClick7={()=>{
+                  Btn15();
+                }}
+                btn_bgcolor7={buttonstate20 === 1?'#7751E8':'#ffffff'}
+                fontcolor7={buttonstate20 === 1? '#ffffff':'#7751E8'}
+                onBtnClick8={()=>{
+                  Btn16();
+                }}
+                btn_bgcolor8={buttonstate21 === 1?'#7751E8':'#ffffff'}
+                fontcolor8={buttonstate21 === 1? '#ffffff':'#7751E8'}
+
+                // ADD FILTER BUTTON: button color changes end
+
+            
+            
+            ></AddFilter>
+        </AddFilterDiv>
+
+        <PostArea>
+        
+=======
         <PostArea1>
+
         <CommunityPost
         title="Any recommendations on resturaunts in Vancouver?"
         name="Floyd Miles"

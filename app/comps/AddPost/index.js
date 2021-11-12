@@ -111,6 +111,8 @@ const AddCont = styled.div`
 display:${props=>props.display};
 `
 const AddPost = ({
+
+
   height="65px",
  visibility="hidden",
  display="none",
@@ -167,7 +169,7 @@ return<Cont>
     />
     <Button
     title="Event"
-    width="87px"
+  width="87px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -217,9 +219,52 @@ return<Cont>
     fontWeight="400"
     onClick={onBtnClick5}
     />
+
+     <Button
+    title="Commute"
+    width="87px"
+    height="27px"
+    margin="10px"
+    borderRadius="18px"
+    border="solid 1.8px"
+    bgcolor={btn_bgcolor6}
+    fontcolor={fontcolor6}
+    fontSize="10px"
+    fontWeight="400"
+    onClick={onBtnClick6}
+    />
+     <Button
+    title="Restaurants"
+    width="87px"
+    height="27px"
+    margin="10px"
+    borderRadius="18px"
+    border="solid 1.8px"
+    bgcolor={btn_bgcolor7}
+    fontcolor={fontcolor7}
+    fontSize="10px"
+    fontWeight="400"
+    onClick={onBtnClick7}
+    />
+     <Button
+    title="Other"
+    width="87px"
+    height="27px"
+    margin="10px"
+    borderRadius="18px"
+    border="solid 1.8px"
+    bgcolor={btn_bgcolor8}
+    fontcolor={fontcolor8}
+    fontSize="10px"
+    fontWeight="400"
+    onClick={onBtnClick8}
+    />
+  </TabCont>  
+=======
   
     
   </TabCont>
+
   <Input type="text" name="text" placeholder="Add a new post here"/>
   <BtmCont>
     <GroupOption>
