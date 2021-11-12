@@ -7,8 +7,8 @@ import NavBar2 from '../comps/NavBar2'
 import AddMembers from '../comps/AddMembers';
 import ProfileInfo from '../comps/ProfileInfo';
 import Button from '../comps/Button';
-
 import {useState} from 'react';
+import {useRouter} from 'next/router';
 
 
 
@@ -20,7 +20,7 @@ const MainCont = styled.div`
 `
 const NavCont = styled.div`
 display:flex;
-flex-grow:1;
+
 `
 const Heading = styled.div`
 font-size: 34px;
@@ -93,7 +93,7 @@ export default function Members() {
     setButtonState5(0);
   }
   }
-
+  const router = useRouter();
   return (
   
     <MainCont>
@@ -140,6 +140,9 @@ export default function Members() {
         width="200px"
         height="50px"
         borderRadius="4.2px"
+        onClick={()=>{
+          router.push("/community")
+        }}
         />
         </CardCont>
         </LeftCont>

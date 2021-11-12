@@ -2,6 +2,8 @@ import react from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 
+
+
 const Cont = styled.div`
 display:${props=>props.display};
 flex-direction: column;
@@ -44,7 +46,7 @@ borderRadius="4.2px",
 onClick=()=>{},
 display="flex"
 })=>{
-
+ 
 return<Cont display={display}>
         <Head className="ubuntu">{heading}</Head>
         <Subhead className="opensans">{ps}</Subhead>
