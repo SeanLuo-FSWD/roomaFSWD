@@ -26,8 +26,8 @@ display:flex;
 flex-direction:row;
 flex-wrap:wrap;
 position:relative;
-left:120px;
-width:60%;
+left:90px;
+width:80%;
 `
 const BtmCont = styled.div`
 display:flex;
@@ -219,6 +219,7 @@ return<Cont>
     fontWeight="400"
     onClick={onBtnClick5}
     />
+
      <Button
     title="Commute"
     width="87px"
@@ -259,6 +260,11 @@ return<Cont>
     onClick={onBtnClick8}
     />
   </TabCont>  
+=======
+  
+    
+  </TabCont>
+
   <Input type="text" name="text" placeholder="Add a new post here"/>
   <BtmCont>
     <GroupOption>

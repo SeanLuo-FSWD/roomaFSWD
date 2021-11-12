@@ -27,12 +27,19 @@ const MainCont = styled.div`
   align-items:center;
   flex-grow:3;
 `
-const PostArea = styled.div`
+const PostArea1 = styled.div`
   display:flex;
   flex-direction:row;
   flex-wrap:wrap;
   justify-content:center;
   margin-top:50px;
+`
+const PostArea2 = styled.div`
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:20px;
 `
 const RightCont = styled.div`
   display:flex;
@@ -330,6 +337,7 @@ export default function Community() {
                 // ADD POST: button color changes end
         />
 
+
         <FilterButtonDiv>
             <FilterOptionsButton
                onFilterButtonClick={()=>{
@@ -395,6 +403,9 @@ export default function Community() {
 
         <PostArea>
         
+=======
+        <PostArea1>
+
         <CommunityPost
         title="Any recommendations on resturaunts in Vancouver?"
         name="Floyd Miles"
@@ -415,6 +426,9 @@ export default function Community() {
         likeNum="230"
         CommentNum="20"
         />
+        
+        </PostArea1>
+        <PostArea2>
         <CommunityPost
         title="Need Roommates!"
         name="Jo K"
@@ -426,7 +440,7 @@ export default function Community() {
         CommentNum="15"
         />
         <CommunityPost
-        title="Music Festival on Queen Park this week!"
+        title="Music Festival on Queen Park!"
         name="Rachel K"
         src="/Avatar3.png"
         button_title="Event"
@@ -435,7 +449,29 @@ export default function Community() {
         likeNum="800"
         CommentNum="30"
         />
-        </PostArea>
+        </PostArea2>
+        <PostArea2>
+        <CommunityPost
+        title="Need Roommates!"
+        name="Jo K"
+        src="/Avatar3.png"
+        button_title="roommates"
+        time="2h ago"
+        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+        likeNum="1100"
+        CommentNum="15"
+        />
+        <CommunityPost
+        title="Music Festival on Queen Park!"
+        name="Rachel K"
+        src="/Avatar3.png"
+        button_title="Event"
+        time="12h ago"
+        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+        likeNum="800"
+        CommentNum="30"
+        />
+        </PostArea2>
         </MainCont>
         <RightCont>
 
