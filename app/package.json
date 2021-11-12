@@ -27,7 +27,8 @@
     "react-native-paper": "^4.9.2",
     "react-switch": "^6.0.0",
     "styled-components": "^5.3.3",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "scrollable-component": "^1.1.2"
   },
   "devDependencies": {
     "eslint": "7.32.0",

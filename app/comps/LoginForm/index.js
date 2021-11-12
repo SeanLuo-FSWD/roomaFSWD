@@ -1,6 +1,7 @@
 import react from 'react';
 import * as React from 'react';
 import styled from 'styled-components';
+import {useRouter} from 'next/router';
 
 
 
@@ -148,12 +149,16 @@ font-weight: 700;
 
 const LoginForm = ({
 marginbottom1="25px",
-marginbottom2="10px"
+marginbottom2="10px",
+routeToHome="/",
+routeToSignup="/signup",
+login="Login"
 
 
 
 }) => {
    
+    const router = useRouter();
 
     return <Main>
     <Cont>
@@ -170,7 +175,7 @@ marginbottom2="10px"
         <Link className="opensans">Forgot Password?</Link>
 
         {/* Login Button */}
-        <LoginButton className="opensans">Login</LoginButton>
+        <LoginButton onClick={()=>router.push(routeToHome)} className="opensans">{login}</LoginButton>
 
         <Divider>
             
@@ -182,7 +187,7 @@ marginbottom2="10px"
             <Icon src="/Google.svg"/>
             Login with Google</GoogleButton>
           
-            <Signup className="opensans">
+            <Signup onClick={()=>router.push(routeToSignup)} className="opensans">
        <Text> Not registered yet?</Text>
         <Link2>Create an Account</Link2>
         </Signup>

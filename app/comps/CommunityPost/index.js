@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styled from 'styled-components';
 import * as React from 'react';
-import FilterButton from '../FilterButton';
+import Button from '../Button';
 
 
 const MainCont = styled.div`
@@ -12,6 +12,7 @@ height: 326px;
 padding:15px;
 border-radius:24px;
 box-shadow: 0px 4.0133771896362305px 11.036787033081055px 0px #00000014;
+margin:20px;
 
 `
 
@@ -148,6 +149,8 @@ font-weight: 700;
 const CommunityPost = ({
     title="Any recommendations on resturaunts in Vancouver?",
     name="Floyd Miles",
+    src="/Avatar3.png",
+    button_title="restaurants",
     time="6h ago",
     text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
     likeNum="100",
@@ -160,13 +163,24 @@ const CommunityPost = ({
                 </TitleCont>
                 <ProfileFilterCont>
                     <ProfileCont>
-                        <Image src="/Avatar3.png"></Image>
+                        <Image src={src}></Image>
                         <SmallProfileCont>
                             <Name className="opensans">{name}</Name>
                             <Time>{time}</Time>
                         </SmallProfileCont>
                     </ProfileCont>
-                    <FilterButton/>
+                    <Button
+                        title={button_title}
+                        width="87px"
+                        height="27px"
+                        margin="10px"
+                        borderRadius="18px"
+                        border="solid 1.8px"
+                        bgcolor="#ffffff"
+                        fontcolor="#7751E8"
+                        fontSize="10px"
+                        fontWeight="400"
+                    />
                 </ProfileFilterCont>
                 <TextCont>
                     <Text className="opensans">{text}</Text>

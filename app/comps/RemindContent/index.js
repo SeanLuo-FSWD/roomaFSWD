@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Cont = styled.div`
 display:flex;
 margin-left:30px;
-visibility:${props=>props.visibility};
+display:${props=>props.display};
 `
 const CardCont = styled.div`
 display:flex;
@@ -58,13 +58,13 @@ height:26px;
 `
 const RemindContent = ({
   bgcolor="rgba(240,199,137,30%)",
-  visibility="visible",
+  display="block",
   task_name="Task Name",
   vlcolor="#F0C789",
   name="Name",
   date="5:00-7:00PM",
   })=>{
-  return<Cont visibility={visibility}>
+  return<Cont display={display}>
     <CardCont bgcolor={bgcolor}>
       <LeftCont>
       <VerLine vlcolor={vlcolor}/>
