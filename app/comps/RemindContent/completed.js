@@ -47,10 +47,11 @@ margin-top:20px;
 const Details = styled.p`
 font-size:14.5px;
 margin-top:5px;
-color: #3E3D3D;
+color: #5C5C5C;
 `
 const Span = styled.span`
 font-weight:700;
+color: #5C5C5C;
 `
 
 const CheckBtn = styled.input`

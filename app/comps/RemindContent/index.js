@@ -14,6 +14,7 @@ width:630px;
 height:92px;
 background-color:${props=>props.bgcolor};
 border-radius:15px;
+margin-top: ${props=>props.margintop};
 `
 const LeftCont = styled.div`
 display:flex;
@@ -38,7 +39,7 @@ margin-top:15px;
 `
 const Heading = styled.h3`
 font-size: 19px;
-color: #181135;
+color: #3E3D3D;
 margin:0;
 margin-top:20px;
 
@@ -46,9 +47,11 @@ margin-top:20px;
 const Details = styled.p`
 font-size:14.5px;
 margin-top:5px;
+color: #5C5C5C;
 `
 const Span = styled.span`
 font-weight:700;
+color: #5C5C5C;
 `
 
 const CheckBtn = styled.input`
@@ -64,9 +67,10 @@ const RemindContent = ({
   vlcolor="#F0C789",
   name="Name",
   date="5:00-7:00PM",
+  margintop="20px"
   })=>{
-  return<Cont display={display}>
-    <CardCont bgcolor={bgcolor}>
+  return<Cont display={display} >
+    <CardCont bgcolor={bgcolor} margintop={margintop}>
       <LeftCont>
       <VerLine vlcolor={vlcolor}/>
       </LeftCont>
