@@ -90,6 +90,15 @@ export default function Home (){
 
     <LeftCont>
     <NavBar2
+      // user pic src
+      src="/Avatar.png"
+      // user name
+      name="Esther Howard"
+      // user rooma point
+      user_point="100 pts"
+      // if there is new message in alert display:block else display:none
+      Alertdisplay="block"
+      // showing user is in home page right now
     color1="#8867EB"
     src1="/Home_Icon_color.svg"
     onContClick={()=>{

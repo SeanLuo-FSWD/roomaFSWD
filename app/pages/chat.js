@@ -102,8 +102,19 @@ export default function Chat() {
   
     <MainCont>
            <NavBar2
+     // user pic src
+     src="/Avatar.png"
+     // user name
+     name="Esther Howard"
+     // user rooma point
+     user_point="100 pts"
+     // if there is new message in alert display:block else display:none
+     Alertdisplay="block"
+     // showing user is in chat page right now
     color3="#8867EB"
     src3="/Chat_Icon_Color.svg"
+
+    // click navigation make it small or big
     onContClick={()=>{
       GlobalNavClick();
     }}

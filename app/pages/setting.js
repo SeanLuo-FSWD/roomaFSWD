@@ -108,6 +108,16 @@ export default function Home() {
     <Cont>
       
       <NavBar2
+    
+      // user pic src
+      src="/Avatar.png"
+      // user name
+      name="Esther Howard"
+      // user rooma point
+      user_point="100 pts"
+      // if there is new message in alert display:block else display:none
+      Alertdisplay="block"
+      // showing user is in setting page right now
     color6="#8867EB"
     src6="/Settings_Icon_Color.svg"
     onContClick={()=>{
