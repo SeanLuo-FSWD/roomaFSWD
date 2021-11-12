@@ -141,8 +141,8 @@ export default function Home (){
     onMoreClick={() =>{
       ReminderHandleClick();
     }} 
-    height={buttonstate2 === 1 ? '760px' : '360px'}
-    top={buttonstate2 === 1 ? '820px' : '425px'}
+    height={buttonstate2 === 1 ? '760px' : '460px'}
+    top={buttonstate2 === 1 ? '840px' : '540px'}
     title_more={buttonstate2 === 1 ? 'Close ' : 'More '}
     //complete_display={buttonstate2 === 1 ? 'none' : 'block'}
     rewards_display={buttonstate2 === 1 ? 'none' : 'block'}

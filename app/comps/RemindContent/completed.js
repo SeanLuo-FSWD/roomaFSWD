@@ -5,6 +5,7 @@ import { useState } from 'react';
 const Cont = styled.div`
 display:flex;
 margin-left:30px;
+margin-bottom:10px;
 display:${props=>props.display};
 `
 const CardCont = styled.div`

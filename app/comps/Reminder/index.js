@@ -123,6 +123,22 @@ return<Cont>
      name="Name"
      date="5:00-7:00PM"
     />
+      <RemindContent
+     bgcolor="rgba(240,199,137,30%)"
+     display={reminder_display}
+     task_name="On going Task Name 2"
+     vlcolor="#F0C789"
+     name="Name"
+     date="7:30-8:00PM"
+    />
+      <RemindContent
+     bgcolor="rgba(240,199,137,30%)"
+     display={reminder_display}
+     task_name="On going Task Name 3"
+     vlcolor="#F0C789"
+     name="Name"
+     date="9:00-11:00PM"
+    />
     <Completed_RemindContent
     bgcolor="rgba(240,199,137,15%)"
     display={reminder_completed_display}
