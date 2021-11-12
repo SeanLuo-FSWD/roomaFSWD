@@ -99,6 +99,16 @@ export default function Members() {
     <MainCont>
       <NavCont>
            <NavBar2
+    
+      // user pic src
+      src="/Avatar.png"
+      // user name
+      name="Esther Howard"
+      // user rooma point
+      user_point="100 pts"
+      // if there is new message in alert display:block else display:none
+      Alertdisplay="block"
+      // showing user is in members page right now
     color4="#8867EB"
     src4="/Members_Icon_Color.svg"
     onContClick={()=>{

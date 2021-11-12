@@ -10,7 +10,6 @@ import FilterOptionsButton from '../comps/FilterOptionsButton';
 import AddFilter from '../comps/AddFilter';
 
 const Cont = styled.div`
-  padding:5px;
   display:flex;
   width:100%;
   height:100%;
@@ -259,6 +258,15 @@ export default function Community() {
     <Cont>
       <GlbNav>
       <NavBar2
+      // user pic src
+      src="/Avatar.png"
+      // user name
+      name="Esther Howard"
+      // user rooma point
+      user_point="100 pts"
+      // if there is new message in alert display:block else display:none
+      Alertdisplay="block"
+      // showing user is in community page right now
     color5="#8867EB"
     src5="/search_Color.svg"
     onContClick={()=>{
