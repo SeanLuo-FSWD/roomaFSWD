@@ -111,6 +111,8 @@ const AddCont = styled.div`
 display:${props=>props.display};
 `
 const AddPost = ({
+
+
   height="65px",
  visibility="hidden",
  display="none",
@@ -167,7 +169,7 @@ return<Cont>
     />
     <Button
     title="Event"
-    width="87px"
+  width="87px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -256,7 +258,7 @@ return<Cont>
     fontWeight="400"
     onClick={onBtnClick8}
     />
-  </TabCont>
+  </TabCont>  
   <Input type="text" name="text" placeholder="Add a new post here"/>
   <BtmCont>
     <GroupOption>
