@@ -1,5 +1,4 @@
 import react from 'react';
-
 import styled from 'styled-components';
 import RemindContent from '../RemindContent';
 import Completed_RemindContent from '../RemindContent/completed';
