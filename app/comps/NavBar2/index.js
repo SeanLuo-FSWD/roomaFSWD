@@ -153,11 +153,19 @@ display:${props=>props.display};
 width:16px;
 height:16px;
 border-radius:50%;
+text-align:center;
+align-items:center;
+justify-content:center;
 background-color:#5950E0;
-color:#FFFFFF;
 position:relative;
-top:-30px;
+top:-33px;
 left:8px;
+`
+const Num = styled.p`
+position:relative;
+color:#FFFFFF;
+font-size:8px;
+top:3px;
 `
 const RoomaLogo = styled.img`
 width:50px;
@@ -172,6 +180,7 @@ const NavBar2 = ({
     name="Esther Howard",
     user_point="100 pts",
     Alertdisplay="block",
+    AltNum="1",
     // making nav width change
     onContClick=()=>{},
     width="288px",
@@ -208,7 +217,9 @@ const NavBar2 = ({
               <TopCont display={display}>
                   <BellIconArea>
                   <BellIcon src="/Bell_Icon.svg"/>
-                  <Alert display={Alertdisplay}/>
+                    <Alert display={Alertdisplay}>
+                        <Num>{AltNum}</Num>
+                    </Alert>
                   </BellIconArea>
                         <ProfileCont>
                             <Pic src={src}></Pic>
