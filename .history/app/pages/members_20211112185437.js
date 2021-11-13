@@ -25,7 +25,7 @@ display:flex;
 const Heading = styled.div`
 font-size: 34px;
 font-weight: 700;
-margin-left: 180px;
+margin-left: 150px;
 margin-top: 50px;
 
 

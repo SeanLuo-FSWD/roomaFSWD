@@ -25,7 +25,6 @@ display:flex;
 const Heading = styled.div`
 font-size: 34px;
 font-weight: 700;
-margin-left: 180px;
 margin-top: 50px;
 
 
@@ -36,6 +35,7 @@ display: flex;
 flex-direction: column;
 flex:1;
 border-right: 1px #D6D6D6 solid;
+margin-left: 300px;
 
 `
 const CardCont = styled.div`

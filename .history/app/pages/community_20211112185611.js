@@ -15,6 +15,7 @@ const Cont = styled.div`
   width:100%;
   height:100%;
   flex-direction:row;
+  margin-right: 600px;
 `
 const GlbNav = styled.div`
   display:flex;

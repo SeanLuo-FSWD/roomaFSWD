@@ -36,6 +36,7 @@ display: flex;
 flex-direction: column;
 flex:1;
 border-right: 1px #D6D6D6 solid;
+margin-left: 300px;
 
 `
 const CardCont = styled.div`

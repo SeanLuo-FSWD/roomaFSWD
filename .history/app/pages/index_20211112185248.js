@@ -20,7 +20,7 @@ const MainCont = styled.div`
 const LeftCont = styled.div`
 display:flex;
 flex-grow:1;
-// position: fixed;
+position: fixed;
 `
 
 const MiddleCont = styled.div`
