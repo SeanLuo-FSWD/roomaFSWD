@@ -4,8 +4,8 @@ import styled from 'styled-components'
 const NavCont = styled.div`
 display:flex;
 background-color: white;
-width: 350px;
-height: 100%;
+width:${props=>props.width};
+height:100%;
 box-shadow: 0px 4.427648067474365px 47.59721755981445px 0px #00000017;
 flex-direction: column;
 
@@ -117,19 +117,20 @@ margin: 20px 30px 20px 30px;
 const Notification= ({
   bgcolor="#FAFAFA",
   display="flex",
+  NotificationWidth="288px",
   marginleft="25px",
   margintop="40px",
   info="All Roommates (5)",
   msg="Hello Everyone!",
   
-  onClick=()=>{}  
+  onBackClick=()=>{},
   
   }) => {
 
-    return <NavCont>
+    return <NavCont display={display} width={NotificationWidth}>
 
         <TopCont>
-            <Icon src="/arrow.svg"/>
+            <Icon src="/arrow.svg" onClick={onBackClick}/>
             <Title className="opensans">Notification</Title>
         </TopCont>
 
