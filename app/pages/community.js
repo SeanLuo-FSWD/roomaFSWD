@@ -302,7 +302,7 @@ export default function Community() {
                 onAddClick={()=>{
                   HandleAddClick();
                 }}
-                height={buttonstate1 === 1 ? '385px':'65px' }
+                height={buttonstate1 === 1 ? '450px':'65px' }
                 display={buttonstate1 === 1 ? 'block':'none'}
                 onToggleClick={() =>{
                   HandleToggleClick();
