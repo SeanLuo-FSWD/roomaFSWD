@@ -14,6 +14,7 @@ height:${props=>props.height};
 background-color:white;
 box-shadow: 0 4px 17px 0 rgba(0, 0, 0, 0.2);
 border-radius:22px;
+
 `
 const TopCont = styled.div`
 display:flex;
@@ -26,8 +27,9 @@ display:flex;
 flex-direction:row;
 flex-wrap:wrap;
 position:relative;
-left:90px;
-width:80%;
+left:50px;
+width:87%;
+justify-content:space-between;
 `
 const BtmCont = styled.div`
 display:flex;
@@ -37,7 +39,9 @@ justify-content:space-between;
 const InsertOption = styled.div`
 display:flex;
 flex-direction:row;
-margin-right:20px
+margin-right:20px;
+margin-top:8px;
+
 
 `
 const GroupOption = styled.div`
@@ -52,13 +56,14 @@ flex-direction:row;
 
 const ToggleBox = styled.div`
 display:flex;
-margin-top:10px;
+margin-top:15px;
 margin-left:10px;
 `
 const AvatarBox = styled.div`
 display:flex;
 flex-direction:row;
-visibility:${props=>props.visibility};
+// visibility:${props=>props.visibility};
+visibility:visible;
 `
 const Heading = styled.h3`
 font-size: 21px;
@@ -66,14 +71,14 @@ font-weight: 500;
 color: #181135;
 margin:0;
 margin-top:20px;
-margin-left:20px;
+margin-left:30px;
 margin-bottom:20px;
 `
 const Icon = styled.img`
 width:19px;
 height:19px;
 margin-top:20px;
-margin-right:30px;
+margin-right:45px;
 `
 const Input = styled.input`
 background-color:#F4F4F4;
@@ -97,15 +102,17 @@ display:flex;
 flex-direction:column;
 `
 const ButtonArea = styled.div`
-margin-top:5px;
+margin-top:60px;
+margin-right: -50px;
 `
 const Avatar = styled.img`
 width:45px;
 height:45px;
 position:relative;
-left:140px;
+left:50px;
 top:-10px;
 margin-left:-20px;
+
 `
 const AddCont = styled.div`
 display:${props=>props.display};
@@ -114,7 +121,7 @@ const AddPost = ({
 
 
   height="65px",
- visibility="hidden",
+ visibility="visible",
  display="none",
  btn_bgcolor1="#ffffff",
  btn_bgcolor2="#ffffff",
@@ -156,7 +163,7 @@ return<Cont>
   <TabCont>
     <Button
     title="Roommates"
-    width="87px"
+    width="114.16px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -169,7 +176,7 @@ return<Cont>
     />
     <Button
     title="Event"
-  width="87px"
+  width="114.16px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -182,7 +189,7 @@ return<Cont>
     />
     <Button
     title="School"
-    width="87px"
+    width="114.16px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -195,7 +202,7 @@ return<Cont>
     />
     <Button
     title="Work"
-    width="87px"
+    width="114.16px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -208,7 +215,7 @@ return<Cont>
     />
      <Button
     title="Information"
-    width="87px"
+    width="114.16px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -222,7 +229,7 @@ return<Cont>
 
      <Button
     title="Commute"
-    width="87px"
+    width="114.16px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -235,7 +242,7 @@ return<Cont>
     />
      <Button
     title="Restaurants"
-    width="87px"
+    width="114.16px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -248,7 +255,7 @@ return<Cont>
     />
      <Button
     title="Other"
-    width="87px"
+    width="114.16px"
     height="27px"
     margin="10px"
     borderRadius="18px"
@@ -280,13 +287,13 @@ return<Cont>
       }} 
       />
       <Avatar
-      src="/Avatar.png"
+      src="/Avatar2.png"
       onClick={() =>{
         
       }} 
       />
       <Avatar
-      src="/Avatar.png"
+      src="/Avatar3.png"
       onClick={() =>{
         
       }} 
