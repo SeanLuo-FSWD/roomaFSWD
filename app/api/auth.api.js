@@ -2,34 +2,8 @@ import axios from "axios";
 // import MOCK_URL from "../../constants/mock_server_url";
 import { server_api } from "../config/env.config";
 
-const updateProfile = (bodyFormData, cb) => {
-  console.log("updateProfile updateProfile updateProfile");
-  // console.log(bodyFormData);
-  axios({
-    method: "POST",
-    url: `${server_api}/user/profile`,
-    data: bodyFormData,
-    headers: { "Content-Type": "multipart/form-data" },
-    withCredentials: true,
-  })
-    .then((response) => {
-      console.log("updateProfile response");
-      console.log(response);
-      cb(null, response);
-    })
-    .catch((error) => {
-      console.log("updateProfile error");
-      if (!error.response) {
-        cb(
-          new Error(
-            "Wow the server MAY have crashed...be a hero, and tell Alex, Johnny or Sean  ASAP. Please also remember the steps leading to this."
-          )
-        );
-      } else {
-        cb(error.response.data);
-      }
-    });
-};
+const serverCrash =
+  "Wow the server MAY have crashed...be a hero, and tell Hailey, Jason or Sean ASAP. Please also remember the steps leading to this.";
 
 const logout = (cb) => {
   axios
@@ -45,23 +19,19 @@ const logout = (cb) => {
       console.log("user logout error");
       console.log(error);
       if (!error.response) {
-        cb(
-          new Error(
-            "Wow the server MAY have crashed...be a hero, and tell Alex, Johnny or Sean  ASAP. Please also remember the steps leading to this."
-          )
-        );
+        cb(new Error(serverCrash));
       } else {
         cb(error.response.data);
       }
     });
 };
 
-const login = (user_obj, cb) => {
+const loginUser = (user_obj, cb) => {
   console.log("user login user_obj");
   console.log(user_obj);
 
   axios
-    .post(`${server_api}/user/login`, user_obj, {
+    .post(`${server_api}auth/local`, user_obj, {
       withCredentials: true,
     })
     .then((response) => {
@@ -73,11 +43,7 @@ const login = (user_obj, cb) => {
       console.log("user login error");
       console.log(error);
       if (!error.response) {
-        cb(
-          new Error(
-            "Wow the server MAY have crashed...be a hero, and tell Alex, Johnny or Sean  ASAP. Please also remember the steps leading to this."
-          )
-        );
+        cb(new Error(serverCrash));
       } else {
         cb(error.response.data);
       }
@@ -100,11 +66,7 @@ const register = (user_obj, cb) => {
       console.log(error.response.data);
 
       if (!error.response) {
-        cb(
-          new Error(
-            "Wow the server MAY have crashed...be a hero, and tell Hailey, Jason or Sean asap. Please also remember the steps leading to this."
-          )
-        );
+        cb(new Error(serverCrash));
       } else {
         cb(
           "Registration failed, please check your credential, or contact Hailey, Jason or Sean"
@@ -113,4 +75,4 @@ const register = (user_obj, cb) => {
     });
 };
 
-export { register, login, logout, updateProfile };
+export { register, loginUser, logout };

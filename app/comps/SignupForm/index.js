@@ -173,15 +173,7 @@ const LoginForm = ({
         console.log(err);
         setCurrentError(err);
       } else {
-        setCurrentUser({
-          ...currentUser,
-          name: RegData.name,
-          email: RegData.email,
-        });
-
-        setCurrentMsg(
-          `Registration successful, ${RegData.name}. Please login now.`
-        );
+        setCurrentMsg(`Registration successful. Please login now.`);
 
         router.push(routeToLogin);
       }
@@ -192,56 +184,56 @@ const LoginForm = ({
     <Main>
       <Cont>
         {currentError && <ErrorMsg errmsg={currentError}></ErrorMsg>}
-        <form>
-          <Heading className="ubuntu">Sign Up</Heading>
-          {/* user input */}
-          <Label className="opensans">
-            Name*
-            <Input
-              marginbottom={marginbottom1}
-              className="opensans"
-              type="text"
-              placeholder="Name"
-              name="name"
-              onChange={onFormChange}
-              required
-            ></Input>
-          </Label>
-          <Label className="opensans">
-            Email*
-            <Input
-              marginbottom={marginbottom2}
-              className="opensans"
-              type="text"
-              placeholder="Email"
-              name="email"
-              onChange={onFormChange}
-              required
-            ></Input>
-          </Label>
-
-          <Label className="opensans">
-            Password*
-            <Input
-              marginbottom={marginbottom3}
-              className="opensans"
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={onFormChange}
-              required
-            ></Input>
-          </Label>
-
-          {/* Login Button */}
-          <LoginButton
-            //   onClick={() => router.push(routeToJoin)}
-            onClick={handleRegister}
+        {/* <form> */}
+        <Heading className="ubuntu">Sign Up</Heading>
+        {/* user input */}
+        <Label className="opensans">
+          Name*
+          <Input
+            marginbottom={marginbottom1}
             className="opensans"
-          >
-            Sign up
-          </LoginButton>
-        </form>
+            type="text"
+            placeholder="Name"
+            name="name"
+            onChange={onFormChange}
+            required
+          ></Input>
+        </Label>
+        <Label className="opensans">
+          Email*
+          <Input
+            marginbottom={marginbottom2}
+            className="opensans"
+            type="text"
+            placeholder="Email"
+            name="email"
+            onChange={onFormChange}
+            required
+          ></Input>
+        </Label>
+
+        <Label className="opensans">
+          Password*
+          <Input
+            marginbottom={marginbottom3}
+            className="opensans"
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={onFormChange}
+            required
+          ></Input>
+        </Label>
+
+        {/* Login Button */}
+        <LoginButton
+          //   onClick={() => router.push(routeToJoin)}
+          onClick={handleRegister}
+          className="opensans"
+        >
+          Sign up
+        </LoginButton>
+        {/* </form> */}
 
         <Signup className="opensans">
           <Text> Already have an account?</Text>

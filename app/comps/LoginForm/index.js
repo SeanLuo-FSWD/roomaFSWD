@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import * as React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import CurrentMsg from "../../UI/CurrentMsg";
 import { globalContext } from "../../store/globalContext";
+import { loginUser } from "../../api/auth.api";
 
 const Main = styled.div`
   display: flex;
@@ -137,8 +138,51 @@ const LoginForm = ({
   routeToSignup = "/signup",
   login = "Login",
 }) => {
+  const {
+    currentUser,
+    setCurrentUser,
+    currentError,
+    setCurrentError,
+    setCurrentMsg,
+    currentMsg,
+  } = useContext(globalContext);
+
   const router = useRouter();
-  const { currentMsg } = useContext(globalContext);
+  const [LoginData, setLoginData] = useState({
+    name: "",
+    email: "",
+  });
+  const onFormChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setLoginData({ ...LoginData, [name]: value });
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const user_obj = {
+      email: LoginData.email,
+      password: LoginData.password,
+    };
+
+    loginUser(user_obj, (err, result) => {
+      if (err) {
+        console.log(err);
+        setCurrentError(err.message);
+      } else {
+        setCurrentUser({
+          ...currentUser,
+          name: LoginData.name,
+          email: LoginData.email,
+        });
+
+        setCurrentMsg("");
+        router.push("/");
+      }
+    });
+  };
+
   return (
     <Main>
       <Cont>
@@ -152,6 +196,8 @@ const LoginForm = ({
             className="opensans"
             type="text"
             placeholder="Email"
+            name="email"
+            onChange={onFormChange}
           ></Input>
         </Label>
         <Label className="opensans">
@@ -161,15 +207,14 @@ const LoginForm = ({
             className="opensans"
             type="password"
             placeholder="Password"
+            name="password"
+            onChange={onFormChange}
           ></Input>
         </Label>
         <Link className="opensans">Forgot Password?</Link>
 
         {/* Login Button */}
-        <LoginButton
-          onClick={() => router.push(routeToHome)}
-          className="opensans"
-        >
+        <LoginButton onClick={handleLogin} className="opensans">
           {login}
         </LoginButton>
 
