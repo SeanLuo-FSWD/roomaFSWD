@@ -22,8 +22,8 @@ display: flex;
 flex-direction: column;
 flex:2;
 border-right: 1px #D6D6D6 solid;
-margin-left: 20px;
-
+// margin-left: 20px;
+margin-left: 300px;
 padding-right: 20px;
 
 `
@@ -57,7 +57,7 @@ color: #181135;
 
 const NavCont = styled.div`
 display:flex;
-
+s
 
 `
 
