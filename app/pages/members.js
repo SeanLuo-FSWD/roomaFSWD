@@ -20,6 +20,7 @@ const MainCont = styled.div`
 `
 const NavCont = styled.div`
 display:flex;
+position: fixed;
 
 `
 const Heading = styled.div`
@@ -36,6 +37,7 @@ display: flex;
 flex-direction: column;
 flex:1;
 border-right: 1px #D6D6D6 solid;
+margin-left: 300px;
 
 `
 const CardCont = styled.div`

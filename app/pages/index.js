@@ -20,13 +20,15 @@ const MainCont = styled.div`
 const LeftCont = styled.div`
 display:flex;
 flex-grow:1;
+position: fixed;
 `
 
 const MiddleCont = styled.div`
 display:flex;
 flex-direction:column;
 flex-grow:8;
-margin-left: 10px;
+// margin-left: 10px;
+margin-left: 300px;
 margin-top: 10px;
 `
 

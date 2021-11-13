@@ -20,12 +20,14 @@ const GlbNav = styled.div`
   display:flex;
   flex-direction:column;
   flex-grow:1;
+  position:fixed;
 `
 const MainCont = styled.div`
   display:flex;
   flex-direction:column;
   align-items:center;
   flex-grow:3;
+  margin-left: 300px;
 `
 const PostArea1 = styled.div`
   display:flex;
