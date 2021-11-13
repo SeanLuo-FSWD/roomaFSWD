@@ -83,16 +83,35 @@ export default function Add_task() {
       }
       }
   //Onclick show Add Task Comp
-  const [showTaskComp, setShowTaskComp] = useState(0);
-
+  const [buttonstate8, setButtonState8] = useState(0);
   const HandleClickTaskComp1 = () =>{
-    setShowTaskComp(1);
+    if (buttonstate8===0){
+      setButtonState8(1);
+    }
   }
+  const [buttonstate9, setButtonState9] = useState(0);
   const HandleClickTaskComp2 = () =>{
-    setShowTaskComp(2);
+    if (buttonstate9 ===0){
+      setButtonState9(1);
+      setButtonState8(0);
+      setButtonState10(0);
+    }
+   
   }
-
-  
+  const [buttonstate10, setButtonState10] = useState(0);
+  const HandleClickTaskComp3 = () =>{
+    if (buttonstate10 ===0){
+      setButtonState10(1); 
+      setButtonState9(0);
+      setButtonState8(0);  
+    }
+    else if (buttonstate10 === 1){
+      setButtonState8(0);  
+    }
+   else{
+     setButtonState10(0);
+   }
+  }
   return (
   
     <MainCont>
@@ -153,22 +172,30 @@ export default function Add_task() {
        width="132px"
        height="50px"
        borderRadius="4.2px"
-       display={showTaskComp === 1 ? 'none' : 'flex'}
-       display={showTaskComp === 2 ? 'none' : 'flex'}
-      
        onClick={() =>{
         HandleClickTaskComp1();
         
       }} 
+      display={buttonstate8 || buttonstate9 || buttonstate10 === 1 ? 'none':'flex'}
+    
       />
-      <Tab  display={showTaskComp === 2? 'flex' : 'none'}/>
-      <TaskComp  display={showTaskComp === 1 ? 'flex' : 'none'}
+      <Tab  
+      display={buttonstate9 || buttonstate10 === 1 ? 'flex':'none'}
+      onTabClick={()=>{
+        HandleClickTaskComp3();
+      }}
+
+      />
+      <TaskComp  
       onClick={() =>{
         HandleClickTaskComp2();
-        
-      }} 
+      }}
+      display={buttonstate8 || buttonstate10 === 1 ? 'flex':'none'|| buttonstate9 === 1 ? 'none':'flex'}
+      
+      
       />
-      <Assigned display={showTaskComp === 2? 'flex' : 'none'}/>
+      <Assigned 
+      display={buttonstate9 === 1 ? 'flex':'none'|| buttonstate10 === 1 ? 'none':'flex'}/>
     </AddTaskCont>
     
       </MiddleCont>
