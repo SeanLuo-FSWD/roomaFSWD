@@ -120,7 +120,7 @@ const ButCont = styled.div`
 `;
 
 const TaskComp = ({ 
-  display = "flex", 
+  display = "none", 
   onClick = () => {},
  
 
