@@ -263,7 +263,28 @@ export default function Community() {
 
 
 
-
+// navbar notification
+const [buttonstate22, setButtonState22] = useState(0);
+  const NotificationClick = () =>{
+      if (buttonstate22===0){
+      setButtonState22(1);
+      setButtonState23(0);
+    }else{
+      setButtonState22(0);
+      setButtonState23(1);
+    }
+    }
+  
+    const [buttonstate23, setButtonState23] = useState(0);
+    const BackClick = () =>{
+        if (buttonstate23===0){
+        setButtonState23(1);
+        setButtonState22(0);
+      }else{
+        setButtonState23(0);
+        setButtonState22(1);
+      }
+      }
   return (
     <Cont>
       <GlbNav>
@@ -282,7 +303,7 @@ export default function Community() {
     onContClick={()=>{
       GlobalNavClick();
     }}
-    width={buttonstate5 === 1 ? '140px' : '288px'}
+    Navwidth={buttonstate5 === 1 ? '140px' : '288px' || buttonstate22 ===1 ? '288px':''}
     display={buttonstate5 === 1 ? 'none' : 'flex'}
     displayLogo={buttonstate5 === 1 ? 'flex' : 'none'}
     displayHome={buttonstate5 === 1 ? 'none' : 'block'}
@@ -293,6 +314,15 @@ export default function Community() {
     displaySetting={buttonstate5 === 1 ? 'none' : 'block'}
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
+
+    onNotificationClick={()=>{
+      NotificationClick();
+    }}
+    onBackClick={()=>{
+      BackClick();
+    }}
+    Contdisplay={buttonstate22 === 1 ? 'none':'flex' || buttonstate23 === 1 ? 'flex':'none'}
+    Contdisplay2={buttonstate22 === 1 ? 'flex':'none'|| buttonstate23 === 1 ? 'none':'flex'}
     />
         </GlbNav>
         <MainCont>
