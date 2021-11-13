@@ -16,12 +16,15 @@ const MainCont = styled.div`
   height:100vh;
 
 `
+
+
 //left cont
 const LeftCont = styled.div`
 display: flex;
 flex-direction: column;
 flex:2;
 border-right: 1px #D6D6D6 solid;
+di
 `
 const TopCont = styled.div`
 display:flex;

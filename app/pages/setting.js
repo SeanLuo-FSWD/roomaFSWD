@@ -22,7 +22,8 @@ display: flex;
 flex-direction: column;
 flex:2;
 border-right: 1px #D6D6D6 solid;
-margin-left: 20px;
+// margin-left: 20px;
+margin-left: 300px;
 padding-right: 20px;
 
 `
@@ -51,6 +52,12 @@ font-size:35px;
 margin-left: -200px;
 font-weight:700;
 color: #181135;
+
+`
+
+const NavCont = styled.div`
+display:flex;
+position:fixed;
 
 `
 
@@ -108,6 +115,7 @@ export default function Home() {
   return (
     <Cont>
       
+      <NavCont>
       <NavBar2
     
       // user pic src
@@ -136,6 +144,7 @@ export default function Home() {
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
     />
+    </NavCont>
     <LeftCont>
     <SetNav>
       <Title className="ubuntu">Settings</Title>
