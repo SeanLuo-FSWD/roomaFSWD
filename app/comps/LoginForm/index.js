@@ -1,8 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import * as React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import CurrentMsg from "../../UI/CurrentMsg";
+import ErrorMsg from "../../UI/ErrorMsg";
 import { globalContext } from "../../store/globalContext";
 import { loginUser } from "../../api/auth.api";
 
@@ -147,6 +148,11 @@ const LoginForm = ({
     currentMsg,
   } = useContext(globalContext);
 
+  useEffect(() => {
+    return () => {
+      setCurrentError("");
+    };
+  }, []);
   const router = useRouter();
   const [LoginData, setLoginData] = useState({
     name: "",
@@ -168,8 +174,9 @@ const LoginForm = ({
 
     loginUser(user_obj, (err, result) => {
       if (err) {
+        console.log("zzzzzzzzzzzzzzzzzzzzzzz");
         console.log(err);
-        setCurrentError(err.message);
+        setCurrentError(err.err);
       } else {
         setCurrentUser({
           ...currentUser,
@@ -187,6 +194,8 @@ const LoginForm = ({
     <Main>
       <Cont>
         {currentMsg && <CurrentMsg msg={currentMsg}></CurrentMsg>}
+        {currentError && <ErrorMsg errmsg={currentError}></ErrorMsg>}
+
         <Heading className="ubuntu">Login</Heading>
         {/* user input */}
         <Label className="opensans">

@@ -7,7 +7,7 @@ const serverCrash =
 
 const logout = (cb) => {
   axios
-    .get(`${server_api}/user/logout`, {
+    .get(`${server_api}user/logout`, {
       withCredentials: true,
     })
     .then((response) => {

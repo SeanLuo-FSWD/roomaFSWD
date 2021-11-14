@@ -1,41 +1,68 @@
-import api from "../config/axios";
+import api from "./axios";
+import axios from "axios";
 import router from "next/router";
+import { server_api } from "../config/env.config";
 
-export const requireAuthen = () => {
-  return async (ctx) => {
-    // using cookie to request a user
-    const response = await api({
-      method: "get",
-      url: "/auth/authenticate",
-      headers: ctx.req.headers.cookie
-        ? { cookie: ctx.req.headers.cookie }
-        : undefined,
-    });
+export const requireAuthen = async (ctx, RoomRedirect = false) => {
+  console.log("1111111111111111111111");
 
-    // user not found back to login page
-    if (response.status != 200) {
-      return {
-        redirect: {
-          destination: "/login",
-          permanent: false,
-        },
-      };
-    }
+  // using cookie to request a user
+  const response = await api({
+    method: "get",
+    url: "/auth/authenticate",
+    headers: ctx.req.headers.cookie
+      ? { cookie: ctx.req.headers.cookie }
+      : undefined,
+  });
 
-    if (!response.data.roomId) {
-      return {
-        redirect: {
-          destination: "/join",
-          permanent: false,
-        },
-      };
-    }
+  // const response = await axios
+  //   .get(`${server_api}auth/authenticate`, {
+  //     withCredentials: true,
+  //   })
+  //   .then((response) => {
+  //     console.log("eeeeeeeeeeeeeeeeeeeeee");
+  //     console.log(response);
+  //     return response;
+  //   })
+  //   .catch((error) => {
+  //     console.log("xxxxxxxxxxxxxxxxxxxxxx");
+  //     // console.log(error);
+  //     console.log(error.response);
+  //     console.log("88888888888888888888");
+  //     console.log(error.response.data);
+  //   });
 
+  console.log("cccccccccccccccccccc");
+  console.log("cccccccccccccccccccc");
+  console.log(response);
+  // user not found back to login page
+  if (response.status != 200) {
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
     return {
-      props: {
-        user: response.data,
+      redirect: {
+        destination: "/login",
+        permanent: false,
       },
     };
+  }
+
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
+  console.log(response);
+  if (!response.data.roomId && RoomRedirect) {
+    console.log("bbbbbbbbbbbbbbbbbb");
+    return {
+      redirect: {
+        destination: "/join",
+        permanent: false,
+      },
+    };
+  }
+
+  console.log("cccccccccccccccccccc");
+  return {
+    props: {
+      user: response.data,
+    },
   };
 };
 

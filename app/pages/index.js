@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import NavBar2 from "../comps/NavBar2";
 import Greeting from "../comps/Greeting";
 import Reminder from "../comps/Reminder";
@@ -9,6 +9,7 @@ import WeeklyRewards from "../comps/WeeklyRewards";
 import CalendarComp from "../comps/CalendarComp";
 import Event from "../comps/Event";
 import { requireAuthen } from "../api/require.authen";
+import { globalContext } from "../store/globalContext";
 
 const MainCont = styled.div`
   display: flex;
@@ -36,7 +37,20 @@ const RightCont = styled.div`
   flex-grow: 1;
 `;
 
-export default function Home() {
+export default function Home(props) {
+  const {
+    currentUser,
+    setCurrentUser,
+    currentError,
+    setCurrentError,
+    setCurrentMsg,
+    currentMsg,
+  } = useContext(globalContext);
+
+  console.log("ddddddddddddddddddddddd");
+  console.log("ddddddddddddddddddddddd");
+  console.log(props);
+
   // detect button clicked or not
   const [buttonstate1, setButtonState1] = useState(0);
   const EventHandleClick = () => {
@@ -166,7 +180,7 @@ export default function Home() {
           height="100px"
           heading="Hello"
           // User should be connected with the users' name
-          User="Ester!"
+          User={props.user ? props.user.name : "user!"}
           ps="Here’s your schedule this week"
           visibility="visible"
         />
@@ -228,4 +242,7 @@ export default function Home() {
   );
 }
 
-export const getServerSideProps = requireAuthen();
+export const getServerSideProps = (context) => {
+  return requireAuthen(context);
+  // return requireAuthen(context, true);
+};

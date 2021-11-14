@@ -25,7 +25,7 @@ const createRoom = (room_obj, cb) => {
         cb(new Error(serverCrash));
       } else {
         cb(
-          "Color selection failed, please check your credential, or contact Hailey, Jason or Sean"
+          "Room creation failed, please check your credential, or contact Hailey, Jason or Sean"
         );
       }
     });

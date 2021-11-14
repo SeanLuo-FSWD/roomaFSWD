@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import * as React from "react";
 import styled from "styled-components";
 import Button from "../Button";
 import { useRouter } from "next/router";
 import { updateProfile, getRetrieveUrl } from "../../api/profile.api";
+import { createRoom } from "../../api/room.api";
+import { globalContext } from "../../store/globalContext";
+
 // import ImageUtil from "./ImageUtil";
 import ImageUtil from "../../api/ImageUtil";
 
@@ -58,9 +61,12 @@ const Btnarea = styled.div`
   right: 10px;
   top: 800px;
 `;
-const NewProfile = ({}) => {
+const NewProfile = ({ user }) => {
   const router = useRouter();
   const [File, setFile] = useState(null);
+  const [UserData, setUserData] = useState(null);
+
+  // const { currentUser, setCurrentUser } = useContext(globalContext);
 
   function getImg(e) {
     let binaryData = [];
@@ -71,35 +77,48 @@ const NewProfile = ({}) => {
     setFile({ src: img_src, file: imgFile });
   }
 
-  const postSubmit = async (e) => {
+  const postSubmit = async (e, skip = false) => {
     e.preventDefault();
     let retrieveUrl;
+    let user_obj = {};
 
-    if (File) {
-      retrieveUrl = await ImageUtil.getRetrievalUrl(File.file);
+    if (!skip) {
+      console.log("noooot skiped!");
+      if (File) {
+        retrieveUrl = await ImageUtil.getRetrievalUrl(File.file);
+        user_obj = { ...user_obj, pfp: retrieveUrl };
+      }
+
+      if (UserData) {
+        user_obj = { ...user_obj, name: UserData.name };
+      }
+
+      await updateProfile(user_obj, (err) => {
+        if (err) {
+          console.log(err);
+          setCurrentError(err);
+        } else {
+          // Need to nest a join room api before going to "/" here
+          // router.push(routeToLogin);
+
+          console.log("success");
+        }
+      });
     }
 
-    console.log("vvvvvvvvvvvvvvvvvvv");
-    console.log(retrieveUrl);
-    const user_obj = {
-      pfp: retrieveUrl,
+    const room_obj = {
+      name: `${user.name}'s house`,
     };
-    updateProfile(user_obj, (err) => {
+
+    createRoom(room_obj, (err, response) => {
       if (err) {
         console.log(err);
-        setCurrentError(err);
       } else {
-        // Need to nest a join room api before going to "/" here
-        // router.push(routeToLogin);
-        console.log("success");
+        console.log(response);
+        router.push("/");
       }
     });
   };
-
-  // const postSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let fileUrl = await ImageUtil.getRetrievalUrl(File.file);
-  // };
 
   return (
     <Main>
@@ -137,6 +156,12 @@ const NewProfile = ({}) => {
           className="opensans"
           type="text"
           placeholder="Name"
+          defaultValue={user.name}
+          onChange={(e) => {
+            console.log("e.target.value");
+            console.log(e.target.value);
+            setUserData(e.target.value);
+          }}
         ></Input>
         <Input
           borderbtm="none"
@@ -186,8 +211,8 @@ const NewProfile = ({}) => {
             fontcolor="#724FE9"
             fontSize="20px"
             fontWeight="700"
-            onClick={() => {
-              router.push("/");
+            onClick={(e) => {
+              postSubmit(e, true);
             }}
           />
           <Button
@@ -201,7 +226,11 @@ const NewProfile = ({}) => {
             fontSize="20px"
             fontWeight="700"
             onClick={(e) => {
-              postSubmit(e);
+              if (!UserData && !File) {
+                postSubmit(e, true);
+              } else {
+                postSubmit(e);
+              }
               // router.push("/");
             }}
           />
