@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Button from "../Button";
 import { useRouter } from "next/router";
 import { updateProfile, getRetrieveUrl } from "../../api/profile.api";
+// import ImageUtil from "./ImageUtil";
+import ImageUtil from "../../api/ImageUtil";
 
 const Main = styled.div`
   display: flex;
@@ -74,25 +76,30 @@ const NewProfile = ({}) => {
     let retrieveUrl;
 
     if (File) {
-      retrieveUrl = await getRetrieveUrl(File.file);
+      retrieveUrl = await ImageUtil.getRetrievalUrl(File.file);
     }
 
-    console.log("cccccccccccccccccccc");
+    console.log("vvvvvvvvvvvvvvvvvvv");
     console.log(retrieveUrl);
-    // const user_obj = {
-    //   pfp: retrieveUrl,
-    // };
-    // updateProfile(user_obj, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //     setCurrentError(err);
-    //   } else {
-    //     // Need to nest a join room api before going to "/" here
-    //     // router.push(routeToLogin);
-    //     console.log('success');
-    //   }
-    // });
+    const user_obj = {
+      pfp: retrieveUrl,
+    };
+    updateProfile(user_obj, (err) => {
+      if (err) {
+        console.log(err);
+        setCurrentError(err);
+      } else {
+        // Need to nest a join room api before going to "/" here
+        // router.push(routeToLogin);
+        console.log("success");
+      }
+    });
   };
+
+  // const postSubmit = async (e) => {
+  //   e.preventDefault();
+  //   let fileUrl = await ImageUtil.getRetrievalUrl(File.file);
+  // };
 
   return (
     <Main>

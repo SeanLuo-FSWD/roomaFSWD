@@ -5,18 +5,18 @@ import api from "./axios";
 const serverCrash =
   "Wow the server MAY have crashed...be a hero, and tell Hailey, Jason or Sean ASAP. Please also remember the steps leading to this.";
 
-const createRoom = (user_obj, cb) => {
+const createRoom = (room_obj, cb) => {
   axios
-    .post(`${server_api}room/create`, user_obj, {
+    .post(`${server_api}room/create`, room_obj, {
       withCredentials: true,
     })
     .then((response) => {
-      console.log("patch updateProfile response");
+      console.log("createRoom response");
       console.log(response);
       cb(null, response);
     })
     .catch((error) => {
-      console.log("patch updateProfile error");
+      console.log("createRoom error");
       console.log(error);
       console.log(error.response);
       console.log(error.response.data);
