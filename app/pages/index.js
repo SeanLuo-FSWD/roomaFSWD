@@ -121,9 +121,9 @@ export default function Home(props) {
       <LeftCont>
         <NavBar2
           // user pic src
-          src="/Avatar.png"
+          src={props.user.pfp}
           // user name
-          name="Esther Howard"
+          name={props.user.name}
           // user rooma point
           user_point="100 pts"
           // if there is new message in alert display:block else display:none
@@ -243,6 +243,6 @@ export default function Home(props) {
 }
 
 export const getServerSideProps = (context) => {
-  return requireAuthen(context);
-  // return requireAuthen(context, true);
+  // return requireAuthen(context);
+  return requireAuthen(context, true);
 };

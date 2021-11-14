@@ -31,19 +31,51 @@ const createRoom = (room_obj, cb) => {
     });
 };
 
-const joinRoom = async (file) => {
-  const uploadUrl = (await api.get("/s3url")).data.uploadUrl;
-
-  console.log("bbbbbbbbbbbbbbbbbb");
-  console.log(uploadUrl);
-  const {
-    config: { url },
-  } = await api.put(uploadUrl, file, {
-    headers: { "Content-Type": "multipart/form-data" },
-    withCredentials: false,
-  });
-
-  return url;
+const getCode = async (cb) => {
+  axios
+    .get(`${server_api}room/invcode`, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      console.log("getCode response");
+      console.log(response);
+      cb(null, response);
+    })
+    .catch((error) => {
+      console.log("getCode error");
+      console.log(error);
+      if (!error.response) {
+        cb(new Error(serverCrash));
+      } else {
+        cb(error.response.data);
+      }
+    });
 };
 
-export { createRoom, joinRoom };
+const joinRoom = async (room_obj, cb) => {
+  axios
+    .patch(`${server_api}room/join`, room_obj, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      console.log("patch joinRoom response");
+      console.log(response);
+      cb(null, response);
+    })
+    .catch((error) => {
+      console.log("patch joinRoom error");
+      console.log(error);
+      console.log(error.response);
+      console.log(error.response.data);
+
+      if (!error.response) {
+        cb(new Error(serverCrash));
+      } else {
+        cb(
+          "Join room failed, please check your invite code, or contact Hailey, Jason or Sean"
+        );
+      }
+    });
+};
+
+export { createRoom, joinRoom, getCode };

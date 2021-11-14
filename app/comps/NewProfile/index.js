@@ -110,14 +110,18 @@ const NewProfile = ({ user }) => {
       name: `${user.name}'s house`,
     };
 
-    createRoom(room_obj, (err, response) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(response);
-        router.push("/");
-      }
-    });
+    if (!user.roomId) {
+      createRoom(room_obj, (err, response) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(response);
+          router.push("/");
+        }
+      });
+    } else {
+      router.push("/");
+    }
   };
 
   return (
