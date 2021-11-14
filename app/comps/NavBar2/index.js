@@ -12,6 +12,8 @@ align-items:center;
 width:${props=>props.width};
 height:100vh;
 box-shadow: 0px 4.0133771896362305px 11.036787033081055px 0px #00000014;
+
+
 `
 
 const ProfileCont = styled.div`
@@ -30,31 +32,49 @@ flex-direction: column;
 justify-content:center;
 width: 100%;
 height: 100%;
+
 `
 const TopCont = styled.div`
 display:${props=>props.display};
+
 `
 const TopCont2 = styled.div`
 display:${props=>props.display};
+
+
 `
 const TabCont = styled.div`
 display:flex;
 flex-direction:row;
 align-items:center;
-margin-left:35px;
-margin-right:30px;
+margin-left:50px;
+margin-right:50px;
+
+
+`
+const Hover = styled.div`
+justify-content:${props=>props.justifyContent};
+color:${props=>props.color};
+:hover{
+    width:100%;
+    display:flex;
+    align-items:center;
+    background:#F4F4F4;
+}
+
+
 `
 
 const SetIconCont = styled.div`
-display:flex;
-position: relative;
-top: 85px;
+width:100%;
 display:flex;
 flex-direction:row;
 justify-content:${props=>props.justifyContent};
 align-items:center;
-margin-left:35px;
-margin-right:30px;
+margin-left:50px;
+margin-right:50px;
+
+
 `
 /*oepn nav:
 justify-content:space-even;
@@ -63,7 +83,19 @@ close nav:
 justify-content:center;
 */
 
+const SetHover = styled.div`
+display:flex;
+position: relative;
+top: 100px;
+color:${props=>props.color};
+:hover{
+    width:100%;
+    align-items:center;
+    background:#F4F4F4;
+}
+`
 const MainIcons = styled.div`
+width:100%;
 display: flex;
 flex-direction: column;
 height: 40%;
@@ -71,6 +103,7 @@ justify-content:space-between;
 align-items:${props=>props.alignItems};
 position: relative;
 bottom: 30px;
+
 `
 /*
 open nav bar:
@@ -84,6 +117,7 @@ align-items:center;
 const Icon = styled.img`
 width: 20px;
 height: 20px;
+
 `
 
 const Title = styled.p`
@@ -109,14 +143,25 @@ const BellIcon = styled.img`
 width:20px;
 height:25px;
 position:relative;
-left:225px;
-top:-100px;
+left:245px;
+top:-135px;
+`
+const Alert = styled.div`
+display:${props=>props.display};
+width:16px;
+height:16px;
+border-radius:50%;
+background-color:#5950E0;
+color:#FFFFFF;
+position:absolute;
+top:10px;
+left:252px
 `
 const RoomaLogo = styled.img`
 width:50px;
 height:50px;
 position:relative;
-bottom: 130px;
+bottom: 145px;
 margin-left:48px;
 align-items:center;
 `
@@ -124,6 +169,7 @@ const NavBar2 = ({
     src="/Avatar.png",
     name="Esther Howard",
     user_point="100 pts",
+    Alertdisplay="block",
     // making nav width change
     onContClick=()=>{},
     width="288px",
@@ -136,14 +182,29 @@ const NavBar2 = ({
     displayCommunity="block",
     displaySetting="block",
     alignItems="unset",
-    justifyContent="space-even"
+    justifyContent="space-even",
+    // changing the color by detecting the page location
+    color1="#4E4E4E",
+    src1="/Home_Icon.svg",
+    color2="#4E4E4E",
+    src2="/Task_Icon.svg",
+    color3="#4E4E4E",
+    src3="/Chat_Icon.svg",
+    color4="#4E4E4E",
+    src4="/Members_Icon.svg",
+    color5="#4E4E4E",
+    src5="/search.svg",
+    color6="#4E4E4E",
+    src6="/Settings_Icon.svg"
+ 
+
 }) => {
     const router = useRouter();
     return <CtrlCont onClick={onContClick} width={width}>
            <IconCont>
                {/*Wide global nav top cont from here*/}
               <TopCont display={display}>
-                  <BellIcon src="/Bell_Icon.svg"/>
+                  <BellIcon src="/Bell_Icon.svg"/><Alert display={Alertdisplay}/>
                         <ProfileCont>
                             <Pic src={src}></Pic>
                             <Name className="opensans">{name}</Name>
@@ -160,58 +221,92 @@ const NavBar2 = ({
                 </TopCont2>
 
                     <MainIcons alignItems={alignItems}>
+                        <Hover
+                        justifyContent={justifyContent}
+                        color={color1}
+                        
+                        >
                         <TabCont 
                          onClick={()=>{
                             router.push("/")
                         }}
                         >
-                            <Icon src="/Home_Icon.svg"/>
+                            <Icon src={src1}/>
                             <Title className="opensans" display={displayHome}>Home</Title>
                         </TabCont>
+                        </Hover>
+                        <Hover
+                         justifyContent={justifyContent}
+                         color={color2}
+                         
+                        >
                         <TabCont
                          onClick={()=>{
                             router.push("/add_task")
                         }}
                         >
-                            <Icon src="/Task_Icon.svg"/>
+                            <Icon src={src2}/>
                             <Title className="opensans" display={displayTask}>Tasks</Title>
                         </TabCont>
+                        </Hover>
+                        <Hover
+                         justifyContent={justifyContent}
+                         color={color3}
+                         
+                        >
                         <TabCont
                            onClick={()=>{
-                            router.push("/")
+                            router.push("/chat")
                         }}
                         >
-                            <Icon src="/Chat_Icon.svg"/>
+                            <Icon src={src3}/>
                             <Title className="opensans" display={displayChat}>Chat</Title>
-                        </TabCont>          
+                        </TabCont>
+                        </Hover>
+                        <Hover
+                         justifyContent={justifyContent}
+                         color={color4}
+                        
+                        >      
                         <TabCont
                            onClick={()=>{
                             router.push("/members")
                         }}
                         >
-                            <Icon src="/Members_Icon.svg"/>
+                            <Icon src={src4}/>
                             <Title className="opensans" display={displayMember}>Memebers</Title>
                         </TabCont>
+                        </Hover>
+                        <Hover
+                         justifyContent={justifyContent}
+                         color={color5}
+                        
+                        >
                         <TabCont
                            onClick={()=>{
                             router.push("/community")
                         }}
                         >
-                            <Icon src="/search.svg"/>
+                            <Icon src={src5}/>
                             <Title className="opensans" display={displayCommunity}>Community</Title>
                         </TabCont>
+                        </Hover>
                     </MainIcons>
-                 
+                        <SetHover
+                        color={color6}
+                       
+                        >
                         <SetIconCont
                         justifyContent={justifyContent}
+                        
                            onClick={()=>{
                             router.push("/setting")
                         }}
                         >
-                                <Icon src="/Settings_Icon.svg"/>
+                                <Icon src={src6}/>
                                 <Title className="opensans" display={displaySetting}>Settings</Title>
                         </SetIconCont>
-                
+                        </SetHover>
                 </IconCont>
                 
             </CtrlCont>   

@@ -4,35 +4,81 @@ import styled from 'styled-components';
 import React from 'react';
 import NavBar2 from '../comps/NavBar2';
 import Invite from '../comps/Invite';
+import HouseRules from '../comps/HouseRules';
+import ManageProfile from '../comps/ManageProfile';
+import LeaveGroup from '../comps/LeaveGroup';
+import LogOut from '../comps/LogOut';
 import SettingNavCont from '../comps/SettingNavCont';
 import {useState} from 'react';
 
 const Cont = styled.div`
-  padding:5px;
-  display:flex;
-  width:100%;
-  height:100%;
-  flex-direction:row;
+display:flex;
+width:100vw;
+height:100vh;
 `
-const GlbNav = styled.div`
-  display:flex;
-  flex-direction:column;
-  flex-grow:1;
+
+const LeftCont = styled.div`
+display: flex;
+flex-direction: column;
+flex:2;
+border-right: 1px #D6D6D6 solid;
+margin-left: 20px;
+padding-right: 20px;
+
 `
 const SetNav = styled.div`
-  display:flex;
-  flex-direction:column;
-  flex-grow:3;
+display:flex;
+width: 100%;
+height: 100%;
+flex-direction: column;
+align-items:center;
+
+  
 `
 const Holder = styled.div `
   display:flex;
-  flex-direction:column;
-  margin-top:30px;
-  flex-grow:4;
+ flex: 4;
+
+  // justify-content: center;
+  // align-items: center;
+  // flex-direction:column;
+  // margin-top:30px;
+
+`
+
+const Title = styled.p`
+font-size:35px;
+margin-left: -200px;
+font-weight:700;
+
 `
 
 export default function Home() {
 
+
+//setting navigation buttons: Right Cont change
+  const [showRightCont, setShowRightCont] = useState(0);
+
+  const HandleClickRightCont1 = () =>{
+    setShowRightCont(1);
+  }
+  const HandleClickRightCont2 = () =>{
+    setShowRightCont(2);
+  } 
+  const HandleClickRightCont3 = () =>{
+    setShowRightCont(3);
+  }  
+  const HandleClickRightCont4 = () =>{
+    setShowRightCont(4);
+  } 
+  const HandleClickRightCont5 = () =>{
+    setShowRightCont(5);
+  }
+  
+ 
+
+
+// setting navigation button: Color change
   const [buttonstate1, setButtonState1] = useState(0);
   const [buttonstate5, setButtonState5] = useState(0);
   const HandleClickButtonColor1 = () =>{
@@ -60,8 +106,20 @@ export default function Home() {
   
   return (
     <Cont>
-      <GlbNav>
+      
       <NavBar2
+    
+      // user pic src
+      src="/Avatar.png"
+      // user name
+      name="Esther Howard"
+      // user rooma point
+      user_point="100 pts"
+      // if there is new message in alert display:block else display:none
+      Alertdisplay="block"
+      // showing user is in setting page right now
+    color6="#8867EB"
+    src6="/Settings_Icon_Color.svg"
     onContClick={()=>{
       GlobalNavClick();
     }}
@@ -77,18 +135,19 @@ export default function Home() {
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
     />
-        </GlbNav>
+    <LeftCont>
     <SetNav>
-      <h2>Settings</h2>
+      <Title className="ubuntu">Settings</Title>
       <SettingNavCont
           heading="Add a member"
           ps="Invite a new member"
           src="/Member.png"
           onClick={() =>{
             HandleClickButtonColor1();
+            HandleClickRightCont1();
           }} 
           bgcolor={
-            buttonstate1 === 1 ? '#888888' : '#FFFFFF'}
+            buttonstate1 === 1 ? '#FAFAFA' : '#FFFFFF'}
          
       />
       <SettingNavCont
@@ -97,8 +156,9 @@ export default function Home() {
         src="/House.png"
        onClick={() =>{
         HandleClickButtonColor2();
+        HandleClickRightCont2();
       }} 
-      bgcolor={buttonstate1 === 2 ? '#888888' : '#FFFFFF'}
+      bgcolor={buttonstate1 === 2 ? '#FAFAFA' : '#FFFFFF'}
       /> 
       <SettingNavCont
       heading="Manage Profile"
@@ -106,9 +166,10 @@ export default function Home() {
       src="/Test Account.png"
        onClick={() =>{
         HandleClickButtonColor3();
+        HandleClickRightCont3();
       }} 
       bgcolor={
-        buttonstate1 === 3 ? '#888888' : '#FFFFFF'}
+        buttonstate1 === 3 ? '#FAFAFA' : '#FFFFFF'}
       /> 
       <SettingNavCont
       heading="Leave group"
@@ -116,9 +177,10 @@ export default function Home() {
       src="/Export.png"
        onClick={() =>{
         HandleClickButtonColor4();
+        HandleClickRightCont4();
       }} 
       bgcolor={
-        buttonstate1 === 4 ? '#888888' : '#FFFFFF'}
+        buttonstate1 === 4 ? '#FAFAFA' : '#FFFFFF'}
       /> 
       <SettingNavCont
       heading="Log Out"
@@ -126,13 +188,20 @@ export default function Home() {
       src="/Exit.png"
        onClick={() =>{
         HandleClickButtonColor5();
+        HandleClickRightCont5();
       }} 
       bgcolor={
-        buttonstate1 === 5 ? '#888888' : '#FFFFFF'}
+        buttonstate1 === 5 ? '#FAFAFA' : '#FFFFFF'}
       /> 
     </SetNav> 
+    </LeftCont>
     <Holder>
-      <Invite></Invite>
+      <Invite display={showRightCont === 1 ? 'flex' : 'none'}></Invite>
+      <HouseRules display={showRightCont === 2 ? 'flex' : 'none'}></HouseRules>
+      <ManageProfile display={showRightCont === 3 ? 'flex' : 'none'}></ManageProfile>
+      <LeaveGroup display={showRightCont === 4 ? 'flex' : 'none'}></LeaveGroup>
+      <LogOut display={showRightCont === 5 ? 'flex' : 'none'}></LogOut>
+      
     </Holder> 
     </Cont>
   )

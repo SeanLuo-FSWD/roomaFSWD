@@ -7,6 +7,9 @@ import Event from '../comps/Event';
 import {useState} from 'react';
 import Greeting from '../comps/Greeting';
 import AddMembers from '../comps/AddMembers';
+import Tab from '../comps/TaskComp/tabs';
+import TaskComp from '../comps/TaskComp/task';
+import Assigned from '../comps/TaskComp/assigned';
 
 const MainCont = styled.div`
   display:flex;
@@ -22,14 +25,16 @@ flex-grow:1;
 const MiddleCont = styled.div`
 display:flex;
 flex-direction:column;
-flex-grow:8;
+flex-grow:9;
+
 `
 
 
 const RightCont = styled.div`
 display:flex;
 flex-direction:column;
-flex-grow:1;
+flex-grow:0.5;
+
 `
 
 const AddTaskCont = styled.div`
@@ -54,12 +59,36 @@ export default function Add_task() {
     setButtonState5(0);
   }
   }
+
+  //Onclick show Add Task Comp
+  const [showTaskComp, setShowTaskComp] = useState(0);
+
+  const HandleClickTaskComp1 = () =>{
+    setShowTaskComp(1);
+  }
+  const HandleClickTaskComp2 = () =>{
+    setShowTaskComp(2);
+  }
+
   
   return (
   
     <MainCont>
       <LeftCont>
       <NavBar2
+    // user pic src
+    src="/Avatar.png"
+    // user name
+    name="Esther Howard"
+    // user rooma point
+    user_point="100 pts"
+    // if there is new message in alert display:block else display:none
+    Alertdisplay="block"
+    // showing user is in add_task page right now
+    color2="#8867EB"
+    src2="/Task_Icon_Color.svg"
+
+    // click navigation make it small or big
     onContClick={()=>{
       GlobalNavClick();
     }}
@@ -81,6 +110,7 @@ export default function Add_task() {
     width="250px"
     height="100px"
     heading="Add Tasks"
+    User=""
     ps=""
     visibility="visible"
     />
@@ -92,8 +122,23 @@ export default function Add_task() {
        width="132px"
        height="50px"
        borderRadius="4.2px"
+       display={showTaskComp === 1 ? 'none' : 'flex'}
+      
+       onClick={() =>{
+        HandleClickTaskComp1();
+        
+      }} 
       />
+      <Tab  display={showTaskComp === 1 ? 'flex' : 'none'}/>
+      <TaskComp  display={showTaskComp === 1 ? 'flex' : 'none'}
+      onClick={() =>{
+        HandleClickTaskComp2();
+        
+      }} 
+      />
+      <Assigned display={showTaskComp === 2? 'flex' : 'none'}/>
     </AddTaskCont>
+    
       </MiddleCont>
       <RightCont>
         <CalendarComp/>

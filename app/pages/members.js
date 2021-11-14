@@ -18,6 +18,10 @@ const MainCont = styled.div`
   height:100vh;
 
 `
+const NavCont = styled.div`
+display:flex;
+flex-grow:1;
+`
 const Heading = styled.div`
 font-size: 34px;
 font-weight: 700;
@@ -89,11 +93,24 @@ export default function Members() {
     setButtonState5(0);
   }
   }
-  
+
   return (
   
     <MainCont>
+      <NavCont>
            <NavBar2
+    
+      // user pic src
+      src="/Avatar.png"
+      // user name
+      name="Esther Howard"
+      // user rooma point
+      user_point="100 pts"
+      // if there is new message in alert display:block else display:none
+      Alertdisplay="block"
+      // showing user is in members page right now
+    color4="#8867EB"
+    src4="/Members_Icon_Color.svg"
     onContClick={()=>{
       GlobalNavClick();
     }}
@@ -108,7 +125,9 @@ export default function Members() {
     displaySetting={buttonstate5 === 1 ? 'none' : 'block'}
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
+
     />
+    </NavCont>
         <LeftCont>
         <Heading className="ubuntu">Members</Heading>
 
