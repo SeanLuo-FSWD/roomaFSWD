@@ -86,6 +86,8 @@ const Event = ({
   }, [retDate]);
 
   const displayEvents = () => {
+    console.log("displayEvents at Event");
+    console.log(Events);
     if (Events) {
       const listCompo = Events.map((event) => (
         <RemindContent

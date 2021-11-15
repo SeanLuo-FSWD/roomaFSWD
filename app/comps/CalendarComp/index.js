@@ -26,28 +26,24 @@ const CalendarComp = ({}) => {
 
   // let dates_arr = [];
 
-  useEffect(() => {
-    // let dates_arr = [];
-    // document.querySelectorAll(
-    //   ".react-calendar .react-calendar__month-view__days button abbr"
-    // )
-    // .forEach((each) => {
-    //   dates_arr.push(each.getAttribute("aria-label"));
-    // });
-    console.log("cccccccccccccccccccc");
-    // console.log(dates_arr);
-    console.log(Events);
-  });
+  // useEffect(() => {
+  //   // let dates_arr = [];
+  //   // document.querySelectorAll(
+  //   //   ".react-calendar .react-calendar__month-view__days button abbr"
+  //   // )
+  //   // .forEach((each) => {
+  //   //   dates_arr.push(each.getAttribute("aria-label"));
+  //   // });
+  //   console.log("cccccccccccccccccccc");
+  //   // console.log(dates_arr);
+  //   console.log(Events);
+  // });
 
   useEffect(() => {
-    console.log("ddddddddddddddddddddddd");
-    console.log(date);
     getMonthEvents();
   }, [date]);
 
   const getMonthEvents = () => {
-    console.log("000000000000000000000????");
-
     // document.querySelectorAll(
     //   ".react-calendar .react-calendar__month-view__days button abbr"
     // )
@@ -71,6 +67,7 @@ const CalendarComp = ({}) => {
         console.log(err);
       } else {
         //  setEvents(result.data.events);
+        console.log(result.data.events);
         CustomUtil.colorReactCal(dates_arr, result.data.events);
       }
     });
@@ -82,7 +79,13 @@ const CalendarComp = ({}) => {
         onChange={(date) => setDate(date)}
         value={date}
         selectRange={true}
-        onActiveStartDateChange={() => getMonthEvents()}
+        // onActiveStartDateChange={() => getMonthEvents()}
+        onActiveStartDateChange={({ activeStartDate }) =>
+          setDate(activeStartDate)
+        }
+        // onActiveStartDateChange={({ action, activeStartDate, value, view }) =>
+        //   alert(activeStartDate)
+        // }
       />
       {/*{date.length > 0 ? (
   <p>

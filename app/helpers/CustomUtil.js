@@ -6,8 +6,33 @@ class CustomUtil {
           new Date(date.getAttribute("aria-label")).toDateString()
         );
 
-        const firstDate = new Date(event.startAt);
-        const secondDate = new Date(event.endAt);
+        const firstDate = this.formatTimelessDate(
+          new Date(event.startAt).toDateString(),
+          false,
+          {
+            offsetType: "day",
+            amount: 1,
+          }
+        );
+        const secondDate = this.formatTimelessDate(
+          new Date(event.endAt).toDateString(),
+          false,
+          {
+            offsetType: "day",
+            amount: 1,
+          }
+        );
+
+        // const firstDate = new Date(event.startAt);
+        // const secondDate = new Date(event.endAt);
+        console.log("event.startAt : " + event.startAt);
+        console.log("     " + firstDate);
+        console.log("event.endAt : " + event.endAt);
+        console.log("     " + secondDate);
+
+        // console.log(
+        //   `------firstDate ${firstDate}--------date_obj ${date_obj}-------secondDate ${secondDate}--------`
+        // );
 
         if (
           firstDate.getTime() <= date_obj.getTime() &&
@@ -15,6 +40,9 @@ class CustomUtil {
         ) {
           // date.style.color = "blue";
           // date.style.fontWeight = "bold";
+          // console.log("444444444444444444");
+          // console.log("444444444444444444");
+          // console.log(date.parentNode);
           date.parentNode.style.backgroundColor = "rgba(240,199,137,30%)";
         }
       });
@@ -43,7 +71,7 @@ class CustomUtil {
       amount: 0,
     }
   ) {
-    let dayPDT = new Date(day + " 01:00:00 GMT-0700 (Pacific Daylight Time)");
+    let dayPDT = new Date(day + " 00:00:00 GMT-0700 (Pacific Standard Time)");
     let year = dayPDT.getFullYear();
     let month = dayPDT.getMonth();
     let date = dayPDT.getDate();

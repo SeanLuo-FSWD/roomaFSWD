@@ -38,6 +38,7 @@ const getEvents = async (query, cb) => {
     })
     .then((response) => {
       console.log("getEvents response");
+      console.log(response);
       cb(null, response);
     })
     .catch((error) => {
