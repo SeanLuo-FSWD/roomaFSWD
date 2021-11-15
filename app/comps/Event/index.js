@@ -69,21 +69,19 @@ const Event = ({
   // ).toISOString(),
   displayForm,
   CalDate,
+  onSetcalTrigger,
 }) => {
   const handleEventSubmitClick = () => {
     onSubmitClick();
   };
 
-  const [Events, setEvents] = useState(null);
+  const [Events, setEvents] = useState([]);
   const [Refresh, setRefresh] = useState(false)
   useEffect(() => {
-    console.log("zzzzzzzzzzzzzzzzzzzzzzzdisplayForm");
-    console.log(displayForm);
     if (displayForm === false) {
       const startEndDate = new Date(CalDate)
       const eveduration = `?startAt=${CustomUtil.flattenHours(startEndDate)}&endAt=${CustomUtil.flattenHours(startEndDate)}`;
-      console.log("display formmmmmmmm grab new events " + eveduration);
-      getEvents(eveduration, (err, result) => {
+      getEvents("", (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -96,7 +94,7 @@ const Event = ({
   const onSetRefresh = () => {
     setRefresh(!Refresh);
   }
-  
+
   const displayEvents = () => {
     console.log("displayEvents at Event");
     console.log(Events);
@@ -106,8 +104,6 @@ const Event = ({
         //   event.startAt
         // ).toDateString()}`;
         const duration = event.startAt;
-
-        console.log("event.startAtttttttt - time?  " + duration);
         return (
           <RemindContent
             bgcolor={bgcolor}
@@ -118,6 +114,7 @@ const Event = ({
             date={duration}
             eventId={event.id}
             onSetRefresh={onSetRefresh}
+            onSetcalTrigger={onSetcalTrigger}
           />
         );
       });

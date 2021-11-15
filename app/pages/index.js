@@ -51,6 +51,7 @@ export default function Home(props) {
   const [buttonstate1, setButtonState1] = useState(0);
   const [displayForm, setDisplayForm] = useState(false);
   const [CalDate, setCalDate] = useState(null);
+  const [calTrigger, setcalTrigger] = useState(false)
 
   const EventHandleClick = () => {
     setDisplayForm(!displayForm);
@@ -61,16 +62,21 @@ export default function Home(props) {
     // }
   };
 
+  const onSetcalTrigger = () => {
+    console.log("fffffffffffffffffffffff________calTrigger");
+    console.log(calTrigger);
+    setcalTrigger(!calTrigger)
+  };
+
   const onDateSelect = (date) => {
-    console.log("fffffffffffffffffffffff");
-    console.log("fffffffffffffffffffffff");
-    console.log(date);
+
     setCalDate(date);
   };
 
   const onEventSubmitClick = () => {
     // setButtonState1(0);
     setDisplayForm(!displayForm);
+    setcalTrigger(!calTrigger);
   };
 
   const [buttonstate2, setButtonState2] = useState(0);
@@ -232,7 +238,7 @@ export default function Home(props) {
       </MiddleCont>
 
       <RightCont>
-        <CalendarComp onDateSelect={onDateSelect} />
+        <CalendarComp onDateSelect={onDateSelect} calTrigger={calTrigger} />
         <Event
           height="550px"
           day={CalDate ? CalDate.toDateString() : ""}
@@ -252,6 +258,7 @@ export default function Home(props) {
           onSubmitClick={onEventSubmitClick}
           displayForm={displayForm}
           CalDate={CalDate}
+          onSetcalTrigger={onSetcalTrigger}
         />
       </RightCont>
     </MainCont>

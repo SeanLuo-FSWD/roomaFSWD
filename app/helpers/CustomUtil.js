@@ -8,6 +8,7 @@ class CustomUtil {
 
   static colorReactCal(dates_arr, EVENTS) {
     dates_arr.forEach((date) => {
+      date.parentNode.style.backgroundColor = "";
       EVENTS.forEach((event) => {
         let date_obj = this.formatTimelessDate(
           new Date(date.getAttribute("aria-label")).toDateString()
@@ -34,6 +35,8 @@ class CustomUtil {
         //   `------firstDate ${firstDate}--------date_obj ${date_obj}-------secondDate ${secondDate}--------`
         // );
 
+        // Clear the previously applied color
+        
         if (
           firstDate.getTime() <= date_obj.getTime() &&
           date_obj.getTime() <= secondDate.getTime()

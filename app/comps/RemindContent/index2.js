@@ -61,7 +61,8 @@ const RemindContent = ({
   name = "Name",
   date = "5:00-7:00PM",
   eventId,
-  onSetRefresh
+  onSetRefresh,
+  onSetcalTrigger
 }) => {
 
   const onHandleDelete = (eventId) => {
@@ -72,7 +73,8 @@ const RemindContent = ({
       } else {
         console.log('delete success');
         console.log(response);
-        onSetRefresh()
+        onSetRefresh();
+        onSetcalTrigger();
       }
     });
   };

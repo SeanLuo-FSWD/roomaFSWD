@@ -19,7 +19,7 @@ const Cont = styled.div`
   margin-top: 30px;
 `;
 
-const CalendarComp = ({ onDateSelect }) => {
+const CalendarComp = ({ onDateSelect, calTrigger }) => {
   const [dateTrigger, setDateTrigger] = useState(new Date());
   const [Events, setEvents] = useState(null);
   const [DateArr, setDateArr] = useState([]);
@@ -41,7 +41,7 @@ const CalendarComp = ({ onDateSelect }) => {
 
   useEffect(() => {
     getMonthEvents();
-  }, [dateTrigger]);
+  }, [dateTrigger, calTrigger]);
 
   const getMonthEvents = () => {
     // document.querySelectorAll(
@@ -65,8 +65,7 @@ const CalendarComp = ({ onDateSelect }) => {
     // const calduration = `?startAt=${startAt}&endAt=${endAt}`;
     const calduration = `?startAt=${CustomUtil.flattenHours(startAt)}&endAt=${CustomUtil.flattenHours(endAt)}`;
 
-    console.log("2222222222222222");
-    console.log("cccccccccccccccccccc");
+    console.log("getMonthEvents_______cccccccccccccccccccc");
     console.log(calduration);
     getEvents(calduration, (err, result) => {
       if (err) {

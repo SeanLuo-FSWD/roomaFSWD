@@ -42,6 +42,7 @@ const deleteEvent = (delete_id, cb) => {
     })
     .catch((error) => {
       if (!error.response) {
+        console.log(error);
         cb(new Error(serverCrash));
       } else {
         console.log(error);
