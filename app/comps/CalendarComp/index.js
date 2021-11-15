@@ -19,8 +19,8 @@ const Cont = styled.div`
   margin-top: 30px;
 `;
 
-const CalendarComp = ({}) => {
-  const [date, setDate] = useState(new Date());
+const CalendarComp = ({ onDateSelect }) => {
+  const [dateTrigger, setDateTrigger] = useState(new Date());
   const [Events, setEvents] = useState(null);
   const [DateArr, setDateArr] = useState([]);
 
@@ -41,7 +41,7 @@ const CalendarComp = ({}) => {
 
   useEffect(() => {
     getMonthEvents();
-  }, [date]);
+  }, [dateTrigger]);
 
   const getMonthEvents = () => {
     // document.querySelectorAll(
@@ -57,12 +57,18 @@ const CalendarComp = ({}) => {
 
     const startAt = new Date(
       dates_arr[0].getAttribute("aria-label")
-    ).toISOString();
+    );
     const endAt = new Date(
       dates_arr[dates_arr.length - 1].getAttribute("aria-label")
-    ).toISOString();
+    );
 
-    getEvents(`?startAt=${startAt}&endAt=${endAt}`, (err, result) => {
+    // const calduration = `?startAt=${startAt}&endAt=${endAt}`;
+    const calduration = `?startAt=${CustomUtil.flattenHours(startAt)}&endAt=${CustomUtil.flattenHours(endAt)}`;
+
+    console.log("2222222222222222");
+    console.log("cccccccccccccccccccc");
+    console.log(calduration);
+    getEvents(calduration, (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -73,19 +79,37 @@ const CalendarComp = ({}) => {
     });
   };
 
+  const handleDateSelect = (date) => {
+    onDateSelect(date);
+  };
+
   return (
     <Cont>
       <Calendar
-        onChange={(date) => setDate(date)}
-        defaultValue={date}
-        selectRange={true}
+        // onChange={(date) => setDate(date)}
+        // defaultValue={date}
+        selectRange={false}
         // onActiveStartDateChange={() => getMonthEvents()}
-        onActiveStartDateChange={({ activeStartDate }) =>
-          setDate(activeStartDate)
-        }
-        // onActiveStartDateChange={({ action, activeStartDate, value, view }) =>
-        //   alert(activeStartDate)
+        // onActiveStartDateChange={({ activeStartDate }) =>
+        //   setDate(activeStartDate)
         // }
+        // onClickMonth={(date) => {
+        //   console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
+        //   console.log(date);
+        // }}
+        // onViewChange={({ action, activeStartDate, value, view }) => {
+        //   console.log("bbbbbbbbbbbbbbbbbb");
+        //   console.log(activeStartDate);
+        //   console.log(view);
+        // }}
+        onClickDay={(value, event) => {
+          console.log("eeeeeeeeeeeeeeeeeeeeee");
+          console.log(value); // Tue Dec 28 2021 00:00:00 GMT-0800 (Pacific Standard Time)
+          handleDateSelect(value);
+        }}
+        onActiveStartDateChange={({ action, activeStartDate, value, view }) => {
+          setDateTrigger(activeStartDate);
+        }}
       />
       {/*{date.length > 0 ? (
   <p>

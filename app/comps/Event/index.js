@@ -68,6 +68,7 @@ const Event = ({
     new Date().toDateString()
   ).toISOString(),
   displayForm,
+  CalDate,
 }) => {
   const handleEventSubmitClick = () => {
     onSubmitClick();
@@ -79,8 +80,10 @@ const Event = ({
     console.log("zzzzzzzzzzzzzzzzzzzzzzzdisplayForm");
     console.log(displayForm);
     if (displayForm === false) {
-      console.log("display formmmmmmmm grab new events");
-      getEvents("", (err, result) => {
+      const startEndDate = new Date(CalDate)
+      const eveduration = `?startAt=${CustomUtil.flattenHours(startEndDate)}&endAt=${CustomUtil.flattenHours(startEndDate)}`;
+      console.log("display formmmmmmmm grab new events " + eveduration);
+      getEvents(eveduration, (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -88,16 +91,19 @@ const Event = ({
         }
       });
     }
-  }, [retDate, displayForm]);
+  }, [retDate, displayForm, CalDate]);
 
   const displayEvents = () => {
     console.log("displayEvents at Event");
     console.log(Events);
     if (Events) {
       const listCompo = Events.map((event) => {
-        const duration = `${new Date(
-          event.startAt
-        ).toDateString()} --- ${new Date(event.endAt).toDateString()}`;
+        // const duration = `${new Date(
+        //   event.startAt
+        // ).toDateString()}`;
+        const duration = event.startAt;
+
+        console.log("event.startAtttttttt - time?  " + duration);
         return (
           <RemindContent
             bgcolor={bgcolor}

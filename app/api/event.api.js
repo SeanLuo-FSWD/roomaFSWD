@@ -6,6 +6,8 @@ const serverCrash =
   "Wow the server MAY have crashed...be a hero, and tell Hailey, Jason or Sean ASAP. Please also remember the steps leading to this.";
 
 const createEvent = (event_obj, cb) => {
+  console.log("2222event_obj.startAtevent_obj.startAt: " + event_obj.startAt);
+  console.log(event_obj);
   axios
     .post(`${server_api}event/create`, event_obj, {
       withCredentials: true,
@@ -21,6 +23,7 @@ const createEvent = (event_obj, cb) => {
       if (!error.response) {
         cb(new Error(serverCrash));
       } else {
+        console.log(error);
         cb(
           "Event creation failed, please check your credential, or contact Hailey, Jason or Sean"
         );

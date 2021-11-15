@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../Button";
 import { createEvent } from "../../api/event.api";
 import Picker from "./Picker";
+import CustomUtil from "../../helpers/CustomUtil";
 
 const Cont = styled.div`
   display: flex;
@@ -55,8 +56,18 @@ const AddEvent = ({ visibility2 = "visible", onEventSubmitClick }) => {
   });
 
   useEffect(() => {
-    console.log("88888888888888888888");
-    console.log(PickerDate);
+    const startDate = new Date(
+      `${PickerDate.start.year}-${PickerDate.start.month}-${PickerDate.start.day}`
+    );
+    const endDate = new Date(
+      `${PickerDate.end.year}-${PickerDate.end.month}-${PickerDate.end.day}`
+    );
+
+    const startDateISO =
+    startDate.toISOString();
+    const startDateISOFlat =
+      startDate.toISOString().replace(/T.*$/, "") + "T00:00:00.000Z";
+    console.log(startDateISO + " 11111startDateISOstartDateISO: " + startDateISOFlat);
   });
 
   const onDateChange = (e, start) => {
@@ -107,31 +118,33 @@ const AddEvent = ({ visibility2 = "visible", onEventSubmitClick }) => {
       `${PickerDate.end.year}-${PickerDate.end.month}-${PickerDate.end.day}`
     );
 
-    const startDateISO = startDate.toISOString();
+    const startDateISO =
+      startDate.toISOString().replace(/T.*$/, "") + "T00:00:00.000Z";
+    console.log("11111startDateISOstartDateISO: " + startDateISO);
     const endDateISO = endDate.toISOString();
 
     const event_obj = {
       title: EventData.title,
       description: EventData.description,
       startAt: startDateISO,
-      endAt: endDateISO,
+      endAt: startDateISO,
     };
 
-    if (startDate.getTime() > endDate.getTime()) {
-      window.alert("End date cannot be earlier than start date");
-    } else {
-      createEvent(event_obj, (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("success");
+    // if (startDate.getTime() > endDate.getTime()) {
+    //   window.alert("End date cannot be earlier than start date");
+    // } else {
+    createEvent(event_obj, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("success");
 
-          onEventSubmitClick();
-          // setTimeout(() => {
-          // }, 5000);
-        }
-      });
-    }
+        onEventSubmitClick();
+        // setTimeout(() => {
+        // }, 5000);
+      }
+    });
+    // }
 
     // onEventSubmitClick();
   };
@@ -149,15 +162,15 @@ const AddEvent = ({ visibility2 = "visible", onEventSubmitClick }) => {
         <Picker
           onDateChange={(e) => onDateChange(e, true)}
           PickerDate={PickerDate}
-          title="Start"
+          title="Date"
           type="start"
         ></Picker>
-        <Picker
+        {/* <Picker
           onDateChange={(e) => onDateChange(e, false)}
           PickerDate={PickerDate}
           title="End"
           type="end"
-        ></Picker>
+        ></Picker> */}
         {/* <Input
           type="text"
           name="startAt"

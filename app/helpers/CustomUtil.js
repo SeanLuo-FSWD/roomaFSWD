@@ -1,4 +1,11 @@
 class CustomUtil {
+
+  static flattenHours (date) {
+    // date : any date object, preferably from "2012-09-22"
+    const flat = date.toISOString().replace(/T.*$/, "") + "T00:00:00.000Z";
+    return flat;
+  }
+
   static colorReactCal(dates_arr, EVENTS) {
     dates_arr.forEach((date) => {
       EVENTS.forEach((event) => {
@@ -22,13 +29,6 @@ class CustomUtil {
             amount: 1,
           }
         );
-
-        // const firstDate = new Date(event.startAt);
-        // const secondDate = new Date(event.endAt);
-        console.log("event.startAt : " + event.startAt);
-        console.log("     " + firstDate);
-        console.log("event.endAt : " + event.endAt);
-        console.log("     " + secondDate);
 
         // console.log(
         //   `------firstDate ${firstDate}--------date_obj ${date_obj}-------secondDate ${secondDate}--------`

@@ -50,6 +50,8 @@ export default function Home(props) {
   // detect button clicked or not
   const [buttonstate1, setButtonState1] = useState(0);
   const [displayForm, setDisplayForm] = useState(false);
+  const [CalDate, setCalDate] = useState(null);
+
   const EventHandleClick = () => {
     setDisplayForm(!displayForm);
     // if (buttonstate1 === 0) {
@@ -59,9 +61,14 @@ export default function Home(props) {
     // }
   };
 
+  const onDateSelect = (date) => {
+    console.log("fffffffffffffffffffffff");
+    console.log("fffffffffffffffffffffff");
+    console.log(date);
+    setCalDate(date);
+  };
+
   const onEventSubmitClick = () => {
-    console.log("fffffffffffffffffffffff");
-    console.log("fffffffffffffffffffffff");
     // setButtonState1(0);
     setDisplayForm(!displayForm);
   };
@@ -225,7 +232,7 @@ export default function Home(props) {
       </MiddleCont>
 
       <RightCont>
-        <CalendarComp />
+        <CalendarComp onDateSelect={onDateSelect} />
         <Event
           height="550px"
           day="Oct8"
@@ -244,6 +251,7 @@ export default function Home(props) {
           visibility2={buttonstate1 === 1 ? "visible" : "hidden"}
           onSubmitClick={onEventSubmitClick}
           displayForm={displayForm}
+          CalDate={CalDate}
         />
       </RightCont>
     </MainCont>
