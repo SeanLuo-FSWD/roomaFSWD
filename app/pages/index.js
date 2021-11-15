@@ -52,17 +52,18 @@ export default function Home(props) {
   const [displayForm, setDisplayForm] = useState(false);
   const EventHandleClick = () => {
     setDisplayForm(!displayForm);
-    if (buttonstate1 === 0) {
-      setButtonState1(1);
-    } else {
-      setButtonState1(0);
-    }
+    // if (buttonstate1 === 0) {
+    //   setButtonState1(1);
+    // } else {
+    //   setButtonState1(0);
+    // }
   };
 
   const onEventSubmitClick = () => {
     console.log("fffffffffffffffffffffff");
     console.log("fffffffffffffffffffffff");
-    setButtonState1(0);
+    // setButtonState1(0);
+    setDisplayForm(!displayForm);
   };
 
   const [buttonstate2, setButtonState2] = useState(0);
@@ -239,7 +240,7 @@ export default function Home(props) {
             EventHandleClick();
           }}
           visibility={buttonstate1 === 1 ? "hidden" : "visible"}
-          src={buttonstate1 === 1 ? "/add_rotate.png" : "/add.png"}
+          src={displayForm === true ? "/add_rotate.png" : "/add.png"}
           visibility2={buttonstate1 === 1 ? "visible" : "hidden"}
           onSubmitClick={onEventSubmitClick}
           displayForm={displayForm}

@@ -77,7 +77,7 @@ const CalendarComp = ({}) => {
     <Cont>
       <Calendar
         onChange={(date) => setDate(date)}
-        value={date}
+        defaultValue={date}
         selectRange={true}
         // onActiveStartDateChange={() => getMonthEvents()}
         onActiveStartDateChange={({ activeStartDate }) =>

@@ -76,29 +76,39 @@ const Event = ({
   const [Events, setEvents] = useState(null);
 
   useEffect(() => {
-    getEvents("", (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        setEvents(result.data.events);
-      }
-    });
-  }, [retDate]);
+    console.log("zzzzzzzzzzzzzzzzzzzzzzzdisplayForm");
+    console.log(displayForm);
+    if (displayForm === false) {
+      console.log("display formmmmmmmm grab new events");
+      getEvents("", (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          setEvents(result.data.events);
+        }
+      });
+    }
+  }, [retDate, displayForm]);
 
   const displayEvents = () => {
     console.log("displayEvents at Event");
     console.log(Events);
     if (Events) {
-      const listCompo = Events.map((event) => (
-        <RemindContent
-          bgcolor={bgcolor}
-          visibility={visibility}
-          task_name={event.title}
-          vlcolor={vlcolor}
-          name={event.description}
-          date=""
-        />
-      ));
+      const listCompo = Events.map((event) => {
+        const duration = `${new Date(
+          event.startAt
+        ).toDateString()} --- ${new Date(event.endAt).toDateString()}`;
+        return (
+          <RemindContent
+            bgcolor={bgcolor}
+            // visibility={visibility}
+            task_name={event.title}
+            vlcolor={vlcolor}
+            name={event.description}
+            date={duration}
+          />
+        );
+      });
 
       return listCompo;
     } else {
@@ -118,7 +128,7 @@ const Event = ({
         <BotCont>
           {displayForm ? (
             <AddEvent
-              visibility2={visibility2}
+              // visibility2={visibility2}
               onEventSubmitClick={handleEventSubmitClick}
             />
           ) : (

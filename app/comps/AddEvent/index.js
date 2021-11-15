@@ -7,9 +7,9 @@ import Picker from "./Picker";
 const Cont = styled.div`
   display: flex;
   margin-top: 50px;
-  visibility: ${(props) => props.visibility2};
   flex-direction: column;
 `;
+// visibility: ${(props) => props.visibility2};
 const InputBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -127,15 +127,18 @@ const AddEvent = ({ visibility2 = "visible", onEventSubmitClick }) => {
           console.log("success");
 
           onEventSubmitClick();
+          // setTimeout(() => {
+          // }, 5000);
         }
       });
     }
 
-    onEventSubmitClick();
+    // onEventSubmitClick();
   };
 
   return (
-    <Cont visibility2={visibility2}>
+    // <Cont visibility2={visibility2}>
+    <Cont>
       <InputBox>
         <Input
           type="text"
