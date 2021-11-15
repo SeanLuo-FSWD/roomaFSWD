@@ -235,8 +235,8 @@ export default function Home(props) {
         <CalendarComp onDateSelect={onDateSelect} />
         <Event
           height="550px"
-          day="Oct8"
-          week="Thrusdayz"
+          day={CalDate ? CalDate.toDateString() : ""}
+          // week="Select date above to view events"
           bgcolor="rgba(240,199,137,30%)"
           visibility="visible"
           task_name="Event Name"

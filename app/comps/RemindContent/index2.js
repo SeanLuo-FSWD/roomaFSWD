@@ -1,5 +1,6 @@
 import react from "react";
 import styled from "styled-components";
+import { deleteEvent } from "../../api/event.api";
 
 const Cont = styled.div`
   display: flex;
@@ -38,7 +39,10 @@ const Heading = styled.div`
   margin: 0;
   margin-top: 15px;
   font-weight: 700;
+  display: flex;
+  justify-content: space-between;
 `;
+
 const Details = styled.p`
   font-size: 10px;
   margin-top: 5px;
@@ -56,7 +60,23 @@ const RemindContent = ({
   vlcolor = "#F0C789",
   name = "Name",
   date = "5:00-7:00PM",
+  eventId,
+  onSetRefresh
 }) => {
+
+  const onHandleDelete = (eventId) => {
+    deleteEvent(eventId, (err, response) => {
+      if (err) {
+        console.log("deleteEvent error");
+        console.log(err);
+      } else {
+        console.log('delete success');
+        console.log(response);
+        onSetRefresh()
+      }
+    });
+  };
+  
   return (
     // <Cont visibility={visibility}>
     <Cont>
@@ -65,7 +85,13 @@ const RemindContent = ({
           <VerLine vlcolor={vlcolor} />
         </LeftCont>
         <MainCont>
-          <Heading className="opensans">{task_name}</Heading>
+          <Heading className="opensans">
+          <span>{task_name}</span>
+          <img src="/delete.png" alt="" width="20px" style={{    marginRight:"10px"
+          }} onClick={() => {
+            onHandleDelete(eventId);
+          }}/>
+          </Heading>
           <Details className="opensans">
             <Span>{name} </Span>
             {date}

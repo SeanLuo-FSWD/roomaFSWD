@@ -31,6 +31,27 @@ const createEvent = (event_obj, cb) => {
     });
 };
 
+
+const deleteEvent = (delete_id, cb) => {
+  axios
+    .delete(`${server_api}event/delete/${delete_id}`, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      cb(null, response);
+    })
+    .catch((error) => {
+      if (!error.response) {
+        cb(new Error(serverCrash));
+      } else {
+        console.log(error);
+        cb(
+          "deleteEvent failed, please check your credential, or contact Hailey, Jason or Sean"
+        );
+      }
+    });
+};
+
 const getEvents = async (query, cb) => {
   console.log("sssssssssssssssssssssssss");
   console.log("sssssssssssssssssssssssss");
@@ -55,4 +76,4 @@ const getEvents = async (query, cb) => {
     });
 };
 
-export { getEvents, createEvent };
+export { getEvents, createEvent, deleteEvent };

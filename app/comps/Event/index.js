@@ -52,8 +52,8 @@ const DefMessage = styled.p`
 `;
 
 const Event = ({
-  day = "Oct8",
-  week = "Thrusday",
+  day = "",
+  // week = "Select date above to view events",
   bgcolor = "rgba(240,199,137,30%)",
   visibility = "visible",
   task_name = "Event Name",
@@ -64,9 +64,9 @@ const Event = ({
   visibility2 = "hidden",
   onClick = () => {},
   onSubmitClick,
-  retDate = CustomUtil.formatTimelessDate(
-    new Date().toDateString()
-  ).toISOString(),
+  // retDate = CustomUtil.formatTimelessDate(
+  //   new Date().toDateString()
+  // ).toISOString(),
   displayForm,
   CalDate,
 }) => {
@@ -75,7 +75,7 @@ const Event = ({
   };
 
   const [Events, setEvents] = useState(null);
-
+  const [Refresh, setRefresh] = useState(false)
   useEffect(() => {
     console.log("zzzzzzzzzzzzzzzzzzzzzzzdisplayForm");
     console.log(displayForm);
@@ -91,12 +91,16 @@ const Event = ({
         }
       });
     }
-  }, [retDate, displayForm, CalDate]);
+  }, [Refresh, displayForm, CalDate]);
 
+  const onSetRefresh = () => {
+    setRefresh(!Refresh);
+  }
+  
   const displayEvents = () => {
     console.log("displayEvents at Event");
     console.log(Events);
-    if (Events) {
+    if (Events.length) {
       const listCompo = Events.map((event) => {
         // const duration = `${new Date(
         //   event.startAt
@@ -112,13 +116,15 @@ const Event = ({
             vlcolor={vlcolor}
             name={event.description}
             date={duration}
+            eventId={event.id}
+            onSetRefresh={onSetRefresh}
           />
         );
       });
 
       return listCompo;
     } else {
-      return;
+      return <p style={{textAlign: "center"}}>No event for this day</p>
     }
   };
 
@@ -127,7 +133,8 @@ const Event = ({
       <CardCont>
         <TopCont>
           <Heading className="ubuntu">
-            {day} , <Span>{week}</Span>
+            {/* {day} , <Span>{week}</Span> */}
+            {day ? day : "Select date above to view events"}
           </Heading>
           <Icon src={src} onClick={onClick} />
         </TopCont>
@@ -137,9 +144,7 @@ const Event = ({
               // visibility2={visibility2}
               onEventSubmitClick={handleEventSubmitClick}
             />
-          ) : (
-            displayEvents()
-          )}
+          ) : displayEvents()}
           {/* {Events && displayEvents()}
           <RemindContent
             bgcolor={bgcolor}
