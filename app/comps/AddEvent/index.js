@@ -6,7 +6,7 @@ import Picker from "./Picker";
 
 const Cont = styled.div`
   display: flex;
-  margin-top: -50px;
+  margin-top: 50px;
   visibility: ${(props) => props.visibility2};
   flex-direction: column;
 `;
@@ -39,8 +39,6 @@ const AddEvent = ({ visibility2 = "visible", onEventSubmitClick }) => {
   const [EventData, setEventData] = useState({
     title: "",
     description: "",
-    startAt: "",
-    endAt: "",
   });
 
   const [PickerDate, setPickerDate] = useState({
@@ -102,16 +100,38 @@ const AddEvent = ({ visibility2 = "visible", onEventSubmitClick }) => {
 
   const onAddEvent = () => {
     console.log("444444444444444444");
+    const startDate = new Date(
+      `${PickerDate.start.year}-${PickerDate.start.month}-${PickerDate.start.day}`
+    );
+    const endDate = new Date(
+      `${PickerDate.end.year}-${PickerDate.end.month}-${PickerDate.end.day}`
+    );
 
-    console.log();
-    // createEvent(EventData, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     console.log("success");
-    //     onEventSubmitClick();
-    //   }
-    // });
+    const startDateISO = startDate.toISOString();
+    const endDateISO = endDate.toISOString();
+
+    const event_obj = {
+      title: EventData.title,
+      description: EventData.description,
+      startAt: startDateISO,
+      endAt: endDateISO,
+    };
+
+    if (startDate.getTime() > endDate.getTime()) {
+      window.alert("End date cannot be earlier than start date");
+    } else {
+      createEvent(event_obj, (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("success");
+
+          onEventSubmitClick();
+        }
+      });
+    }
+
+    onEventSubmitClick();
   };
 
   return (
@@ -135,7 +155,7 @@ const AddEvent = ({ visibility2 = "visible", onEventSubmitClick }) => {
           title="End"
           type="end"
         ></Picker>
-        <Input
+        {/* <Input
           type="text"
           name="startAt"
           placeholder="Start Event"
@@ -146,7 +166,7 @@ const AddEvent = ({ visibility2 = "visible", onEventSubmitClick }) => {
           name="endAt"
           placeholder="End Event"
           onChange={onFormChange}
-        />
+        /> */}
         <DescriptionInput
           type="text"
           name="description"

@@ -1,7 +1,9 @@
-import react, { useState } from "react";
+import react, { useState, useEffect } from "react";
 import styled from "styled-components";
 import RemindContent from "../RemindContent/index2";
 import AddEvent from "../AddEvent";
+import { getEvents } from "../../api/event.api";
+import CustomUtil from "../../helpers/CustomUtil";
 
 const Cont = styled.div`
   display: flex;
@@ -61,8 +63,47 @@ const Event = ({
   src = "/plus.svg",
   visibility2 = "hidden",
   onClick = () => {},
-  onEventSubmitClick,
+  onSubmitClick,
+  retDate = CustomUtil.formatTimelessDate(
+    new Date().toDateString()
+  ).toISOString(),
+  displayForm,
 }) => {
+  const handleEventSubmitClick = () => {
+    onSubmitClick();
+  };
+
+  const [Events, setEvents] = useState(null);
+
+  useEffect(() => {
+    getEvents("", (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        setEvents(result.data.events);
+      }
+    });
+  }, [retDate]);
+
+  const displayEvents = () => {
+    if (Events) {
+      const listCompo = Events.map((event) => (
+        <RemindContent
+          bgcolor={bgcolor}
+          visibility={visibility}
+          task_name={event.title}
+          vlcolor={vlcolor}
+          name={event.description}
+          date=""
+        />
+      ));
+
+      return listCompo;
+    } else {
+      return;
+    }
+  };
+
   return (
     <Cont>
       <CardCont>
@@ -73,6 +114,15 @@ const Event = ({
           <Icon src={src} onClick={onClick} />
         </TopCont>
         <BotCont>
+          {displayForm ? (
+            <AddEvent
+              visibility2={visibility2}
+              onEventSubmitClick={handleEventSubmitClick}
+            />
+          ) : (
+            displayEvents()
+          )}
+          {/* {Events && displayEvents()}
           <RemindContent
             bgcolor={bgcolor}
             visibility={visibility}
@@ -80,11 +130,11 @@ const Event = ({
             vlcolor={vlcolor}
             name={name}
             date={date}
-          />
-          <AddEvent
+          /> */}
+          {/* <AddEvent
             visibility2={visibility2}
-            onEventSubmitClick={onEventSubmitClick}
-          />
+            onEventSubmitClick={handleEventSubmitClick}
+          /> */}
         </BotCont>
       </CardCont>
     </Cont>

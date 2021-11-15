@@ -18,9 +18,6 @@ const createEvent = (event_obj, cb) => {
     .catch((error) => {
       console.log("createEvent error");
       console.log(error);
-      console.log(error.response);
-      console.log(error.response.data);
-
       if (!error.response) {
         cb(new Error(serverCrash));
       } else {
@@ -31,18 +28,20 @@ const createEvent = (event_obj, cb) => {
     });
 };
 
-const getEvents = async (cb) => {
+const getEvents = async (query, cb) => {
+  console.log("sssssssssssssssssssssssss");
+  console.log("sssssssssssssssssssssssss");
+  console.log(query);
   axios
-    .get(`${server_api}room/invcode`, {
+    .get(`${server_api}event/list${query}`, {
       withCredentials: true,
     })
     .then((response) => {
-      console.log("getCode response");
-      console.log(response);
+      console.log("getEvents response");
       cb(null, response);
     })
     .catch((error) => {
-      console.log("getCode error");
+      console.log("getEvents error");
       console.log(error);
       if (!error.response) {
         cb(new Error(serverCrash));

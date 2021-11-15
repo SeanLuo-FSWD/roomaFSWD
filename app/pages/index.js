@@ -47,12 +47,11 @@ export default function Home(props) {
     currentMsg,
   } = useContext(globalContext);
 
-  console.log("777777777777777777777");
-  console.log("777777777777777777777");
-  console.log(props.events);
   // detect button clicked or not
   const [buttonstate1, setButtonState1] = useState(0);
+  const [displayForm, setDisplayForm] = useState(false);
   const EventHandleClick = () => {
+    setDisplayForm(!displayForm);
     if (buttonstate1 === 0) {
       setButtonState1(1);
     } else {
@@ -60,7 +59,9 @@ export default function Home(props) {
     }
   };
 
-  const onEventSubmitClick = (params) => {
+  const onEventSubmitClick = () => {
+    console.log("fffffffffffffffffffffff");
+    console.log("fffffffffffffffffffffff");
     setButtonState1(0);
   };
 
@@ -240,7 +241,8 @@ export default function Home(props) {
           visibility={buttonstate1 === 1 ? "hidden" : "visible"}
           src={buttonstate1 === 1 ? "/add_rotate.png" : "/add.png"}
           visibility2={buttonstate1 === 1 ? "visible" : "hidden"}
-          onEventSubmitClick={onEventSubmitClick}
+          onSubmitClick={onEventSubmitClick}
+          displayForm={displayForm}
         />
       </RightCont>
     </MainCont>
