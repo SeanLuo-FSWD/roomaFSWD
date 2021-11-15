@@ -47,10 +47,9 @@ export default function Home(props) {
     currentMsg,
   } = useContext(globalContext);
 
-  console.log("ddddddddddddddddddddddd");
-  console.log("ddddddddddddddddddddddd");
-  console.log(props);
-
+  console.log("777777777777777777777");
+  console.log("777777777777777777777");
+  console.log(props.events);
   // detect button clicked or not
   const [buttonstate1, setButtonState1] = useState(0);
   const EventHandleClick = () => {
@@ -60,6 +59,11 @@ export default function Home(props) {
       setButtonState1(0);
     }
   };
+
+  const onEventSubmitClick = (params) => {
+    setButtonState1(0);
+  };
+
   const [buttonstate2, setButtonState2] = useState(0);
   const ReminderHandleClick = () => {
     if (buttonstate2 === 0) {
@@ -121,9 +125,9 @@ export default function Home(props) {
       <LeftCont>
         <NavBar2
           // user pic src
-          src={props.user.pfp}
+          src={props.auth.user.pfp}
           // user name
-          name={props.user.name}
+          name={props.auth.user.name}
           // user rooma point
           user_point="100 pts"
           // if there is new message in alert display:block else display:none
@@ -180,7 +184,7 @@ export default function Home(props) {
           height="100px"
           heading="Hello"
           // User should be connected with the users' name
-          User={props.user ? props.user.name : "user!"}
+          User={props.auth.user ? props.auth.user.name : "user!"}
           ps="Here’s your schedule this week"
           visibility="visible"
         />
@@ -223,7 +227,7 @@ export default function Home(props) {
         <Event
           height="550px"
           day="Oct8"
-          week="Thrusday"
+          week="Thrusdayz"
           bgcolor="rgba(240,199,137,30%)"
           visibility="visible"
           task_name="Event Name"
@@ -236,13 +240,34 @@ export default function Home(props) {
           visibility={buttonstate1 === 1 ? "hidden" : "visible"}
           src={buttonstate1 === 1 ? "/add_rotate.png" : "/add.png"}
           visibility2={buttonstate1 === 1 ? "visible" : "hidden"}
+          onEventSubmitClick={onEventSubmitClick}
         />
       </RightCont>
     </MainCont>
   );
 }
 
-export const getServerSideProps = (context) => {
+export const getServerSideProps = async (context) => {
   // return requireAuthen(context);
-  return requireAuthen(context, true);
+  let authProp = await requireAuthen(context, true);
+
+  if (!authProp.hasOwnProperty("user")) {
+    return { redirect: authProp };
+  } else {
+    return {
+      props: {
+        auth: authProp,
+        events: Math.random(),
+      },
+    };
+  }
 };
+
+// export const getServerSideProps = (context) => {
+//   // return requireAuthen(context);
+//   return {
+//     props: {
+//       random: Math.random(),
+//     },
+//   };
+// };

@@ -52,6 +52,85 @@ const getCode = async (cb) => {
     });
 };
 
+const getRoomates = async (ctx) => {
+  console.log("getRoomates getRoomates getRoomates");
+
+  const response = await api({
+    method: "get",
+    url: "/user/roommates",
+    headers: ctx.req.headers.cookie
+      ? { cookie: ctx.req.headers.cookie }
+      : undefined,
+  });
+
+  console.log("666666666666666666");
+  console.log(response.data.roommates);
+
+  if (response.status != 200) {
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
+    return {
+      props: {
+        users: [],
+      },
+    };
+  }
+
+  return {
+    props: {
+      users: response.data.roommates,
+    },
+  };
+
+  // await axios
+  //   .get(`${server_api}user/roommates`, {
+  //     withCredentials: true,
+  //   })
+  //   .then((response) => {
+  //     console.log("getRoomates response");
+  //     console.log(response);
+  //     cb(null, response);
+  //   })
+  //   .catch((error) => {
+  //     console.log("getRoomates error");
+  //     console.log(error);
+  //     if (!error.response) {
+  //       cb(new Error(serverCrash));
+  //     } else {
+  //       cb(error.response.data);
+  //     }
+  //   });
+};
+
+const leaveRoom = async (cb) => {
+  axios
+    .patch(
+      `${server_api}room/leave`,
+      {},
+      {
+        withCredentials: true,
+      }
+    )
+    .then((response) => {
+      console.log("patch leaveRoom response");
+      console.log(response);
+      cb(null, response);
+    })
+    .catch((error) => {
+      console.log("patch leaveRoom error");
+      console.log(error);
+      console.log(error.response);
+      console.log(error.response.data);
+
+      if (!error.response) {
+        cb(new Error(serverCrash));
+      } else {
+        cb(
+          "Leave room failed, please check your invite code, or contact Hailey, Jason or Sean"
+        );
+      }
+    });
+};
+
 const joinRoom = async (room_obj, cb) => {
   axios
     .patch(`${server_api}room/join`, room_obj, {
@@ -78,4 +157,4 @@ const joinRoom = async (room_obj, cb) => {
     });
 };
 
-export { createRoom, joinRoom, getCode };
+export { createRoom, joinRoom, getCode, leaveRoom, getRoomates };

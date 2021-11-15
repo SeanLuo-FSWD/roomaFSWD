@@ -32,17 +32,18 @@ export const requireAuthen = async (ctx, RoomRedirect = false) => {
   //     console.log(error.response.data);
   //   });
 
-  console.log("cccccccccccccccccccc");
-  console.log("cccccccccccccccccccc");
-  console.log(response);
   // user not found back to login page
   if (response.status != 200) {
     console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
+    // return {
+    //   redirect: {
+    //     destination: "/login",
+    //     permanent: false,
+    //   },
+    // };
     return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
+      destination: "/login",
+      permanent: false,
     };
   }
 
@@ -50,20 +51,24 @@ export const requireAuthen = async (ctx, RoomRedirect = false) => {
   console.log(response);
   if (!response.data.roomId && RoomRedirect) {
     console.log("bbbbbbbbbbbbbbbbbb");
+    // return {
+    //   redirect: {
+    //     destination: "/join",
+    //     permanent: false,
+    //   },
+    // };
     return {
-      redirect: {
-        destination: "/join",
-        permanent: false,
-      },
+      destination: "/join",
+      permanent: false,
     };
   }
 
-  console.log("cccccccccccccccccccc");
-  return {
-    props: {
-      user: response.data,
-    },
-  };
+  // return {
+  //   props: {
+  //     user: response.data,
+  //   },
+  // };
+  return { user: response.data };
 };
 
 export const checkUser = () => {
