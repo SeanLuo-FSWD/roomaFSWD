@@ -6,6 +6,7 @@ import NavBar2 from '../comps/NavBar2';
 import AddPost from '../comps/AddPost'
 import {useState} from 'react';
 import CommunityPost from '../comps/CommunityPost';
+import Comments from '../comps/Comments';
 import FilterOptionsButton from '../comps/FilterOptionsButton';
 import AddFilter from '../comps/AddFilter';
 
@@ -19,12 +20,14 @@ const GlbNav = styled.div`
   display:flex;
   flex-direction:column;
   flex-grow:1;
+  position:fixed;
 `
 const MainCont = styled.div`
   display:flex;
   flex-direction:column;
   align-items:center;
   flex-grow:3;
+  margin-left: 300px;
 `
 const PostArea1 = styled.div`
   display:flex;
@@ -42,9 +45,9 @@ const PostArea2 = styled.div`
 `
 const RightCont = styled.div`
   display:flex;
-  margin-left:200px;
   flex-direction:column;
-  flex-grow:3;
+  flex-grow:1;
+
 `
 
 
@@ -65,7 +68,7 @@ export default function Community() {
   const [buttonstate1, setButtonState1] = useState(0);
   const [buttonstate5, setButtonState5] = useState(0);
   const [buttonstate2, setButtonState2] = useState(0);
-
+  const [onPostClick, setPostClick] =useState(0);
   // ADD POST: useState Function 
   const [buttonstate6, setButtonState6] = useState(0);
   const [buttonstate7, setButtonState7] = useState(0);
@@ -121,7 +124,7 @@ export default function Community() {
     setButtonState2(0);
   }
   }
-  //
+  // global nav click
   const GlobalNavClick = () =>{
     if (buttonstate5===0){
     setButtonState5(1);
@@ -130,8 +133,18 @@ export default function Community() {
   }
   }
 
+  // Post clikced 
+  // needs to increase the number of useState depending on the post number.
+  // post content in comment comp will change depending on the post the user's clicked
+  // now is static since hard to imagine how many posts will be there...
+  const PostClick=()=>{
+    if(onPostClick ===0){
+      setPostClick(1);
 
-
+    }else{
+      setPostClick(0);
+    }
+  }
   // ADD POST: Btn options handling from here
   const Btn1= () =>{
     if (buttonstate6===0){
@@ -253,7 +266,28 @@ export default function Community() {
 
 
 
-
+// navbar notification
+const [buttonstate22, setButtonState22] = useState(0);
+  const NotificationClick = () =>{
+      if (buttonstate22===0){
+      setButtonState22(1);
+      setButtonState23(0);
+    }else{
+      setButtonState22(0);
+      setButtonState23(1);
+    }
+    }
+  
+    const [buttonstate23, setButtonState23] = useState(0);
+    const BackClick = () =>{
+        if (buttonstate23===0){
+        setButtonState23(1);
+        setButtonState22(0);
+      }else{
+        setButtonState23(0);
+        setButtonState22(1);
+      }
+      }
   return (
     <Cont>
       <GlbNav>
@@ -272,7 +306,7 @@ export default function Community() {
     onContClick={()=>{
       GlobalNavClick();
     }}
-    width={buttonstate5 === 1 ? '140px' : '288px'}
+    Navwidth={buttonstate5 === 1 ? '140px' : '288px' || buttonstate22 ===1 ? '288px':''}
     display={buttonstate5 === 1 ? 'none' : 'flex'}
     displayLogo={buttonstate5 === 1 ? 'flex' : 'none'}
     displayHome={buttonstate5 === 1 ? 'none' : 'block'}
@@ -283,6 +317,15 @@ export default function Community() {
     displaySetting={buttonstate5 === 1 ? 'none' : 'block'}
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
+
+    onNotificationClick={()=>{
+      NotificationClick();
+    }}
+    onBackClick={()=>{
+      BackClick();
+    }}
+    Contdisplay={buttonstate22 === 1 ? 'none':'flex' || buttonstate23 === 1 ? 'flex':'none'}
+    Contdisplay2={buttonstate22 === 1 ? 'flex':'none'|| buttonstate23 === 1 ? 'none':'flex'}
     />
         </GlbNav>
         <MainCont>
@@ -292,7 +335,7 @@ export default function Community() {
                 onAddClick={()=>{
                   HandleAddClick();
                 }}
-                height={buttonstate1 === 1 ? '385px':'65px' }
+                height={buttonstate1 === 1 ? '450px':'65px' }
                 display={buttonstate1 === 1 ? 'block':'none'}
                 onToggleClick={() =>{
                   HandleToggleClick();
@@ -423,6 +466,10 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="100"
         CommentNum="10"
+        onPostClick={()=>{
+          PostClick();
+        }}
+        
         />
         <CommunityPost
         title="Furniture Sale"
@@ -433,6 +480,9 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="230"
         CommentNum="20"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         
         </PostArea1>
@@ -446,6 +496,9 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="1100"
         CommentNum="15"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         <CommunityPost
         title="Music Festival on Queen Park!"
@@ -456,6 +509,9 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="800"
         CommentNum="30"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         </PostArea2>
         <PostArea2>
@@ -468,6 +524,9 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="1100"
         CommentNum="15"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         <CommunityPost
         title="Music Festival on Queen Park!"
@@ -478,11 +537,24 @@ export default function Community() {
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
         likeNum="800"
         CommentNum="30"
+        onPostClick={()=>{
+          PostClick();
+        }}
         />
         </PostArea2>
         </MainCont>
         <RightCont>
-
+                <Comments
+                  visibility={onPostClick === 1 ? "visible":"hidden"}
+                  title="Any recommendations on resturaunts in Vancouver?"
+                  name="Floyd Miles"
+                  src="/Avatar3.png"
+                  button_title="restaurants"
+                  time="6h ago"
+                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
+                  likeNum="100"
+                  CommentNum="10"
+                />
         </RightCont>
     </Cont>
   )

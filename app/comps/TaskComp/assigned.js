@@ -69,7 +69,7 @@ flex-direction: column;
 
 
 const Assigned = ({
-  display="flex"
+  display="none"
 })=>{
   return <MainCont display={display}>
   <Cont>

@@ -24,6 +24,15 @@ a {
   font-family: "Open Sans", sans-serif;
 }
 
+.activeButton {
+  color: white !important;
+  background: #796fe8 !important;
+}
+
+.memberBorder {
+  border: 4px solid #796fe8 !important;
+}
+
 /*----------------Calendar css here ---------------------*/
 
 .react-calendar {
@@ -122,8 +131,4 @@ a {
 .react-calendar__tile--hover {
   background-color: #f6f5fe;
   color: black;
-}
-
-.test {
-  color: red !important;
 }

@@ -20,13 +20,14 @@ const MainCont = styled.div`
 const LeftCont = styled.div`
 display:flex;
 flex-grow:1;
+// position: fixed;
 `
 
 const MiddleCont = styled.div`
 display:flex;
 flex-direction:column;
 flex-grow:8;
-margin-left: 10px;
+// margin-left: 10px;
 margin-top: 10px;
 `
 
@@ -86,6 +87,27 @@ export default function Home (){
     }
     }
 
+  const [buttonstate6, setButtonState6] = useState(0);
+  const NotificationClick = () =>{
+      if (buttonstate6===0){
+      setButtonState6(1);
+      setButtonState7(0);
+    }else{
+      setButtonState6(0);
+      setButtonState7(1);
+    }
+    }
+  
+    const [buttonstate7, setButtonState7] = useState(0);
+    const BackClick = () =>{
+        if (buttonstate7===0){
+        setButtonState7(1);
+        setButtonState6(0);
+      }else{
+        setButtonState7(0);
+        setButtonState6(1);
+      }
+      }
   return (<MainCont>
 
     <LeftCont>
@@ -104,7 +126,7 @@ export default function Home (){
     onContClick={()=>{
       GlobalNavClick();
     }}
-    width={buttonstate5 === 1 ? '140px' : '288px'}
+    Navwidth={buttonstate5 === 1 ? '140px' : '288px' || buttonstate6 ===1 ? '288px':''}
     display={buttonstate5 === 1 ? 'none' : 'flex'}
     displayLogo={buttonstate5 === 1 ? 'flex' : 'none'}
     displayHome={buttonstate5 === 1 ? 'none' : 'block'}
@@ -116,7 +138,15 @@ export default function Home (){
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
 
-   
+    onNotificationClick={()=>{
+     NotificationClick();
+   }}
+   onBackClick={()=>{
+     BackClick();
+   }}
+   Contdisplay={buttonstate6 === 1 ? 'none':'flex' || buttonstate7 === 1 ? 'flex':'none'}
+   Contdisplay2={buttonstate6 === 1 ? 'flex':'none'|| buttonstate7 === 1 ? 'none':'flex'}
+  
     />
     </LeftCont>
 
@@ -141,8 +171,8 @@ export default function Home (){
     onMoreClick={() =>{
       ReminderHandleClick();
     }} 
-    height={buttonstate2 === 1 ? '760px' : '360px'}
-    top={buttonstate2 === 1 ? '820px' : '425px'}
+    height={buttonstate2 === 1 ? '850px' : '600px'}
+    top={buttonstate2 === 1 ? '920px' : '675px'}
     title_more={buttonstate2 === 1 ? 'Close ' : 'More '}
     //complete_display={buttonstate2 === 1 ? 'none' : 'block'}
     rewards_display={buttonstate2 === 1 ? 'none' : 'block'}

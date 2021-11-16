@@ -5,10 +5,10 @@ import { useForm, useState } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axiosInstance from "../../pages/api/axiosInstance";
+import { useEffect } from "react";
 
 const schema = yup.object().shape({
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
+  name: yup.string().required("User name is required"),
   email: yup.string().required("Email is required"),
   password: yup.string().min(4).max(15).required("Password is required"),
   confirmedPassword: yup
@@ -153,25 +153,39 @@ const LoginForm = ({
   const formOptions = { resolver: yupResolver(schema) };
   const { register, handleSubmit, formState } = useForm(formOptions);
   const { errors } = formState;
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       console.log("sending request");
 
-  const submitForm = (data) => {
+  //       const loginRes = await axiosInstance.post("/auth/local/register", {
+  //         "name": "lalala",
+  //         "email": "lalaaa@gmail.com",
+  //         "password": "ladsla123"
+  //       });
+  //       console.log("hey", loginRes.data);
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   })();
+  // }, []);
+
+  const submitForm = async (data) => {
     alert("SUCCESS!");
     console.log(data);
-    axiosInstance
-      .post(
-        "v1/auth/local/register",
-        {
-          name: data.firstName,
-          email: data.email,
-          password: data.password,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res.data);
+    try {
+      console.log("sending request");
+      const registerRes = await axiosInstance.post("/auth/local/register", {
+        "name": data.name,
+        "email": data.email,
+        "password": data.password,
       });
-    return false;
+      console.log("hey", registerRes.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
+
   return (
     <Main>
       <Cont>
@@ -179,29 +193,18 @@ const LoginForm = ({
         {/* user input */}
         <Form onSubmit={handleSubmit(submitForm)}>
           <Label className="opensans">
-            First Name*
+            Name*
             <Input
               marginbottom={marginbottom1}
               className="opensans"
               type="text"
-              placeholder="Fist Name"
-              name="firstName"
-              {...register("firstName")}
+              placeholder="Name"
+              name="name"
+              {...register("name")}
             ></Input>
-            <p>{errors.firstName?.message}</p>
+            <p>{errors.name?.message}</p>
           </Label>
-          <Label className="opensans">
-            Last Name*
-            <Input
-              marginbottom={marginbottom1}
-              className="opensans"
-              type="text"
-              placeholder="Last Name"
-              name="lastName"
-              {...register("lastName")}
-            ></Input>
-            <p>{errors.lastName?.message}</p>
-          </Label>
+
           <Label className="opensans">
             Email*
             <Input

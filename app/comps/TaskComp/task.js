@@ -1,7 +1,9 @@
 import react from "react";
 import styled from "styled-components";
 import Button from "../Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import axiosInstance from "../../pages/api/axiosInstance";
 
 const MainCont = styled.div`
   display: ${(props) => props.display};
@@ -104,6 +106,8 @@ const MemCont = styled.div`
 const Avatar = styled.img`
   width: 60px;
   height: 60px;
+  // border: 4px solid #796fe8;
+  border-radius: 50%;
 `;
 
 const Name = styled.div`
@@ -117,7 +121,11 @@ const ButCont = styled.div`
   justify-content: flex-end;
 `;
 
-const TaskComp = ({ display = "flex", onClick = () => {} }) => {
+const TaskComp = ({ display = "none", onClick = () => {} }) => {
+  const { register, handleSubmit } = useForm({
+    shouldUseNativeValidation: true,
+  });
+  //Day Button
   const weekends = [
     { id: "Mon", clicked: false },
     { id: "Tue", clicked: false },
@@ -127,96 +135,173 @@ const TaskComp = ({ display = "flex", onClick = () => {} }) => {
     { id: "Sat", clicked: false },
     { id: "Sun", clicked: false },
   ];
-  const [buttons, setButtons] = useState(weekends);
+  const [weekButtons, setWeekButtons] = useState(weekends);
+  const [roommates, setRoommates] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        console.log("sending request");
+        const user = axiosInstance.post("/auth/local", {
+          email: "meow@gmail.com",
+          password: "meow123",
+        });
+        console.log(user.data);
+        const roommate = await axiosInstance.get("/user/roommates", {});
+        console.log("hey", roommate.data);
+        setRoommates(roommate.data.roommates);
+        console.log("real roomm", roommates);
+      } catch (error) {
+        console.log(error.message);
+      }
+    })();
+  }, []);
 
   function handleButtonClick(buttonId) {
-    const nextState = buttons.map((button) => {
+    const nextState = weekButtons.map((button) => {
       if (button.id !== buttonId) {
         return button;
       }
-      console.log({ ...button });
+      console.log({ ...button, clicked: !button.clicked });
       return { ...button, clicked: !button.clicked };
     });
-    setButtons(nextState);
+    setWeekButtons(nextState);
   }
+
+  //Points Button
+  const points = [
+    { id: "10", span: "points", clicked: false },
+    { id: "20", span: "points", clicked: false },
+    { id: "30", span: "points", clicked: false },
+    { id: "40", span: "points", clicked: false },
+    { id: "50", span: "points", clicked: false },
+    { id: "60", span: "points", clicked: false },
+    { id: "70", span: "points", clicked: false },
+  ];
+  const [pointButtons, setPointButtons] = useState(points);
+
+  function handlePointsClick(pointsId) {
+    const pointState = pointButtons.map((points) => {
+      if (points.id !== pointsId) {
+        //user click only one point
+        return { ...points, clicked: false };
+      }
+      return { ...points, clicked: !points.clicked };
+    });
+    setPointButtons(pointState);
+  }
+
+  function handleRoommatesClick(roommatesId) {
+    const roommateState = roommates.map((roommate) => {
+      if (roommate.id !== roommatesId) {
+        return roommate;
+      }
+      console.log({ ...roommate, clicked: !roommate.clicked });
+      return { ...roommate, clicked: !roommate.clicked };
+    });
+    setRoommates(roommateState);
+  }
+
+  //when user submit the form
+  const submitForm = async (data) => {
+    console.log(data);
+
+    const days = weekButtons.filter((res) => res.clicked).map((ele) => ele.id);
+    const points = pointButtons
+      .filter((res) => res.clicked === true)
+      .map((res) => res.id)[0];
+
+    const assignedUsers = roommates
+      .filter((res) => res.clicked === true)
+      .map((ele) => ele.id);
+
+    console.log(days, points, assignedUsers);
+    try {
+    } catch (error) {}
+  };
 
   return (
     <MainCont display={display}>
       <Cont>
-        <InputCont>
-          <Input1 type="text" placeholder="Add New Task" />{" "}
-          <Input2 type="text" placeholder="Time" />
-        </InputCont>
+        <form onSubmit={handleSubmit(submitForm)}>
+          <InputCont>
+            <Input1
+              type="text"
+              name="title"
+              placeholder="Add New Task"
+              {...register("title")}
+            />
+            <Input2
+              type="text"
+              name="date"
+              placeholder="Time"
+              {...register("data")}
+            />
+          </InputCont>
 
-        <Day>
-          <Head className="opensans">Day</Head>
-          <ButtonCont>
-            {buttons.map((button) => (
-              <DayButton
-                className="opensans"
-                key={button.id}
-                onClick={() => handleButtonClick(button.id)}
-                className={button.clicked ? "test" : null}
-              >
-                {button.id}
-              </DayButton>
-            ))}
-          </ButtonCont>
-        </Day>
+          <Day>
+            <Head className="opensans">Day</Head>
+            <ButtonCont>
+              {weekButtons.map((button) => (
+                <DayButton
+                  type="button"
+                  className="opensans"
+                  key={button.id}
+                  onClick={() => handleButtonClick(button.id)}
+                  className={button.clicked ? "activeButton" : null}
+                >
+                  {button.id}
+                </DayButton>
+              ))}
+            </ButtonCont>
+          </Day>
 
-        <Day>
-          <Head className="opensans">Points</Head>
-          <ButtonCont>
-            <PtsButton className="opensans">
-              10 <Span>Points</Span>
-            </PtsButton>
-            <PtsButton className="opensans">
-              20 <Span>Points</Span>
-            </PtsButton>
-            <PtsButton className="opensans">
-              30 <Span>Points</Span>
-            </PtsButton>
-            <PtsButton className="opensans">
-              40 <Span>Points</Span>
-            </PtsButton>
-            <PtsButton className="opensans">
-              50 <Span>Points</Span>
-            </PtsButton>
-            <PtsButton className="opensans">
-              60 <Span>Points</Span>
-            </PtsButton>
-            <PtsButton className="opensans">
-              70 <Span>Points</Span>
-            </PtsButton>
-          </ButtonCont>
-        </Day>
+          <Day>
+            <Head className="opensans">Points</Head>
+            <ButtonCont>
+              {pointButtons.map((points) => (
+                <PtsButton
+                  type="button"
+                  className="opensans"
+                  key={points.id}
+                  onClick={() => handlePointsClick(points.id)}
+                  className={points.clicked ? "activeButton" : null}
+                >
+                  {points.id} <Span>Points</Span>
+                </PtsButton>
+              ))}
+            </ButtonCont>
+          </Day>
 
-        <Day>
-          <Head className="opensans">Members</Head>
-          <MemWrap>
-            <MemCont>
-              <Avatar src="/Avatar2.png" />
-              <Name className="opensans">Victoria</Name>
-            </MemCont>
-            <MemCont>
-              <Avatar src="/Avatar3.png" />
-              <Name className="opensans">Victoria</Name>
-            </MemCont>
-            <MemCont>
-              <Avatar src="/Avatar2.png" />
-              <Name className="opensans">Victoria</Name>
-            </MemCont>
-          </MemWrap>
-        </Day>
-
-        <ButCont>
-          <Button
-            title="Add"
-            width="122px"
-            margin="0px 40px 40px 0px"
-            onClick={onClick}
-          />
-        </ButCont>
+          <Day>
+            <Head className="opensans">Members</Head>
+            <MemWrap>
+              {roommates.map((roommate) => (
+                <MemCont>
+                  <Avatar
+                    key={roommate.id}
+                    onClick={() => handleRoommatesClick(roommate.id)}
+                    className={roommate.clicked ? "memberBorder" : null}
+                    src="/Avatar2.png"
+                  />
+                  <Name className="opensans">{roommate.name}</Name>
+                </MemCont>
+              ))}
+              <MemCont>
+                <Avatar src="/Avatar2.png" />
+                <Name className="opensans">Victoria</Name>
+              </MemCont>
+            </MemWrap>
+          </Day>
+          <ButCont>
+            <Button
+              title="Add"
+              width="122px"
+              margin="0px 40px 40px 0px"
+              onClick={onClick}
+              type="submit"
+            />
+          </ButCont>
+        </form>
       </Cont>
     </MainCont>
   );

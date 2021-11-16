@@ -23,6 +23,7 @@ flex-direction: column;
 flex:2;
 border-right: 1px #D6D6D6 solid;
 margin-left: 20px;
+
 padding-right: 20px;
 
 `
@@ -50,6 +51,13 @@ const Title = styled.p`
 font-size:35px;
 margin-left: -200px;
 font-weight:700;
+color: #181135;
+
+`
+
+const NavCont = styled.div`
+display:flex;
+
 
 `
 
@@ -103,10 +111,31 @@ export default function Home() {
     setButtonState5(0);
   }
   }
+  const [buttonstate6, setButtonState6] = useState(0);
+  const NotificationClick = () =>{
+      if (buttonstate6===0){
+      setButtonState6(1);
+      setButtonState7(0);
+    }else{
+      setButtonState6(0);
+      setButtonState7(1);
+    }
+    }
   
+    const [buttonstate7, setButtonState7] = useState(0);
+    const BackClick = () =>{
+        if (buttonstate7===0){
+        setButtonState7(1);
+        setButtonState6(0);
+      }else{
+        setButtonState7(0);
+        setButtonState6(1);
+      }
+      }
   return (
     <Cont>
       
+      <NavCont>
       <NavBar2
     
       // user pic src
@@ -123,7 +152,7 @@ export default function Home() {
     onContClick={()=>{
       GlobalNavClick();
     }}
-    width={buttonstate5 === 1 ? '140px' : '288px'}
+    Navwidth={buttonstate5 === 1 ? '140px' : '288px' || buttonstate6 ===1 ? '288px':''}
     display={buttonstate5 === 1 ? 'none' : 'flex'}
     displayLogo={buttonstate5 === 1 ? 'flex' : 'none'}
     displayHome={buttonstate5 === 1 ? 'none' : 'block'}
@@ -134,7 +163,17 @@ export default function Home() {
     displaySetting={buttonstate5 === 1 ? 'none' : 'block'}
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
+
+    onNotificationClick={()=>{
+      NotificationClick();
+    }}
+    onBackClick={()=>{
+      BackClick();
+    }}
+    Contdisplay={buttonstate6 === 1 ? 'none':'flex' || buttonstate7 === 1 ? 'flex':'none'}
+    Contdisplay2={buttonstate6 === 1 ? 'flex':'none'|| buttonstate7 === 1 ? 'none':'flex'}
     />
+    </NavCont>
     <LeftCont>
     <SetNav>
       <Title className="ubuntu">Settings</Title>

@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import {useRouter} from 'next/router';
 import Button from '../Button'
 import PointCont from '../PointCont';
+import Notification from '../Notification';
 
 const CtrlCont = styled.div`
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-width:${props=>props.width};
 height:100vh;
 box-shadow: 0px 4.0133771896362305px 11.036787033081055px 0px #00000014;
 
@@ -27,10 +27,10 @@ top:-70px;
 `
 
 const IconCont = styled.div`
-display: flex;
+display:${props=>props.display};
 flex-direction: column;
 justify-content:center;
-width: 100%;
+width:${props=>props.width};
 height: 100%;
 
 `
@@ -139,23 +139,33 @@ font-weight:700;
 margin-top:15px;
 margin-bottom:15px;
 `
-const BellIcon = styled.img`
-width:20px;
-height:25px;
+const BellIconArea = styled.div`
 position:relative;
 left:245px;
-top:-135px;
+top:-130px;
+`
+const BellIcon = styled.img`
+width:25px;
+height:30px;
 `
 const Alert = styled.div`
 display:${props=>props.display};
 width:16px;
 height:16px;
 border-radius:50%;
+text-align:center;
+align-items:center;
+justify-content:center;
 background-color:#5950E0;
+position:relative;
+top:-45px;
+left:10px;
+`
+const Num = styled.p`
+position:relative;
 color:#FFFFFF;
-position:absolute;
-top:10px;
-left:252px
+font-size:9px;
+top:3px;
 `
 const RoomaLogo = styled.img`
 width:50px;
@@ -170,9 +180,10 @@ const NavBar2 = ({
     name="Esther Howard",
     user_point="100 pts",
     Alertdisplay="block",
+    AltNum="1",
     // making nav width change
     onContClick=()=>{},
-    width="288px",
+    Navwidth="288px",
     display="flex",
     displayLogo="none",
     displayHome="block",
@@ -195,16 +206,32 @@ const NavBar2 = ({
     color5="#4E4E4E",
     src5="/search.svg",
     color6="#4E4E4E",
-    src6="/Settings_Icon.svg"
- 
-
+    src6="/Settings_Icon.svg",
+    // notification clicked, change the interface
+    onNotificationClick=()=>{},
+    Contdisplay="flex",
+    Contdisplay2="none",
+    // notification clicked and back to navbar view
+    onBackClick=()=>{},
+    NotificationWidth="288px",
 }) => {
     const router = useRouter();
-    return <CtrlCont onClick={onContClick} width={width}>
-           <IconCont>
+    return <CtrlCont >
+            <IconCont display={Contdisplay2}>
+            <Notification
+            onBackClick={onBackClick}
+            NotificationWidth={NotificationWidth}
+            />
+            </IconCont>
+           <IconCont  display={Contdisplay} onClick={onContClick} width={Navwidth}>
                {/*Wide global nav top cont from here*/}
               <TopCont display={display}>
-                  <BellIcon src="/Bell_Icon.svg"/><Alert display={Alertdisplay}/>
+                  <BellIconArea  onClick={onNotificationClick} >
+                  <BellIcon src="/Bell_Icon.svg"/>
+                    <Alert display={Alertdisplay}>
+                        <Num>{AltNum}</Num>
+                    </Alert>
+                  </BellIconArea>
                         <ProfileCont>
                             <Pic src={src}></Pic>
                             <Name className="opensans">{name}</Name>

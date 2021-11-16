@@ -35,11 +35,12 @@ height:20px;
 `
 
 const Tabs = ({
-display="flex"
+display="none",
+onTabClick=()=>{},
 })=>{
   return<MainCont display={display}>
 <TabCont>
-    {/* <Button
+    <Button
     title="Garbage"
     width="120px"
     height="40px"
@@ -62,9 +63,9 @@ display="flex"
     fontSize="16px"
     fontWeight="400"
     margin="15px"
-    /> */}
+    />
     <AddBtn>
-    <PlusIcon src="/add.svg"/>
+    <PlusIcon src="/add.svg" onClick={onTabClick}/>
     </AddBtn>
   </TabCont>
 

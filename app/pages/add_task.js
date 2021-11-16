@@ -20,12 +20,14 @@ const MainCont = styled.div`
 const LeftCont = styled.div`
 display:flex;
 flex-grow:1;
+position: fixed;
 `
 
 const MiddleCont = styled.div`
 display:flex;
 flex-direction:column;
 flex-grow:9;
+margin-left:300px;
 
 `
 
@@ -59,18 +61,57 @@ export default function Add_task() {
     setButtonState5(0);
   }
   }
-
-  //Onclick show Add Task Comp
-  const [showTaskComp, setShowTaskComp] = useState(0);
-
-  const HandleClickTaskComp1 = () =>{
-    setShowTaskComp(1);
-  }
-  const HandleClickTaskComp2 = () =>{
-    setShowTaskComp(2);
-  }
-
+  const [buttonstate6, setButtonState6] = useState(0);
+  const NotificationClick = () =>{
+      if (buttonstate6===0){
+      setButtonState6(1);
+      setButtonState7(0);
+    }else{
+      setButtonState6(0);
+      setButtonState7(1);
+    }
+    }
   
+    const [buttonstate7, setButtonState7] = useState(0);
+    const BackClick = () =>{
+        if (buttonstate7===0){
+        setButtonState7(1);
+        setButtonState6(0);
+      }else{
+        setButtonState7(0);
+        setButtonState6(1);
+      }
+      }
+  //Onclick show Add Task Comp
+  const [buttonstate8, setButtonState8] = useState(0);
+  const HandleClickTaskComp1 = () =>{
+    if (buttonstate8===0){
+      setButtonState8(1);
+    }
+  }
+  const [buttonstate9, setButtonState9] = useState(0);
+  const HandleClickTaskComp2 = () =>{
+    if (buttonstate9 ===0){
+      setButtonState9(1);
+      setButtonState8(0);
+      setButtonState10(0);
+    }
+   
+  }
+  const [buttonstate10, setButtonState10] = useState(0);
+  const HandleClickTaskComp3 = () =>{
+    if (buttonstate10 ===0){
+      setButtonState10(1); 
+      setButtonState9(0);
+      setButtonState8(0);  
+    }
+    else if (buttonstate10 === 1){
+      setButtonState8(0);  
+    }
+   else{
+     setButtonState10(0);
+   }
+  }
   return (
   
     <MainCont>
@@ -92,7 +133,7 @@ export default function Add_task() {
     onContClick={()=>{
       GlobalNavClick();
     }}
-    width={buttonstate5 === 1 ? '140px' : '288px'}
+    Navwidth={buttonstate5 === 1 ? '140px' : '288px' || buttonstate6 ===1 ? '288px':''}
     display={buttonstate5 === 1 ? 'none' : 'flex'}
     displayLogo={buttonstate5 === 1 ? 'flex' : 'none'}
     displayHome={buttonstate5 === 1 ? 'none' : 'block'}
@@ -103,6 +144,15 @@ export default function Add_task() {
     displaySetting={buttonstate5 === 1 ? 'none' : 'block'}
     alignItems={buttonstate5 === 1 ? 'center':'unset'}
     justifyContent={buttonstate5 ===1 ? 'center':'space-even'}
+
+    onNotificationClick={()=>{
+      NotificationClick();
+    }}
+    onBackClick={()=>{
+      BackClick();
+    }}
+    Contdisplay={buttonstate6 === 1 ? 'none':'flex' || buttonstate7 === 1 ? 'flex':'none'}
+    Contdisplay2={buttonstate6 === 1 ? 'flex':'none'|| buttonstate7 === 1 ? 'none':'flex'}
     />
       </LeftCont>
       <MiddleCont>
@@ -122,21 +172,30 @@ export default function Add_task() {
        width="132px"
        height="50px"
        borderRadius="4.2px"
-       display={showTaskComp === 1 ? 'none' : 'flex'}
-      
        onClick={() =>{
         HandleClickTaskComp1();
         
       }} 
+      display={buttonstate8 || buttonstate9 || buttonstate10 === 1 ? 'none':'flex'}
+    
       />
-      <Tab  display={showTaskComp === 1 ? 'flex' : 'none'}/>
-      <TaskComp  display={showTaskComp === 1 ? 'flex' : 'none'}
+      <Tab  
+      display={buttonstate9 || buttonstate10 === 1 ? 'flex':'none'}
+      onTabClick={()=>{
+        HandleClickTaskComp3();
+      }}
+
+      />
+      <TaskComp  
       onClick={() =>{
         HandleClickTaskComp2();
-        
-      }} 
+      }}
+      display={buttonstate8 || buttonstate10 === 1 ? 'flex':'none'|| buttonstate9 === 1 ? 'none':'flex'}
+      
+      
       />
-      <Assigned display={showTaskComp === 2? 'flex' : 'none'}/>
+      <Assigned 
+      display={buttonstate9 === 1 ? 'flex':'none'|| buttonstate10 === 1 ? 'none':'flex'}/>
     </AddTaskCont>
     
       </MiddleCont>
