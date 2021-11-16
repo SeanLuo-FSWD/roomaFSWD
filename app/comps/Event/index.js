@@ -76,12 +76,14 @@ const Event = ({
   };
 
   const [Events, setEvents] = useState([]);
-  const [Refresh, setRefresh] = useState(false)
+  const [Refresh, setRefresh] = useState(false);
   useEffect(() => {
     if (displayForm === false) {
-      const startEndDate = new Date(CalDate)
-      const eveduration = `?startAt=${CustomUtil.flattenHours(startEndDate)}&endAt=${CustomUtil.flattenHours(startEndDate)}`;
-      getEvents("", (err, result) => {
+      const startEndDate = new Date(CalDate);
+      const eveduration = `?startAt=${CustomUtil.flattenHours(
+        startEndDate
+      )}&endAt=${CustomUtil.flattenHours(startEndDate)}`;
+      getEvents(eveduration, (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -93,7 +95,7 @@ const Event = ({
 
   const onSetRefresh = () => {
     setRefresh(!Refresh);
-  }
+  };
 
   const displayEvents = () => {
     console.log("displayEvents at Event");
@@ -121,7 +123,7 @@ const Event = ({
 
       return listCompo;
     } else {
-      return <p style={{textAlign: "center"}}>No event for this day</p>
+      return <p style={{ textAlign: "center" }}>No event for this day</p>;
     }
   };
 
@@ -141,7 +143,9 @@ const Event = ({
               // visibility2={visibility2}
               onEventSubmitClick={handleEventSubmitClick}
             />
-          ) : displayEvents()}
+          ) : (
+            displayEvents()
+          )}
           {/* {Events && displayEvents()}
           <RemindContent
             bgcolor={bgcolor}

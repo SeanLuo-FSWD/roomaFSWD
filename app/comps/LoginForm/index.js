@@ -6,7 +6,7 @@ import CurrentMsg from "../../UI/CurrentMsg";
 import ErrorMsg from "../../UI/ErrorMsg";
 import { globalContext } from "../../store/globalContext";
 import { loginUser } from "../../api/auth.api";
-
+import { server_api } from "../../config/env.config";
 const Main = styled.div`
   display: flex;
   flex-direction: column;
@@ -174,8 +174,8 @@ const LoginForm = ({
 
     loginUser(user_obj, (err, result) => {
       if (err) {
-        console.log("zzzzzzzzzzzzzzzzzzzzzzz");
-        console.log(err);
+        console.log("xxxxxxxxxxxxxxxxxxxxxx");
+        console.log(setCurrentError);
         setCurrentError(err.err);
       } else {
         setCurrentUser({
@@ -232,7 +232,7 @@ const LoginForm = ({
         </Divider>
 
         {/* Google Login */}
-        <GoogleButton className="opensans">
+        <GoogleButton className="opensans" onClick={googleLogin}>
           <Icon src="/Google.svg" />
           Login with Google
         </GoogleButton>
@@ -244,6 +244,10 @@ const LoginForm = ({
       </Cont>
     </Main>
   );
+};
+
+const googleLogin = () => {
+  window.open(`${server_api}auth/google`, "_self");
 };
 
 export default LoginForm;

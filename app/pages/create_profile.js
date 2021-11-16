@@ -30,9 +30,9 @@ const RightCont = styled.div`
   flex: 1;
 `;
 
-export default function CreateProfile({ user }) {
+export default function CreateProfile(props) {
   console.log("sssssssssssssssssssssssss");
-  console.log(user);
+  console.log(props.auth.user);
 
   return (
     <MainCont>
@@ -53,12 +53,24 @@ export default function CreateProfile({ user }) {
       </LeftCont>
 
       <RightCont>
-        <NewProfile user={user} />
+        <NewProfile user={props.auth.user} />
       </RightCont>
     </MainCont>
   );
 }
 
-export const getServerSideProps = (context) => {
-  return requireAuthen(context);
+export const getServerSideProps = async (context) => {
+
+  let authProp = await requireAuthen(context, false);
+  if (!authProp.hasOwnProperty("user")) {
+    return { redirect: authProp };
+  } else {
+    return {
+      props: {
+        auth: authProp
+        // events: Math.random(),
+      },
+    };
+  }
+  // return requireAuthen(context);
 };

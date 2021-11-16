@@ -1,10 +1,12 @@
+import { useState, useContext, useEffect } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import * as React from "react";
-import { useState } from "react";
 import Button from "../../comps/Button";
 import { useRouter } from "next/router";
 import { joinRoom } from "../../api/room.api";
+import { globalContext } from "../../store/globalContext";
+import ErrorMsg from "../../UI/ErrorMsg";
 
 const MainCont = styled.div`
   display: flex;
@@ -56,14 +58,34 @@ const JoinFrom = ({ routeToColor = "/pick_a_color" }) => {
   const router = useRouter();
   const [InvCode, setInvCode] = useState("");
 
-  const onJoinRoom = async () => {
+  const {
+    currentUser,
+    setCurrentUser,
+    currentError,
+    setCurrentError,
+    setCurrentMsg,
+    currentMsg,
+  } = useContext(globalContext);
+
+  useEffect(() => {
+    return () => {
+      setCurrentError("");
+    };
+  }, []);
+
+  const onJoinRoom = () => {
     const room_obj = {
       invcode: InvCode,
     };
-    await joinRoom(room_obj, (err) => {
+    // console.log("ddddddddddddddddddddddd");
+    // console.log(InvCode);
+    // setCurrentError("InvCode");
+    joinRoom(room_obj, (err) => {
       if (err) {
+        console.log("2222222222222222");
         console.log(err);
-        // setCurrentError(err);
+        console.log(setCurrentError);
+        setCurrentError("Join room failed, please verify your invite code.");
       } else {
         // Need to nest a join room api before going to "/" here
         // router.push(routeToLogin);
@@ -99,6 +121,7 @@ const JoinFrom = ({ routeToColor = "/pick_a_color" }) => {
       </Cont>
       <Line />
       <Cont>
+        {currentError && <ErrorMsg errmsg={currentError}></ErrorMsg>}
         <Heading className="opensans">Join with a Code</Heading>
         <Para className="opensans">
           Join by getting an invite code from your room members

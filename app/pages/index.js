@@ -10,6 +10,7 @@ import CalendarComp from "../comps/CalendarComp";
 import Event from "../comps/Event";
 import { requireAuthen } from "../api/require.authen";
 import { globalContext } from "../store/globalContext";
+import CreateProfile from "./create_profile";
 
 const MainCont = styled.div`
   display: flex;
@@ -261,6 +262,7 @@ export default function Home(props) {
           onSetcalTrigger={onSetcalTrigger}
         />
       </RightCont>
+
     </MainCont>
   );
 }
@@ -275,7 +277,7 @@ export const getServerSideProps = async (context) => {
     return {
       props: {
         auth: authProp,
-        events: Math.random(),
+        // events: Math.random(),
       },
     };
   }

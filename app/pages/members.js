@@ -184,9 +184,9 @@ export default function Members(props) {
         <Heading className="ubuntu">Members</Heading>
 
         {displayMembers()}
-        <CardCont>
-          <MemberProfile />
-          {/* <AddMembers
+        {/* <CardCont>
+          <MemberProfile /> */}
+        {/* <AddMembers
         heading="Add Members"
         ps="Start by adding members"
         title="Go to Community"
@@ -197,7 +197,7 @@ export default function Members(props) {
           router.push("/community")
         }}
         /> */}
-        </CardCont>
+        {/* </CardCont> */}
       </LeftCont>
 
       {/* Right Container */}

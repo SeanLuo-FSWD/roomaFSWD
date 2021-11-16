@@ -94,7 +94,7 @@ const Invite = ({
       if (err) {
         console.log("onGetCode onGetCode err");
         console.log(err);
-        setCurrentError(err.err);
+        // setCurrentError(err.err);
       } else {
         console.log("vvvvvvvvvvvvvvvvvvv");
         console.log(result.data.invcode);

@@ -151,7 +151,7 @@ const joinRoom = async (room_obj, cb) => {
         cb(new Error(serverCrash));
       } else {
         cb(
-          "Join room failed, please check your invite code, or contact Hailey, Jason or Sean"
+          "Join room failed, please verify your invite code."
         );
       }
     });
