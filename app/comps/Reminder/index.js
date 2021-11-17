@@ -84,7 +84,6 @@ const Icon = styled.img`
 `;
 
 const Reminder = ({
-  heading = "Today",
   def_visibility = "visible",
   reminder_display = "block",
   reminder_completed_display = "block",
@@ -94,45 +93,80 @@ const Reminder = ({
   title_more = "More ",
   rewards_display = "block",
   checked = "checked",
-  //complete_display="block",
-  //more_display="flex",
-  //complete_width="235px",
-  //complete_height="47px",
-  //complete_borderRadius="8px",
-  //more_after_display="none",
   onMoreClick = () => {},
   onCompleteClick = () => {},
   /* After expanding completed button on the top */
   //onCompleteClick_After=()=>{},
 }) => {
   const [todos, setTodos] = useState([]);
+  const [todayTask, setTodayTask] = useState([]);
+  const [tmwTask, setTmwTask] = useState([]);
+  const [roommates, setRoommates] = useState([]);
+
   useEffect(() => {
     (async () => {
       try {
         console.log("sending request");
         const todoRes = await axiosInstance.get("/task/list", {});
         setTodos(todoRes.data.tasks);
-        // Your array const
-
+        console.log(todos);
         const dates = todos.map((o) => ({
           title: o.title,
           id: o.id,
           day: dayjs(o.date).format("MM-DD-YY"),
-          user: o.id,
+          user: o.userId,
         }));
 
-        console.log(dates);
+        const roommate = await axiosInstance.get("/user/roommates", {});
 
-        let date = new Date().toString();
-        date = dayjs(date).format("MM-DD-YY");
-        console.log(date);
-        console.log(dates);
+        setRoommates(roommate.data.roommates);
+        console.log("roomma", roommates);
 
-        const todayTasks = dates.filter((o) => o.day === date);
+        const date = new Date().toString();
+        const today = dayjs(date).format("MM-DD-YY");
+        const todaydate = new Date();
+        let tomorrowdate = new Date();
+        tomorrowdate.setDate(todaydate.getDate() + 1);
+        const tomorrow = dayjs(tomorrowdate).format("MM-DD-YY");
+        //returns the tomorrow date
 
-        console.log(todayTasks);
+        console.log("this is the dates", dates);
 
-        console.log(date);
+        const todaywithoutColor = dates
+          .map((file) => {
+            return { ...file, color: "", name: "" };
+          })
+          .filter((o) => o.day === today);
+
+        const tmwtiwhourColor = dates
+          .map((file) => {
+            return { ...file, color: "", name: "" };
+          })
+          .filter((o) => o.day === tomorrow);
+
+        console.log(todaywithoutColor);
+
+        todaywithoutColor.forEach((e, index) => {
+          if (e.color == "") {
+            const user = roommates.find((o) => o.id === e.user);
+            e.color = user.color;
+            e.name = user.name;
+          }
+        });
+
+        tmwtiwhourColor.forEach((e, index) => {
+          if (e.color == "") {
+            const user = roommates.find((o) => o.id === e.user);
+            e.color = user.color;
+            e.name = user.name;
+            // console.log(e.color);
+          }
+        });
+
+        setTodayTask(todaywithoutColor);
+        setTmwTask(tmwtiwhourColor);
+        console.log("this is today's work", todayTask);
+        console.log("this is tmw's work", tmwTask);
       } catch (err) {
         console.log(err.message);
       }
@@ -146,7 +180,7 @@ const Reminder = ({
         <CardCont height={height}>
           <scrollable-component>
             <HeadingCont>
-              <Heading className="opensans">{heading}</Heading>
+              <Heading className="opensans">Today</Heading>
               <CompleteCont onClick={onCompleteClick}>
                 <Completed className="opensans">
                   {title_complete}
@@ -154,9 +188,44 @@ const Reminder = ({
                 </Completed>
               </CompleteCont>
             </HeadingCont>
-            {/* {todayTasks.map(todo)} */}
-
-            <RemindContent
+            {todayTask.length == 0 ? (
+              <DefMessage className="opensans">
+                Nothing is scheduled for today.
+              </DefMessage>
+            ) : (
+              todayTask.map((todo, index) => (
+                <RemindContent
+                  key={index}
+                  bgcolor={todo.color}
+                  display={reminder_display}
+                  task_name={todo.title}
+                  vlcolor={todo.color}
+                  name={todo.name}
+                  date="5:00-7:00PM"
+                  margintop="0px;"
+                />
+              ))
+            )}
+            <Heading className="opensans">Tomorrow</Heading>
+            {tmwTask.length == 0 ? (
+              <DefMessage className="opensans">
+                Nothing is scheduled for tomorrow.
+              </DefMessage>
+            ) : (
+              tmwTask.map((todo, index) => (
+                <RemindContent
+                  key={index}
+                  bgcolor={todo.color}
+                  display={reminder_display}
+                  task_name={todo.title}
+                  vlcolor={todo.color}
+                  name={todo.name}
+                  date="5:00-7:00PM"
+                  margintop="0px;"
+                />
+              ))
+            )}
+            {/* <RemindContent
               bgcolor="rgba(240,199,137,30%)"
               display={reminder_display}
               task_name="On going Task Name"
@@ -165,23 +234,7 @@ const Reminder = ({
               date="5:00-7:00PM"
               margintop="0px;"
             />
-            <RemindContent
-              bgcolor="rgba(192,182,255,30%)"
-              display={reminder_display}
-              task_name="On going Task Name"
-              vlcolor="#C0B6FF"
-              name="Name"
-              date="5:00-7:00PM"
-            />
-            <RemindContent
-              bgcolor="rgba(173,217,183,30%)"
-              display={reminder_display}
-              task_name="On going Task Name"
-              vlcolor="#ADD9B7"
-              name="Name"
-              date="5:00-7:00PM"
-            />
-
+            
             <Completed_RemindContent
               bgcolor="rgba(240,199,137,15%)"
               display={reminder_completed_display}
@@ -190,10 +243,10 @@ const Reminder = ({
               name="Name"
               date="5:00-7:00PM"
               checked={checked}
-            />
-            <DefMessage className="opensans" visibility={def_visibility}>
+            /> */}
+            {/* <DefMessage className="opensans">
               Nothing is scheduled for today.
-            </DefMessage>
+            </DefMessage> */}
             <MoreCont onClick={onMoreClick} top={top}>
               <More className="opensans">
                 <Divider />
