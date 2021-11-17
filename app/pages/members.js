@@ -104,7 +104,7 @@ export default function Members(props) {
   const displayMembers = () => {
     const user_list = props.users.map((user) => {
       return (
-        <CardCont>
+        <CardCont key={user.id}>
           <MemberProfile name={user.name} avatar={user.pfp} />
         </CardCont>
       );
