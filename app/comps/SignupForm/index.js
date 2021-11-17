@@ -1,20 +1,10 @@
-import react from "react";
+import { useState, useContext } from "react";
 import * as React from "react";
 import styled from "styled-components";
-import { useForm, useState } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import axiosInstance from "../../pages/api/axiosInstance";
-import { useEffect } from "react";
-
-const schema = yup.object().shape({
-  name: yup.string().required("User name is required"),
-  email: yup.string().required("Email is required"),
-  password: yup.string().min(4).max(15).required("Password is required"),
-  confirmedPassword: yup
-    .string()
-    .oneOf([yup.ref("password")], "Password do not match"),
-});
+import { useRouter } from "next/router";
+import { register } from "../../api/auth.api";
+import { globalContext } from "../../store/globalContext";
+import ErrorMsg from "../../UI/errorMsg";
 
 const Main = styled.div`
   display: flex;
@@ -42,7 +32,7 @@ const Heading = styled.div`
 const Label = styled.label`
   display: flex;
   flex-direction: column;
-  width: 100%
+  width: 50%;
   font-size: 20px;
   font-weight: 500;
   color: #181135;
@@ -73,7 +63,7 @@ const Link = styled.button`
 
 //login button
 const LoginButton = styled.button`
-  width: 100%;
+  width: 50%;
   padding: 25px;
   border-radius: 10px;
   border: none;
@@ -141,117 +131,113 @@ const Link2 = styled.button`
   font-weight: 700;
 `;
 
-const Form = styled.form`
-  width: 50%;
-`;
-
 const LoginForm = ({
   marginbottom1 = "25px",
   marginbottom2 = "25px",
   marginbottom3 = "10px",
+  routeToJoin = "/join",
+  routeToLogin = "/login",
 }) => {
-  const formOptions = { resolver: yupResolver(schema) };
-  const { register, handleSubmit, formState } = useForm(formOptions);
-  const { errors } = formState;
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       console.log("sending request");
+  const {
+    currentUser,
+    setCurrentUser,
+    currentError,
+    setCurrentError,
+    setCurrentMsg,
+  } = useContext(globalContext);
 
-  //       const loginRes = await axiosInstance.post("/auth/local/register", {
-  //         "name": "lalala",
-  //         "email": "lalaaa@gmail.com",
-  //         "password": "ladsla123"
-  //       });
-  //       console.log("hey", loginRes.data);
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   })();
-  // }, []);
+  const router = useRouter();
 
-  const submitForm = async (data) => {
-    alert("SUCCESS!");
-    console.log(data);
-    try {
-      console.log("sending request");
-      const registerRes = await axiosInstance.post("/auth/local/register", {
-        name: data.name,
-        email: data.email,
-        password: data.password,
-      });
-      console.log("hey", registerRes.data);
-    } catch (err) {
-      console.log(err.message);
-    }
+  const [RegData, setRegData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const onFormChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setRegData({ ...RegData, [name]: value });
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    const user_obj = {
+      name: RegData.name,
+      email: RegData.email,
+      password: RegData.password,
+    };
+
+    register(user_obj, (err, result) => {
+      if (err) {
+        console.log(err);
+        setCurrentError(err);
+      } else {
+        setCurrentMsg(`Registration successful. Please login now.`);
+
+        router.push(routeToLogin);
+      }
+    });
   };
 
   return (
     <Main>
       <Cont>
+        {currentError && <ErrorMsg errmsg={currentError}></ErrorMsg>}
+        {/* <form> */}
         <Heading className="ubuntu">Sign Up</Heading>
         {/* user input */}
-        <Form onSubmit={handleSubmit(submitForm)}>
-          <Label className="opensans">
-            Name*
-            <Input
-              marginbottom={marginbottom1}
-              className="opensans"
-              type="text"
-              placeholder="Name"
-              name="name"
-              {...register("name")}
-            ></Input>
-            <p>{errors.name?.message}</p>
-          </Label>
+        <Label className="opensans">
+          Name*
+          <Input
+            marginbottom={marginbottom1}
+            className="opensans"
+            type="text"
+            placeholder="Name"
+            name="name"
+            onChange={onFormChange}
+            required
+          ></Input>
+        </Label>
+        <Label className="opensans">
+          Email*
+          <Input
+            marginbottom={marginbottom2}
+            className="opensans"
+            type="text"
+            placeholder="Email"
+            name="email"
+            onChange={onFormChange}
+            required
+          ></Input>
+        </Label>
 
-          <Label className="opensans">
-            Email*
-            <Input
-              marginbottom={marginbottom2}
-              className="opensans"
-              type="text"
-              placeholder="Email"
-              name="email"
-              {...register("email")}
-            ></Input>
-            <p>{errors.email?.message}</p>
-          </Label>
+        <Label className="opensans">
+          Password*
+          <Input
+            marginbottom={marginbottom3}
+            className="opensans"
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={onFormChange}
+            required
+          ></Input>
+        </Label>
 
-          <Label className="opensans">
-            Password*
-            <Input
-              marginbottom={marginbottom3}
-              className="opensans"
-              type="password"
-              placeholder="Password"
-              name="password"
-              {...register("password")}
-            ></Input>
-          </Label>
-
-          <Label className="opensans">
-            Confirm Password*
-            <Input
-              marginbottom={marginbottom3}
-              className="opensans"
-              type="password"
-              placeholder="Confirm Password"
-              name="password"
-              {...register("confirm password")}
-            ></Input>
-          </Label>
-
-          {/* Signup Button */}
-          {/* submit the data */}
-          <LoginButton type="submit" className="opensans">
-            Sign Up
-          </LoginButton>
-        </Form>
+        {/* Login Button */}
+        <LoginButton
+          //   onClick={() => router.push(routeToJoin)}
+          onClick={handleRegister}
+          className="opensans"
+        >
+          Sign up
+        </LoginButton>
+        {/* </form> */}
 
         <Signup className="opensans">
           <Text> Already have an account?</Text>
-          <Link2>Sign In</Link2>
+          <Link2 onClick={() => router.push(routeToLogin)}>Sign In</Link2>
         </Signup>
 
         <Divider>
