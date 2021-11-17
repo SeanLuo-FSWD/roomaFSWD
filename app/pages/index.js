@@ -245,7 +245,7 @@ export default function Home(props) {
           day={CalDate ? CalDate.toDateString() : ""}
           // week="Select date above to view events"
           bgcolor="rgba(240,199,137,30%)"
-          visibility="visible"
+          // visibility="visible"
           task_name="Event Name"
           vlcolor="#F0C789"
           name="Name"
