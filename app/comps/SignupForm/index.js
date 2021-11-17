@@ -176,13 +176,13 @@ const LoginForm = ({
     try {
       console.log("sending request");
       const registerRes = await axiosInstance.post("/auth/local/register", {
-        "name": data.name,
-        "email": data.email,
-        "password": data.password,
+        name: data.name,
+        email: data.email,
+        password: data.password,
       });
       console.log("hey", registerRes.data);
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      console.log(err.message);
     }
   };
 

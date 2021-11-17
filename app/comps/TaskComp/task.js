@@ -4,6 +4,8 @@ import Button from "../Button";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../pages/api/axiosInstance";
+import { TimePicker } from "antd";
+import "antd/dist/antd.css";
 
 const MainCont = styled.div`
   display: ${(props) => props.display};
@@ -27,16 +29,16 @@ const InputCont = styled.div`
   justify-content: space-evenly;
 `;
 const Input1 = styled.input`
-  padding: 20px 10px 10px 20px;
+  padding: 15px;
   border: #c8c8c8 1px solid;
-  width: 200px;
-  font-size: 19px;
+  width: 50%;
+  font-size: 15px;
   font-weight: 400;
   border-radius: 10px;
   margin-bottom: ${(props) => props.marginbottom};
-  margin-top: 10px;
   border: none;
   background-color: #f6f6f6;
+  margin-right: 10px;
 `;
 const Input2 = styled.input`
   padding: 20px 10px 10px 20px;
@@ -58,7 +60,7 @@ const Day = styled.div`
 const Head = styled.div`
   font-size: 25px;
   font-weight: 700;
-  margin: 0px 0px 10px 25px;
+  // margin: 0px 0px 10px 25px;
   color: #181135;
 `;
 const ButtonCont = styled.div`
@@ -127,16 +129,18 @@ const TaskComp = ({ display = "none", onClick = () => {} }) => {
   });
   //Day Button
   const weekends = [
-    { id: "Mon", clicked: false },
-    { id: "Tue", clicked: false },
-    { id: "Wed", clicked: false },
-    { id: "Thur", clicked: false },
-    { id: "Fri", clicked: false },
-    { id: "Sat", clicked: false },
-    { id: "Sun", clicked: false },
+    { id: "Monday", clicked: false, displayName: "Mon" },
+    { id: "Tuesday", clicked: false, displayName: "Tue" },
+    { id: "Wednesday", clicked: false, displayName: "Thur" },
+    { id: "Thursday", clicked: false, displayName: "Wed" },
+    { id: "Friday", clicked: false, displayName: "Fri" },
+    { id: "Saturday", clicked: false, displayName: "Sat" },
+    { id: "Sunday", clicked: false, displayName: "Sun" },
   ];
   const [weekButtons, setWeekButtons] = useState(weekends);
+  const [originalRoom, setOriginalRoom] = useState([]);
   const [roommates, setRoommates] = useState([]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -148,6 +152,7 @@ const TaskComp = ({ display = "none", onClick = () => {} }) => {
         console.log(user.data);
         const roommate = await axiosInstance.get("/user/roommates", {});
         console.log("hey", roommate.data);
+        setOriginalRoom(roommate.data.roommates);
         setRoommates(roommate.data.roommates);
         console.log("real roomm", roommates);
       } catch (error) {
@@ -202,27 +207,45 @@ const TaskComp = ({ display = "none", onClick = () => {} }) => {
   }
 
   //when user submit the form
-  const submitForm = async (data) => {
-    console.log(data);
-
-    const days = weekButtons.filter((res) => res.clicked).map((ele) => ele.id);
-    const points = pointButtons
-      .filter((res) => res.clicked === true)
-      .map((res) => res.id)[0];
-
-    const assignedUsers = roommates
-      .filter((res) => res.clicked === true)
-      .map((ele) => ele.id);
-
-    console.log(days, points, assignedUsers);
+  const submitForm = async (data, e) => {
     try {
-    } catch (error) {}
+      const days = weekButtons
+        .filter((res) => res.clicked)
+        .map((ele) => ele.id);
+      const pts = pointButtons
+        .filter((res) => res.clicked === true)
+        .map((res) => res.id)[0];
+      const assignedUsers = roommates
+        .filter((res) => res.clicked === true)
+        .map((ele) => ele.id);
+      const date = new Date().toISOString();
+
+      const addTodo = await axiosInstance.post("/task/create", {
+        title: data.title,
+        points: pts,
+        assignedUsers: assignedUsers,
+        days: days,
+        startAt: date,
+      });
+      e.target.reset();
+      setWeekButtons(weekends);
+      setPointButtons(points);
+      setRoommates(originalRoom);
+      //clear fields after submit
+
+      console.log(addTodo);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
+  function onChange(time, timeString) {
+    console.log(time, timeString);
+  }
 
   return (
     <MainCont display={display}>
       <Cont>
-        <form onSubmit={handleSubmit(submitForm)}>
+        <form className="todoForm" onSubmit={handleSubmit(submitForm)}>
           <InputCont>
             <Input1
               type="text"
@@ -230,14 +253,20 @@ const TaskComp = ({ display = "none", onClick = () => {} }) => {
               placeholder="Add New Task"
               {...register("title")}
             />
-            <Input2
-              type="text"
+            {/* <Input2
+              className="opensans"
+              type="time"
               name="date"
               placeholder="Time"
               {...register("data")}
+            /> */}
+            <TimePicker
+              className="timePicker"
+              use12Hours
+              format="h:mm a"
+              onChange={onChange}
             />
           </InputCont>
-
           <Day>
             <Head className="opensans">Day</Head>
             <ButtonCont>
@@ -249,7 +278,7 @@ const TaskComp = ({ display = "none", onClick = () => {} }) => {
                   onClick={() => handleButtonClick(button.id)}
                   className={button.clicked ? "activeButton" : null}
                 >
-                  {button.id}
+                  {button.displayName}
                 </DayButton>
               ))}
             </ButtonCont>
@@ -276,7 +305,7 @@ const TaskComp = ({ display = "none", onClick = () => {} }) => {
             <Head className="opensans">Members</Head>
             <MemWrap>
               {roommates.map((roommate) => (
-                <MemCont>
+                <MemCont key={roommate.id}>
                   <Avatar
                     key={roommate.id}
                     onClick={() => handleRoommatesClick(roommate.id)}
@@ -286,10 +315,10 @@ const TaskComp = ({ display = "none", onClick = () => {} }) => {
                   <Name className="opensans">{roommate.name}</Name>
                 </MemCont>
               ))}
-              <MemCont>
+              {/* <MemCont>
                 <Avatar src="/Avatar2.png" />
                 <Name className="opensans">Victoria</Name>
-              </MemCont>
+              </MemCont> */}
             </MemWrap>
           </Day>
           <ButCont>

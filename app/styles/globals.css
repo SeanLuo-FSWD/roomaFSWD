@@ -132,3 +132,18 @@ a {
   background-color: #f6f5fe;
   color: black;
 }
+
+.ant-picker {
+  padding: 20px 10px 10px 20px;
+  border: #c8c8c8 1px solid !important;
+  width: 40%;
+  font-size: 19px;
+  font-weight: 400;
+  border-radius: 10px !important;
+  margin-top: 10px;
+  border: none !important;
+  background-color: #f6f6f6 !important;
+}
+.todoForm {
+  padding-top: 10px;
+}
