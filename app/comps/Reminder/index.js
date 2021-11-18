@@ -99,28 +99,23 @@ const Reminder = ({
   //onCompleteClick_After=()=>{},
 }) => {
   const [todos, setTodos] = useState([]);
-  const [todayTask, setTodayTask] = useState([]);
-  const [tmwTask, setTmwTask] = useState([]);
   const [roommates, setRoommates] = useState([]);
+  const [todotoday, setTodoToday] = useState([]);
+  const [todotmw, setTodoTmw] = useState([]);
+
+  const backgroundColor = (e) => {
+    console.log(e);
+    return e + "70";
+  };
 
   useEffect(() => {
     (async () => {
       try {
-        console.log("sending request");
-        const todoRes = await axiosInstance.get("/task/list", {});
-        setTodos(todoRes.data.tasks);
-        console.log(todos);
-        const dates = todos.map((o) => ({
-          title: o.title,
-          id: o.id,
-          day: dayjs(o.date).format("MM-DD-YY"),
-          user: o.userId,
-        }));
-
+        // console.log("if I have todo", todos);
         const roommate = await axiosInstance.get("/user/roommates", {});
-
+        console.log(roommate.data);
         setRoommates(roommate.data.roommates);
-        console.log("roomma", roommates);
+        //roommates
 
         const date = new Date().toString();
         const today = dayjs(date).format("MM-DD-YY");
@@ -128,45 +123,47 @@ const Reminder = ({
         let tomorrowdate = new Date();
         tomorrowdate.setDate(todaydate.getDate() + 1);
         const tomorrow = dayjs(tomorrowdate).format("MM-DD-YY");
-        //returns the tomorrow date
+        //days
 
-        console.log("this is the dates", dates);
-
-        const todaywithoutColor = dates
-          .map((file) => {
-            return { ...file, color: "", name: "" };
-          })
-          .filter((o) => o.day === today);
-
-        const tmwtiwhourColor = dates
-          .map((file) => {
-            return { ...file, color: "", name: "" };
-          })
-          .filter((o) => o.day === tomorrow);
-
-        console.log(todaywithoutColor);
-
-        todaywithoutColor.forEach((e, index) => {
+        todos.forEach(function (e) {
           if (e.color == "") {
-            const user = roommates.find((o) => o.id === e.user);
+            const user = roommates.find((o) => o.id === e.userId);
             e.color = user.color;
             e.name = user.name;
           }
         });
+        // console.log("heheheh", todos);
 
-        tmwtiwhourColor.forEach((e, index) => {
-          if (e.color == "") {
-            const user = roommates.find((o) => o.id === e.user);
-            e.color = user.color;
-            e.name = user.name;
-            // console.log(e.color);
-          }
+        const todayTodos = todos.filter(
+          (o) => dayjs(o.date).format("MM-DD-YY") === today
+        );
+
+        const tomorrowTodos = todos.filter(
+          (o) => dayjs(o.date).format("MM-DD-YY") === tomorrow
+        );
+
+        console.log("Todaydfasdf", todayTodos, tomorrowTodos);
+
+        setTodoToday(todayTodos);
+        setTodoTmw(tomorrowTodos);
+
+      } catch (err) {}
+    })();
+  }, [todos]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        console.log("sending request");
+
+        const todoRes = await axiosInstance.get("/task/list", {});
+
+        const todoResTask = todoRes.data.tasks;
+        const newTodoResTask = todoResTask.map((file) => {
+          return { ...file, color: "", name: "" };
         });
-
-        setTodayTask(todaywithoutColor);
-        setTmwTask(tmwtiwhourColor);
-        console.log("this is today's work", todayTask);
-        console.log("this is tmw's work", tmwTask);
+        console.log("11111111", newTodoResTask);
+        setTodos(newTodoResTask);
       } catch (err) {
         console.log(err.message);
       }
@@ -188,15 +185,15 @@ const Reminder = ({
                 </Completed>
               </CompleteCont>
             </HeadingCont>
-            {todayTask.length == 0 ? (
+            {todotoday.length == 0 ? (
               <DefMessage className="opensans">
                 Nothing is scheduled for today.
               </DefMessage>
             ) : (
-              todayTask.map((todo, index) => (
+              todotoday.map((todo, index) => (
                 <RemindContent
                   key={index}
-                  bgcolor={todo.color}
+                  bgcolor={backgroundColor(todo.color)}
                   display={reminder_display}
                   task_name={todo.title}
                   vlcolor={todo.color}
@@ -207,15 +204,15 @@ const Reminder = ({
               ))
             )}
             <Heading className="opensans">Tomorrow</Heading>
-            {tmwTask.length == 0 ? (
+            {todotmw.length == 0 ? (
               <DefMessage className="opensans">
                 Nothing is scheduled for tomorrow.
               </DefMessage>
             ) : (
-              tmwTask.map((todo, index) => (
+              todotmw.map((todo, index) => (
                 <RemindContent
                   key={index}
-                  bgcolor={todo.color}
+                  bgcolor={backgroundColor(todo.color)}
                   display={reminder_display}
                   task_name={todo.title}
                   vlcolor={todo.color}
@@ -234,8 +231,8 @@ const Reminder = ({
               date="5:00-7:00PM"
               margintop="0px;"
             />
-            
-            <Completed_RemindContent
+
+            <mpleted_RemindContent
               bgcolor="rgba(240,199,137,15%)"
               display={reminder_completed_display}
               task_name="Completed Task Name"

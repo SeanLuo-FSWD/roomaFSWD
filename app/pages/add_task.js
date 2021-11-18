@@ -191,8 +191,6 @@ export default function Add_task() {
         HandleClickTaskComp2();
       }}
       display={buttonstate8 || buttonstate10 === 1 ? 'flex':'none'|| buttonstate9 === 1 ? 'none':'flex'}
-      
-      
       />
       <Assigned 
       display={buttonstate9 === 1 ? 'flex':'none'|| buttonstate10 === 1 ? 'none':'flex'}/>

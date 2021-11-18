@@ -233,6 +233,7 @@ const TaskComp = ({ display = "none", onClick = () => {} }) => {
       setRoommates(originalRoom);
       //clear fields after submit
 
+
       console.log(addTodo);
     } catch (err) {
       console.log(err.message);
