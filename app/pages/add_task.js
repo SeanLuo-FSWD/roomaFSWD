@@ -10,6 +10,7 @@ import AddMembers from "../comps/AddMembers";
 import Tab from "../comps/TaskComp/tabs";
 import TaskComp from "../comps/TaskComp/task";
 import Assigned from "../comps/TaskComp/assigned";
+import CalEventMerged from "../comps/CalEventMerged";
 
 const MainCont = styled.div`
   display: flex;
@@ -44,13 +45,7 @@ const AddTaskCont = styled.div`
 export default function Add_task() {
   const [buttonstate1, setButtonState1] = useState(0);
   const [buttonstate5, setButtonState5] = useState(0);
-  const EventHandleClick = () => {
-    if (buttonstate1 === 0) {
-      setButtonState1(1);
-    } else {
-      setButtonState1(0);
-    }
-  };
+
   const GlobalNavClick = () => {
     if (buttonstate5 === 0) {
       setButtonState5(1);
@@ -167,24 +162,7 @@ export default function Add_task() {
         </AddTaskCont>
       </MiddleCont>
       <RightCont>
-        <CalendarComp />
-        <Event
-          height="550px"
-          day="Oct8"
-          week="Thrusday"
-          bgcolor="rgba(240,199,137,30%)"
-          // visibility="visible"
-          task_name="Event Name"
-          vlcolor="#F0C789"
-          name="Name"
-          date="5:00-7:00PM"
-          onClick={() => {
-            EventHandleClick();
-          }}
-          visibility={buttonstate1 === 1 ? "hidden" : "visible"}
-          src={buttonstate1 === 1 ? "/add_rotate.png" : "/add.png"}
-          visibility2={buttonstate1 === 1 ? "visible" : "hidden"}
-        />
+        <CalEventMerged />
       </RightCont>
     </MainCont>
   );

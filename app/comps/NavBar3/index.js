@@ -37,6 +37,7 @@ const TopContContainer = styled.div`
   margin-bottom: 40px;
 `;
 const TopCont = styled.div`
+  margin-top: 20px;
   display: ${(props) => props.display};
 `;
 const TopCont2 = styled.div`
@@ -116,6 +117,8 @@ const Title = styled.p`
   font-weight: 400;
   margin-left: 30px;
   display: ${(props) => props.display};
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 
 const Pic = styled.img`
@@ -147,15 +150,18 @@ const Alert = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #5950e0;
-  position: relative;
   top: -45px;
   left: 10px;
+  position: absolute;
+  top: -5px;
+  left: 15px;
 `;
 const Num = styled.p`
   position: relative;
   color: #ffffff;
   font-size: 9px;
   top: 3px;
+  margin-top: 0;
 `;
 const RoomaLogo = styled.img`
   width: 50px;
@@ -170,19 +176,8 @@ const NavBar3 = ({
   user_point = "100 pts",
   Alertdisplay = "block",
   AltNum = "1",
-  // making nav width change
-  Navwidth = "288px",
-  display = "flex",
-  displayLogo = "none",
-  displayHome = "block",
-  displayTask = "block",
-  displayChat = "block",
-  displayMember = "block",
-  displayCommunity = "block",
-  displaySetting = "block",
   alignItems = "unset",
   justifyContent = "space-even",
-  // changing the color by detecting the page location
   color1 = "#4E4E4E",
   src1 = "/Home_Icon.svg",
   color2 = "#4E4E4E",
@@ -195,13 +190,6 @@ const NavBar3 = ({
   src5 = "/search.svg",
   color6 = "#4E4E4E",
   src6 = "/Settings_Icon.svg",
-  // notification clicked, change the interface
-  //   onNotificationClick = () => {},
-  Contdisplay = "flex",
-  Contdisplay2 = "none",
-  // notification clicked and back to navbar view
-  //   onBackClick = () => {},
-  NotificationWidth = "288px",
 }) => {
   const { currentExpandNav, setCurrentExpandNav } = useContext(globalContext);
   const [NoticeView, setNoticeView] = useState(false);
@@ -212,7 +200,6 @@ const NavBar3 = ({
   };
 
   const onNotificationClick = () => {
-    console.log("xxxxxxxxxxxxxxxxxxxxxx");
     setNoticeView(!NoticeView);
   };
 
