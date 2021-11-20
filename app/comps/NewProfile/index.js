@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import * as React from "react";
 import styled from "styled-components";
 import Button from "../Button";
@@ -61,11 +61,50 @@ const Btnarea = styled.div`
   right: 10px;
   top: 800px;
 `;
+
+const AgeInput = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const PreferencesDiv = styled.div`
+  display: flex;
+  align-items: center;
+`;
 const NewProfile = ({ user }) => {
   const router = useRouter();
   const [File, setFile] = useState(null);
-  const [UserData, setUserData] = useState(null);
+  const [UserData, setUserData] = useState({
+    name: "",
+    age: null,
+    phone: "",
+    pronouns: "",
+    preference: [],
+    interests: "",
+  });
+  const [PreferencesInput, setPreferencesInput] = useState([]);
 
+  const Select = styled.select`
+    height: 20px;
+    margin-right: 0.5em;
+  `;
+
+  useEffect(() => {
+    console.log(PreferencesInput);
+  });
+  const onPreferenceSelect = (title) => {
+    if (PreferencesInput.includes(title)) {
+      setPreferencesInput(PreferencesInput.filter((item) => item !== title));
+    } else {
+      setPreferencesInput([...PreferencesInput, title]);
+    }
+  };
+
+  const onFormChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setRegData({ ...UserData, [name]: value });
+  };
   // const { currentUser, setCurrentUser } = useContext(globalContext);
 
   function getImg(e) {
@@ -83,7 +122,6 @@ const NewProfile = ({ user }) => {
     let user_obj = {};
 
     if (!skip) {
-      console.log("noooot skiped!");
       if (File) {
         retrieveUrl = await ImageUtil.getRetrievalUrl(File.file);
         user_obj = { ...user_obj, pfp: retrieveUrl };
@@ -124,6 +162,17 @@ const NewProfile = ({ user }) => {
     }
   };
 
+  const getYears = () => {
+    let numdays = 100;
+    let option_arr = [];
+
+    for (let i = 18; i < numdays; i++) {
+      option_arr.push(<option value={i}>{i}</option>);
+    }
+
+    return option_arr;
+  };
+
   return (
     <Main>
       <Cont>
@@ -141,7 +190,6 @@ const NewProfile = ({ user }) => {
           fontSize="20px"
           fontWeight="700"
           onClick={() => {
-            console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
             document.getElementById("getFile").click();
           }}
         />
@@ -167,41 +215,134 @@ const NewProfile = ({ user }) => {
             setUserData(e.target.value);
           }}
         ></Input>
-        <Input
+        {/* <Input
           borderbtm="none"
           className="opensans"
           type="password"
           placeholder="Age"
-        ></Input>
+        ></Input> */}
+
+        <AgeInput>
+          <p>Age</p>
+          <Select name="day" id="day" onChange={onFormChange}>
+            {getYears()}
+          </Select>
+        </AgeInput>
+
         <Input
           borderbtm="none"
           className="opensans"
-          type="password"
+          type="text"
           placeholder="Phone"
+          onChange={onFormChange}
         ></Input>
-        <Input
+        {/* <Input
           borderbtm="none"
           className="opensans"
-          type="password"
+          type="text"
           placeholder="Status"
-        ></Input>
+        ></Input> */}
         <Input
           borderbtm="none"
           className="opensans"
-          type="password"
+          type="text"
           placeholder="Pronouns"
+          onChange={onFormChange}
         ></Input>
         <Input
           borderbtm="none"
           className="opensans"
-          type="password"
+          type="text"
           placeholder="Preference"
+          onChange={onFormChange}
         ></Input>
+
+        <PreferencesDiv>
+          <Button
+            width="125px"
+            height="40px"
+            // bgcolor="#F2EFFD"
+            bgcolor={
+              PreferencesInput.includes("No Pets") ? "#7751E8" : "#F2EFFD"
+            }
+            title="No Pets"
+            fontSize="14px"
+            // fontcolor="#7751E8"
+            fontcolor={
+              !PreferencesInput.includes("No Pets") ? "#7751E8" : "#F2EFFD"
+            }
+            border=" 1px solid #7751E8"
+            fontWeight="500"
+            borderRadius="29px"
+            onClick={() => {
+              onPreferenceSelect("No Pets");
+            }}
+          />
+          <Button
+            width="125px"
+            height="40px"
+            bgcolor={
+              PreferencesInput.includes("No smokers") ? "#7751E8" : "#F2EFFD"
+            }
+            title="No smokers"
+            fontSize="14px"
+            fontcolor={
+              !PreferencesInput.includes("No smokers") ? "#7751E8" : "#F2EFFD"
+            }
+            border=" 1px solid #7751E8"
+            fontWeight="500"
+            borderRadius="29px"
+            onClick={() => {
+              onPreferenceSelect("No smokers");
+            }}
+          />
+          <Button
+            width="125px"
+            height="40px"
+            bgcolor={
+              PreferencesInput.includes("No loud noises")
+                ? "#7751E8"
+                : "#F2EFFD"
+            }
+            title="No loud noises"
+            fontSize="14px"
+            fontcolor={
+              !PreferencesInput.includes("No loud noises")
+                ? "#7751E8"
+                : "#F2EFFD"
+            }
+            border=" 1px solid #7751E8"
+            fontWeight="500"
+            borderRadius="29px"
+            onClick={() => {
+              onPreferenceSelect("No loud noises");
+            }}
+          />
+          <Button
+            width="125px"
+            height="40px"
+            bgcolor={
+              PreferencesInput.includes("Respect") ? "#7751E8" : "#F2EFFD"
+            }
+            title="Respect"
+            fontSize="14px"
+            fontcolor={
+              !PreferencesInput.includes("Respect") ? "#7751E8" : "#F2EFFD"
+            }
+            border=" 1px solid #7751E8"
+            fontWeight="500"
+            borderRadius="29px"
+            onClick={() => {
+              onPreferenceSelect("Respect");
+            }}
+          />
+        </PreferencesDiv>
         <Input
           borderbtm="solid"
           className="opensans"
-          type="password"
+          type="text"
           placeholder="Interests"
+          onChange={onFormChange}
         ></Input>
         {/* btn to skip or done */}
         <Btnarea>
