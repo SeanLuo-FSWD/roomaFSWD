@@ -13,6 +13,8 @@ import { useState, useContext } from "react";
 import api from "../api/axios";
 import { globalContext } from "../store/globalContext";
 import { useRouter } from "next/router";
+import EditProfile from "../comps/EditProfile";
+import { requireAuthen } from "../api/require.authen";
 
 const Cont = styled.div`
   display: flex;
@@ -57,11 +59,13 @@ const NavCont = styled.div`
   display: flex;
 `;
 
-export default function Home() {
+export default function Home(props) {
   //setting navigation buttons: Right Cont change
   const [showRightCont, setShowRightCont] = useState(0);
   const { currentUser, setCurrentUser } = useContext(globalContext);
   const router = useRouter();
+  console.log("88888888888888888888");
+  console.log(props.auth);
 
   const HandleClickRightCont1 = () => {
     setShowRightCont(1);
@@ -202,9 +206,13 @@ export default function Home() {
         <HouseRules
           display={showRightCont === 2 ? "flex" : "none"}
         ></HouseRules>
-        <ManageProfile
+        {/* <ManageProfile
           display={showRightCont === 3 ? "flex" : "none"}
-        ></ManageProfile>
+        ></ManageProfile> */}
+        <EditProfile
+          user={props.auth}
+          display={showRightCont === 3 ? "flex" : "none"}
+        ></EditProfile>
         <LeaveGroup
           display={showRightCont === 4 ? "flex" : "none"}
         ></LeaveGroup>
@@ -213,3 +221,19 @@ export default function Home() {
     </Cont>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  // return requireAuthen(context);
+  let authProp = await requireAuthen(context, true);
+
+  if (!authProp.hasOwnProperty("user")) {
+    return { redirect: authProp };
+  } else {
+    return {
+      props: {
+        auth: authProp,
+        // events: Math.random(),
+      },
+    };
+  }
+};

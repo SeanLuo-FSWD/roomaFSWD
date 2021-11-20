@@ -7,9 +7,10 @@ import { useRouter } from "next/router";
 import { updateProfile, getRetrieveUrl } from "../../api/profile.api";
 import { createRoom } from "../../api/room.api";
 import { globalContext } from "../../store/globalContext";
-
+import CurrentMsg from "../../UI/CurrentMsg";
 // import ImageUtil from "./ImageUtil";
 import ImageUtil from "../../api/ImageUtil";
+import { requireAuthen } from "../../api/require.authen";
 
 const Main = styled.div`
   display: flex;
@@ -48,7 +49,7 @@ const Get_pic = styled.p`
 
 const Input = styled.input`
   padding: 20px;
-  border: #c8c8c8 1px solid;
+  border: #c8c8c8 1px none;
   border-right-style: none;
   border-left-style: none;
   border-bottom-style: ${(props) => props.borderbtm};
@@ -66,16 +67,12 @@ const Btnarea = styled.div`
 const AgeInput = styled.div`
   display: flex;
   align-items: center;
-  border-top: #c8c8c8 1px solid;
-
   width: 100%;
 `;
 
 const PreferencesDiv = styled.div`
   display: flex;
   align-items: center;
-  border-top: #c8c8c8 1px solid;
-  border-bottom: #c8c8c8 1px solid;
 `;
 
 const Select = styled.select`
@@ -83,7 +80,20 @@ const Select = styled.select`
   margin-right: 0.5em;
 `;
 
-const NewProfile = ({ user }) => {
+const Profileinput = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: #c8c8c8 1px solid;
+`;
+const InputLabel = styled.div`
+  width: 100px;
+  margin-left: 20px;
+`;
+
+const EditProfile = ({ user }) => {
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
+  console.log(user.user.pfp);
   const router = useRouter();
   const [File, setFile] = useState(null);
   const [UserData, setUserData] = useState({
@@ -93,8 +103,12 @@ const NewProfile = ({ user }) => {
     pronouns: "",
     interests: "",
   });
-  const [PreferencesInput, setPreferencesInput] = useState([]);
-
+  const [PreferencesInput, setPreferencesInput] = useState(
+    user.user.preference
+  );
+  const [Message, setMessage] = useState("");
+  const { currentUser, setCurrentUser, setCurrentError } =
+    useContext(globalContext);
   useEffect(() => {
     // console.log(PreferencesInput);
   });
@@ -114,7 +128,6 @@ const NewProfile = ({ user }) => {
     const value = e.target.value;
     setUserData({ ...UserData, [name]: value });
   };
-  // const { currentUser, setCurrentUser } = useContext(globalContext);
 
   function getImg(e) {
     let binaryData = [];
@@ -154,33 +167,18 @@ const NewProfile = ({ user }) => {
         user_obj = { ...user_obj, preference: PreferencesInput };
       }
 
+      console.log("user_obj user_obj user_obj");
+
+      console.log(user_obj);
       await updateProfile(user_obj, (err) => {
         if (err) {
           console.log(err);
           setCurrentError(err);
         } else {
-          // Need to nest a join room api before going to "/" here
-          // router.push(routeToLogin);
-          console.log("success");
+          setMessage("update user success");
+          // Need to call setCurrentUser here with the returned value.
         }
       });
-    }
-
-    const room_obj = {
-      name: `${user.name}'s house`,
-    };
-
-    if (!user.roomId) {
-      createRoom(room_obj, (err, response) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(response);
-          router.push("/");
-        }
-      });
-    } else {
-      router.push("/");
     }
   };
 
@@ -189,7 +187,11 @@ const NewProfile = ({ user }) => {
     let option_arr = [];
 
     for (let i = 18; i < numdays; i++) {
-      option_arr.push(<option value={i}>{i}</option>);
+      option_arr.push(
+        <option value={i} selected={i == user.user.age ? true : false}>
+          {i}
+        </option>
+      );
     }
 
     return option_arr;
@@ -198,8 +200,8 @@ const NewProfile = ({ user }) => {
   return (
     <Main>
       <Cont>
-        <Heading className="ubuntu">Create Profile</Heading>
-        <PicUpload src={File ? File.src : "/upload_pic.png"}></PicUpload>
+        <Heading className="ubuntu">Edit Profile</Heading>
+        <PicUpload src={File ? File.src : user.user.pfp}></PicUpload>
         <Button
           title="Upload Picture"
           width="200px"
@@ -225,17 +227,22 @@ const NewProfile = ({ user }) => {
           onChange={(e) => getImg(e)}
         ></input>
         {/* user input */}
-        <Input
-          borderbtm="none"
-          className="opensans"
-          type="text"
-          name="name"
-          placeholder="Name"
-          defaultValue={user.name}
-          onChange={(e) => {
-            onFormChange(e);
-          }}
-        ></Input>
+
+        <Profileinput>
+          <InputLabel>Name</InputLabel>
+          <Input
+            borderbtm="none"
+            className="opensans"
+            type="text"
+            name="name"
+            placeholder="Name"
+            defaultValue={user.user.name}
+            onChange={(e) => {
+              onFormChange(e);
+            }}
+          ></Input>
+        </Profileinput>
+
         {/* <Input
           borderbtm="none"
           className="opensans"
@@ -243,46 +250,58 @@ const NewProfile = ({ user }) => {
           placeholder="Age"
         ></Input> */}
 
-        <AgeInput name="age">
-          <p>Age</p>
-          <Select
-            name="age"
-            id="day"
+        <Profileinput>
+          <InputLabel>Age</InputLabel>
+          <AgeInput name="age">
+            <Select
+              name="age"
+              id="day"
+              onChange={(e) => {
+                onFormChange(e);
+              }}
+            >
+              <option value=""></option>
+              {getYears()}
+            </Select>
+          </AgeInput>
+        </Profileinput>
+
+        <Profileinput>
+          <InputLabel>Name</InputLabel>
+          <Input
+            name="phone"
+            borderbtm="none"
+            className="opensans"
+            type="text"
+            placeholder="Phone"
+            defaultValue={user.user.phone}
             onChange={(e) => {
               onFormChange(e);
             }}
-          >
-            <option value=""></option>
-            {getYears()}
-          </Select>
-        </AgeInput>
+          ></Input>
+        </Profileinput>
 
-        <Input
-          name="phone"
-          borderbtm="none"
-          className="opensans"
-          type="text"
-          placeholder="Phone"
-          onChange={(e) => {
-            onFormChange(e);
-          }}
-        ></Input>
         {/* <Input
           borderbtm="none"
           className="opensans"
           type="text"
           placeholder="Status"
         ></Input> */}
-        <Input
-          name="pronouns"
-          borderbtm="none"
-          className="opensans"
-          type="text"
-          placeholder="Pronouns"
-          onChange={(e) => {
-            onFormChange(e);
-          }}
-        ></Input>
+
+        <Profileinput>
+          <InputLabel>Pronouns</InputLabel>
+          <Input
+            name="pronouns"
+            borderbtm="none"
+            className="opensans"
+            type="text"
+            placeholder="Pronouns"
+            defaultValue={user.user.pronouns}
+            onChange={(e) => {
+              onFormChange(e);
+            }}
+          ></Input>
+        </Profileinput>
         {/* <Input
           borderbtm="none"
           className="opensans"
@@ -292,9 +311,9 @@ const NewProfile = ({ user }) => {
             onFormChange(e);
           }}
         ></Input> */}
+        <Profileinput>
+          <InputLabel>Preferences</InputLabel>
 
-        <PreferencesDiv>
-          <span>Preferences</span>
           <Button
             width="125px"
             height="40px"
@@ -373,33 +392,25 @@ const NewProfile = ({ user }) => {
               onPreferenceSelect("Respect");
             }}
           />
-        </PreferencesDiv>
-        <Input
-          borderbtm="solid"
-          className="opensans"
-          type="text"
-          placeholder="About Me"
-          name="interests"
-          onChange={(e) => {
-            onFormChange(e);
-          }}
-        ></Input>
-        {/* btn to skip or done */}
-        <Btnarea>
-          <Button
-            title="Skip"
-            width="123px"
-            height="55px"
-            borderRadius="4.5px"
-            border="solid"
-            bgcolor="white"
-            fontcolor="#724FE9"
-            fontSize="20px"
-            fontWeight="700"
-            onClick={(e) => {
-              postSubmit(e, true);
+        </Profileinput>
+
+        <Profileinput>
+          <InputLabel>About&nbsp;Me</InputLabel>
+          <Input
+            borderbtm="solid"
+            className="opensans"
+            type="text"
+            placeholder="About Me"
+            name="interests"
+            defaultValue={user.user.interests}
+            onChange={(e) => {
+              onFormChange(e);
             }}
-          />
+          ></Input>
+        </Profileinput>
+
+        {Message && <CurrentMsg msg={Message} />}
+        <Btnarea>
           <Button
             title="Done"
             width="123px"
@@ -425,4 +436,4 @@ const NewProfile = ({ user }) => {
   );
 };
 
-export default NewProfile;
+export default EditProfile;
