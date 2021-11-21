@@ -79,6 +79,11 @@ export default function Chat(props) {
   const [buttonstate5, setButtonState5] = useState(0);
   const [RightChatter, setRightChatter] = useState(props.chatters);
   const [YourMsgs, setYourMsgs] = useState(["Hello you"]);
+  const [Selected, setSelected] = useState("0000");
+
+  const HandleClickButtonColor = (clickId) => {
+    setSelected(clickId);
+  };
 
   const GlobalNavClick = () => {
     if (buttonstate5 === 0) {
@@ -130,24 +135,20 @@ export default function Chat(props) {
 
     if (e.keyCode === 13) {
       e.preventDefault();
-
-      console.log("enter key pressed");
       setYourMsgs([...YourMsgs, Message]);
     }
   };
 
   const getChats = () => {
-    console.log("props.users props.users props.users");
-    // console.log(props);
-    // console.log(props.chatters);
-    // console.log(props.auth);
     const chat_list = props.chatters.map((chatter) => {
       if (chatter.id !== props.auth.user.id) {
         return (
           <ChatNav
             chatterInfo={[chatter]}
             user={props.auth.user}
+            bgcolor={Selected === chatter.id ? "#FAFAFA" : "#FFFFFF"}
             onClick={() => {
+              HandleClickButtonColor(chatter.id);
               setYourMsgs([`Hello ${chatter.name}`]);
               setRightChatter([chatter]);
             }}
@@ -170,8 +171,10 @@ export default function Chat(props) {
         <NavCont>
           <ChatNav
             chatterInfo={props.chatters}
+            bgcolor={Selected === "0000" ? "#FAFAFA" : "#FFFFFF"}
             user={props.auth.user}
             onClick={() => {
+              HandleClickButtonColor("0000");
               setYourMsgs([`Hello y'all`]);
               setRightChatter(props.chatters);
             }}
@@ -203,13 +206,8 @@ export default function Chat(props) {
 }
 
 export const getServerSideProps = async (ctx) => {
-  // return requireAuthen(context);
-  // return getRoomates(ctx);
-
   let authProp = await requireAuthen(ctx, true);
 
-  console.log("55555555555555555");
-  console.log(authProp);
   let chatters = await getRoomates(ctx);
 
   if (!authProp.hasOwnProperty("user")) {

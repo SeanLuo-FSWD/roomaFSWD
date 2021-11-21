@@ -11,9 +11,10 @@ import CurrentMsg from "../../UI/CurrentMsg";
 // import ImageUtil from "./ImageUtil";
 import ImageUtil from "../../api/ImageUtil";
 import { requireAuthen } from "../../api/require.authen";
+import ErrorMsg from "../../UI/ErrorMsg";
 
 const Main = styled.div`
-  display: flex;
+  display: ${(props) => props.display};
   flex-direction: column;
   width: 100%;
   height: 100%;
@@ -91,7 +92,14 @@ const InputLabel = styled.div`
   margin-left: 20px;
 `;
 
-const EditProfile = ({ user }) => {
+const EditProfile = ({
+  user,
+  display,
+  onSetErrMessage,
+  ErrMessage,
+  onSetMessage,
+  Message,
+}) => {
   console.log("aaaaaaaaaaaaaaaaaaaaaaaa");
   console.log(user.user.pfp);
   const router = useRouter();
@@ -106,7 +114,12 @@ const EditProfile = ({ user }) => {
   const [PreferencesInput, setPreferencesInput] = useState(
     user.user.preference
   );
-  const [Message, setMessage] = useState("");
+  // const [Message, setMessage] = useState("");
+  // const [ErrMessage, setErrMessage] = useState("");
+  const onHandleSetErrMessage = (msg) => {
+    onSetErrMessage(msg);
+  };
+
   const { currentUser, setCurrentUser, setCurrentError } =
     useContext(globalContext);
   useEffect(() => {
@@ -143,18 +156,13 @@ const EditProfile = ({ user }) => {
     let retrieveUrl;
     let user_obj = {};
 
-    for (const [key, value] of Object.entries(UserData)) {
-      console.log(`${key}: ${value}`);
-      if (value) {
-        user_obj[key] = value;
-      }
-    }
+    let isPhoneString = isNaN(UserData.phone);
 
-    if (!skip) {
-      if (File) {
-        retrieveUrl = await ImageUtil.getRetrievalUrl(File.file);
-        user_obj = { ...user_obj, pfp: retrieveUrl };
-      }
+    if (isPhoneString) {
+      // setErrMessage("Phone needs to be a number");
+      onHandleSetErrMessage("Phone needs to be a number");
+    } else {
+      onHandleSetErrMessage("");
 
       for (const [key, value] of Object.entries(UserData)) {
         console.log(`${key}: ${value}`);
@@ -163,22 +171,36 @@ const EditProfile = ({ user }) => {
         }
       }
 
-      if (PreferencesInput.length) {
-        user_obj = { ...user_obj, preference: PreferencesInput };
-      }
-
-      console.log("user_obj user_obj user_obj");
-
-      console.log(user_obj);
-      await updateProfile(user_obj, (err) => {
-        if (err) {
-          console.log(err);
-          setCurrentError(err);
-        } else {
-          setMessage("update user success");
-          // Need to call setCurrentUser here with the returned value.
+      if (!skip) {
+        if (File) {
+          retrieveUrl = await ImageUtil.getRetrievalUrl(File.file);
+          user_obj = { ...user_obj, pfp: retrieveUrl };
         }
-      });
+
+        for (const [key, value] of Object.entries(UserData)) {
+          console.log(`${key}: ${value}`);
+          if (value) {
+            user_obj[key] = value;
+          }
+        }
+
+        if (PreferencesInput.length) {
+          user_obj = { ...user_obj, preference: PreferencesInput };
+        }
+
+        console.log("user_obj user_obj user_obj");
+
+        console.log(user_obj);
+        await updateProfile(user_obj, (err) => {
+          if (err) {
+            console.log(err);
+            onSetErrMessage("issue with submission");
+          } else {
+            onSetMessage("update user success");
+            // Need to call setCurrentUser here with the returned value.
+          }
+        });
+      }
     }
   };
 
@@ -198,7 +220,7 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <Main>
+    <Main display={display}>
       <Cont>
         <Heading className="ubuntu">Edit Profile</Heading>
         <PicUpload src={File ? File.src : user.user.pfp}></PicUpload>
@@ -217,7 +239,6 @@ const EditProfile = ({ user }) => {
             document.getElementById("getFile").click();
           }}
         />
-
         <input
           type="file"
           id="getFile"
@@ -227,13 +248,13 @@ const EditProfile = ({ user }) => {
           onChange={(e) => getImg(e)}
         ></input>
         {/* user input */}
-
         <Profileinput>
           <InputLabel>Name</InputLabel>
           <Input
             borderbtm="none"
             className="opensans"
             type="text"
+            maxLength="20"
             name="name"
             placeholder="Name"
             defaultValue={user.user.name}
@@ -242,14 +263,12 @@ const EditProfile = ({ user }) => {
             }}
           ></Input>
         </Profileinput>
-
         {/* <Input
           borderbtm="none"
           className="opensans"
           type="password"
           placeholder="Age"
         ></Input> */}
-
         <Profileinput>
           <InputLabel>Age</InputLabel>
           <AgeInput name="age">
@@ -265,14 +284,14 @@ const EditProfile = ({ user }) => {
             </Select>
           </AgeInput>
         </Profileinput>
-
         <Profileinput>
-          <InputLabel>Name</InputLabel>
+          <InputLabel>Phone</InputLabel>
           <Input
             name="phone"
             borderbtm="none"
             className="opensans"
             type="text"
+            maxLength="10"
             placeholder="Phone"
             defaultValue={user.user.phone}
             onChange={(e) => {
@@ -280,14 +299,12 @@ const EditProfile = ({ user }) => {
             }}
           ></Input>
         </Profileinput>
-
         {/* <Input
           borderbtm="none"
           className="opensans"
           type="text"
           placeholder="Status"
         ></Input> */}
-
         <Profileinput>
           <InputLabel>Pronouns</InputLabel>
           <Input
@@ -295,6 +312,7 @@ const EditProfile = ({ user }) => {
             borderbtm="none"
             className="opensans"
             type="text"
+            maxLength="10"
             placeholder="Pronouns"
             defaultValue={user.user.pronouns}
             onChange={(e) => {
@@ -393,13 +411,13 @@ const EditProfile = ({ user }) => {
             }}
           />
         </Profileinput>
-
         <Profileinput>
           <InputLabel>About&nbsp;Me</InputLabel>
           <Input
             borderbtm="solid"
             className="opensans"
             type="text"
+            maxLength="100"
             placeholder="About Me"
             name="interests"
             defaultValue={user.user.interests}
@@ -408,8 +426,9 @@ const EditProfile = ({ user }) => {
             }}
           ></Input>
         </Profileinput>
-
         {Message && <CurrentMsg msg={Message} />}
+
+        {ErrMessage && <ErrorMsg errmsg={ErrMessage} />}
         <Btnarea>
           <Button
             title="Done"

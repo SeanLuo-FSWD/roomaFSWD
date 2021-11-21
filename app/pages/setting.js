@@ -61,11 +61,19 @@ const NavCont = styled.div`
 
 export default function Home(props) {
   //setting navigation buttons: Right Cont change
-  const [showRightCont, setShowRightCont] = useState(0);
+  const [showRightCont, setShowRightCont] = useState(1);
   const { currentUser, setCurrentUser } = useContext(globalContext);
+  const [Message, setMessage] = useState("");
+  const [ErrMessage, setErrMessage] = useState("");
   const router = useRouter();
-  console.log("88888888888888888888");
-  console.log(props.auth);
+
+  const onSetErrMessage = (msg) => {
+    setErrMessage(msg);
+  };
+
+  const onSetMessage = (msg) => {
+    setMessage(msg);
+  };
 
   const HandleClickRightCont1 = () => {
     setShowRightCont(1);
@@ -130,16 +138,6 @@ export default function Home(props) {
     }
   };
 
-  const onLogout = async () => {
-    await api({
-      method: "get",
-      url: "auth/logout",
-      withCredentials: true,
-    });
-    setCurrentUser(null);
-    router.push("/");
-  };
-
   return (
     <Cont>
       <NavCont>
@@ -155,6 +153,8 @@ export default function Home(props) {
             onClick={() => {
               HandleClickButtonColor1();
               HandleClickRightCont1();
+              onSetErrMessage("");
+              onSetMessage("");
             }}
             bgcolor={buttonstate1 === 1 ? "#FAFAFA" : "#FFFFFF"}
           />
@@ -165,6 +165,8 @@ export default function Home(props) {
             onClick={() => {
               HandleClickButtonColor2();
               HandleClickRightCont2();
+              onSetErrMessage("");
+              onSetMessage("");
             }}
             bgcolor={buttonstate1 === 2 ? "#FAFAFA" : "#FFFFFF"}
           />
@@ -175,6 +177,8 @@ export default function Home(props) {
             onClick={() => {
               HandleClickButtonColor3();
               HandleClickRightCont3();
+              onSetErrMessage("");
+              onSetMessage("");
             }}
             bgcolor={buttonstate1 === 3 ? "#FAFAFA" : "#FFFFFF"}
           />
@@ -185,6 +189,8 @@ export default function Home(props) {
             onClick={() => {
               HandleClickButtonColor4();
               HandleClickRightCont4();
+              onSetErrMessage("");
+              onSetMessage("");
             }}
             bgcolor={buttonstate1 === 4 ? "#FAFAFA" : "#FFFFFF"}
           />
@@ -195,7 +201,8 @@ export default function Home(props) {
             onClick={() => {
               HandleClickButtonColor5();
               HandleClickRightCont5();
-              onLogout();
+              onSetErrMessage("");
+              onSetMessage("");
             }}
             bgcolor={buttonstate1 === 5 ? "#FAFAFA" : "#FFFFFF"}
           />
@@ -210,6 +217,10 @@ export default function Home(props) {
           display={showRightCont === 3 ? "flex" : "none"}
         ></ManageProfile> */}
         <EditProfile
+          Message={Message}
+          ErrMessage={ErrMessage}
+          onSetErrMessage={onSetErrMessage}
+          onSetMessage={onSetMessage}
           user={props.auth}
           display={showRightCont === 3 ? "flex" : "none"}
         ></EditProfile>
