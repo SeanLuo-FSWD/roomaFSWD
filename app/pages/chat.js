@@ -10,6 +10,7 @@ import Input from "../comps/ChatComps/input";
 import { getRoomates } from "../api/room.api";
 import { globalContext } from "../store/globalContext";
 import { requireAuthen } from "../api/require.authen";
+import ChatBox from "../comps/ChatComps/ChatBox";
 
 const MainCont = styled.div`
   display: flex;
@@ -76,6 +77,8 @@ export default function Chat(props) {
     currentMsg,
   } = useContext(globalContext);
   const [buttonstate5, setButtonState5] = useState(0);
+  const [RightChatter, setRightChatter] = useState(props.chatters);
+  const [YourMsgs, setYourMsgs] = useState(["Hello you"]);
 
   const GlobalNavClick = () => {
     if (buttonstate5 === 0) {
@@ -122,6 +125,17 @@ export default function Chat(props) {
     setButtonState1(5);
   };
 
+  const onMsgSubmit = (e, Message) => {
+    console.log(e);
+
+    if (e.keyCode === 13) {
+      e.preventDefault();
+
+      console.log("enter key pressed");
+      setYourMsgs([...YourMsgs, Message]);
+    }
+  };
+
   const getChats = () => {
     console.log("props.users props.users props.users");
     // console.log(props);
@@ -129,7 +143,16 @@ export default function Chat(props) {
     // console.log(props.auth);
     const chat_list = props.chatters.map((chatter) => {
       if (chatter.id !== props.auth.user.id) {
-        return <ChatNav chatterInfo={chatter} user={props.auth.user} />;
+        return (
+          <ChatNav
+            chatterInfo={[chatter]}
+            user={props.auth.user}
+            onClick={() => {
+              setYourMsgs([`Hello ${chatter.name}`]);
+              setRightChatter([chatter]);
+            }}
+          />
+        );
       }
     });
     return chat_list;
@@ -145,45 +168,26 @@ export default function Chat(props) {
         </TopCont>
 
         <NavCont>
+          <ChatNav
+            chatterInfo={props.chatters}
+            user={props.auth.user}
+            onClick={() => {
+              setYourMsgs([`Hello y'all`]);
+              setRightChatter(props.chatters);
+            }}
+          />
           {getChats()}
-          {/* <ChatNav
-            onClick={() => {
-              HandleClickButtonColor1();
-            }}
-            bgcolor={buttonstate1 === 1 ? "#FAFAFA" : "#FFFFFF"}
-          />
-
-          <ChatNav
-            info="Darleen, Deavon"
-            onClick={() => {
-              HandleClickButtonColor2();
-            }}
-            bgcolor={buttonstate1 === 2 ? "#FAFAFA" : "#FFFFFF"}
-          />
-
-          <ChatNav
-            info="Floyd Miles"
-            display="none"
-            marginleft="40px"
-            onClick={() => {
-              HandleClickButtonColor3();
-            }}
-            bgcolor={buttonstate1 === 3 ? "#FAFAFA" : "#FFFFFF"}
-          />
-          <ChatNav
-            info="Devon Lane"
-            display="none"
-            marginleft="40px"
-            onClick={() => {
-              HandleClickButtonColor4();
-            }}
-            bgcolor={buttonstate1 === 4 ? "#FAFAFA" : "#FFFFFF"}
-          /> */}
         </NavCont>
       </LeftCont>
 
       {/* Right Container */}
-      <RightCont>
+      <ChatBox
+        user={props.auth.user}
+        RightChatter={RightChatter}
+        YourMsgs={YourMsgs}
+        onMsgSubmit={(e, msg) => onMsgSubmit(e, msg)}
+      />
+      {/* <RightCont>
         <ChatCont1>
           <User1></User1>
         </ChatCont1>
@@ -193,7 +197,7 @@ export default function Chat(props) {
         </ChatCont2>
 
         <Input></Input>
-      </RightCont>
+      </RightCont> */}
     </MainCont>
   );
 }

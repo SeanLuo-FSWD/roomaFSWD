@@ -24,6 +24,7 @@ const Img1 = styled.img`
   border-radius: 50%;
   border: 2px solid white;
   margin-left: 20px;
+  margin-right: -50px;
 `;
 const Img2 = styled.img`
   width: 55px;
@@ -53,6 +54,7 @@ const Name = styled.div`
 const Msg = styled.div`
   font-size: 15px;
   color: #979797;
+  margin-left: 30px;
 `;
 
 //Time
@@ -72,17 +74,36 @@ const ChatNav = ({
   display = "flex",
   marginleft = "25px",
   margintop = "40px",
-  chatterInfo = "All Roommates (5)",
+  chatterInfo = [],
   msg = "Hello Everyone!",
   user,
   onClick = () => {},
 }) => {
+  const getProfileCont = () => {
+    // const chat_list = chatterInfo.map((chatter) => {
+    //   let srcImg = chatter.pfp ? chatter.pfp : "/Avatar2.png";
+
+    //   return <Img1 src={srcImg} />;
+    // });
+
+    let chat_list = [];
+    for (let i = 0; i < chatterInfo.length; i++) {
+      if (i < 3) {
+        let srcImg = chatterInfo[i].pfp ? chatterInfo[i].pfp : "/Avatar2.png";
+        chat_list.push(<Img1 src={srcImg} />);
+      }
+    }
+    return chat_list;
+  };
+
   return (
     <NavCont onClick={onClick} bgcolor={bgcolor} margintop={margintop}>
       <ProfileCont>
-        <Img1 src="/Avatar2.png" />
-        <Img2 display={display} src="/Avatar2.png" />
+        {/* <Img1 src="/Avatar2.png" />
+        <Img2 display={display} src="/Avatar2.png" /> */}
+        {getProfileCont()}
       </ProfileCont>
+      {/* <p>{chatterInfo.length > 3 && "..."}</p> */}
 
       <InfoCont marginleft={marginleft}>
         <Name className="opensans">{chatterInfo.name}</Name>
