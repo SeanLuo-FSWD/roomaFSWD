@@ -194,6 +194,7 @@ const EditProfile = ({
             onSetErrMessage("issue with submission");
           } else {
             onSetMessage("update user success");
+            setCurrentUser({ ...currentUser, pfp: retrieveUrl });
             // Need to call setCurrentUser here with the returned value.
           }
         });
@@ -216,11 +217,30 @@ const EditProfile = ({
     return option_arr;
   };
 
+  const getPicUpload = () => {
+    let srcfile = "/upload_pic.png";
+
+    if (File) {
+      if (File.src) {
+        srcfile = File.src;
+      } else if (user.user.pfp) {
+        srcfile = user.user.pfp;
+      }
+    } else {
+      if (user.user.pfp) {
+        srcfile = user.user.pfp;
+      }
+    }
+
+    return srcfile;
+  };
+
   return (
     <Main display={display}>
       <Cont>
         <Heading className="ubuntu">Edit Profile</Heading>
-        <PicUpload src={File ? File.src : user.user.pfp}></PicUpload>
+
+        <PicUpload src={getPicUpload()}></PicUpload>
         <Button
           title="Upload Picture"
           width="200px"
@@ -296,16 +316,6 @@ const EditProfile = ({
             }}
           ></Input>
         </Profileinput>
-        <Input
-          name="occupation"
-          borderbtm="none"
-          className="opensans"
-          type="text"
-          placeholder="Status"
-          onChange={(e) => {
-            onFormChange(e);
-          }}
-        ></Input>
 
         <Profileinput>
           <InputLabel>Pronouns</InputLabel>
@@ -340,17 +350,17 @@ const EditProfile = ({
 
         <Profileinput>
           <InputLabel>School</InputLabel>
-            <Input
-              name="school"
-              borderbtm="none"
-              className="opensans"
-              type="text"
-              placeholder="School/Company"
-              defaultValue={user.user.school}
-              onChange={(e) => {
-                onFormChange(e);
-              }}
-            ></Input>
+          <Input
+            name="school"
+            borderbtm="none"
+            className="opensans"
+            type="text"
+            placeholder="School/Company"
+            defaultValue={user.user.school}
+            onChange={(e) => {
+              onFormChange(e);
+            }}
+          ></Input>
         </Profileinput>
 
         {/* <Input
