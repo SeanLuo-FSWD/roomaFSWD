@@ -59,10 +59,7 @@ const Input = styled.input`
   font-weight: 400;
 `;
 const Btnarea = styled.div`
-  display: flex;
-  position: absolute;
-  right: 10px;
-  top: 800px;
+  margin-left: auto;
 `;
 
 const AgeInput = styled.div`
@@ -299,12 +296,17 @@ const EditProfile = ({
             }}
           ></Input>
         </Profileinput>
-        {/* <Input
+        <Input
+          name="occupation"
           borderbtm="none"
           className="opensans"
           type="text"
           placeholder="Status"
-        ></Input> */}
+          onChange={(e) => {
+            onFormChange(e);
+          }}
+        ></Input>
+
         <Profileinput>
           <InputLabel>Pronouns</InputLabel>
           <Input
@@ -320,6 +322,37 @@ const EditProfile = ({
             }}
           ></Input>
         </Profileinput>
+
+        <Profileinput>
+          <InputLabel>Occupation</InputLabel>
+          <Input
+            name="occupation"
+            borderbtm="none"
+            className="opensans"
+            type="text"
+            placeholder="Occupation"
+            defaultValue={user.user.occupation}
+            onChange={(e) => {
+              onFormChange(e);
+            }}
+          ></Input>
+        </Profileinput>
+
+        <Profileinput>
+          <InputLabel>School</InputLabel>
+            <Input
+              name="school"
+              borderbtm="none"
+              className="opensans"
+              type="text"
+              placeholder="School/Company"
+              defaultValue={user.user.school}
+              onChange={(e) => {
+                onFormChange(e);
+              }}
+            ></Input>
+        </Profileinput>
+
         {/* <Input
           borderbtm="none"
           className="opensans"
